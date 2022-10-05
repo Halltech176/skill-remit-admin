@@ -1,0 +1,90 @@
+body {
+  font-family: "Poppins", sans-serif;
+}
+@font-face {
+  font-family: "aeonik-bold";
+  src: url("./fonts//AeonikProTRIAL-Bold.otf");
+}
+@font-face {
+  font-family: "aeonik-light";
+  src: url("./fonts/AeonikProTRIAL-Light.otf");
+}
+@font-face {
+  font-family: "aeonik-regular";
+  src: url("./fonts/AeonikProTRIAL-Regular.otf");
+}
+.font-aeonik {
+  font-family: "aeonik-regular", sans-serif;
+}
+.font-mont {
+  font-family: "Montserrat", sans-serif;
+}
+.font-rubik {
+  font-family: "Rubik", sans-serif;
+}
+.bg-normal {
+  background: #130160;
+}
+.bg-primary {
+  background: linear-gradient(278.21deg, #130160 1.66%, #3915d1 96.78%);
+}
+.bg-light {
+  background: #f8fdf9;
+}
+.bg-info {
+  /* background: #008640; */
+  background: rgba(0, 134, 64, 0.2);
+}
+.bg-info-light {
+  background: #f4f8fd;
+}
+.bg-primary-light {
+  background: linear-gradient(
+    278.21deg,
+    rgba(0, 130, 169, 0.2) 1.66%,
+    rgba(52, 21, 209, 0.2) 96.78%
+  );
+}
+.bg-secondary {
+  background-color: #fca34d;
+}
+text-normal {
+  color: #001b87;
+}
+.text-primary {
+  background: linear-gradient(278.21deg, #130160 1.66%, #3915d1 96.78%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  /* color: #130160; */
+}
+
+.text-secondary {
+  color: #fca34d;
+}
+.text-neutral {
+  color: #6e7191;
+}
+.btn {
+  background: linear-gradient(278.21deg, #130160 1.66%, #3915d1 96.78%);
+  color: #ffffff;
+  padding: 0.8em 1rem;
+  border-radius: 10px;
+}
+.btn-bg {
+  background: #001b87;
+  border-radius: 5px;
+  padding: 0.7rem 3rem;
+  color: #ffffff;
+}
+
+.text-success {
+  color: #008640;
+}
+.text-dark {
+  color: #000000;
+}
+
+.border-primary {
+  border: 2px solid #001b87;
+}

@@ -1,30 +1,28 @@
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import MenuIcon from "@mui/icons-material/Menu";
-import SearchIcon from "@mui/icons-material/Search";
-import MoreIcon from "@mui/icons-material/MoreVert";
+import Logo from "./Logo";
+import { Link } from "react-router-dom";
 const Header = () => {
   return (
     <>
-      <AppBar position="static">
-        <Toolbar className="bg-primary" variant="dense">
-          <Typography variant="h6" color="inherit" component="div">
-            LOGO
-          </Typography>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-      <h1>Hello</h1>
+      <header className="header text-white bg-primary items-center p-2 px-4 md:px-32 flex justify-between">
+        <Logo />
+        <nav className="hidden md:block">
+          <ul className="flex justify-between items-center">
+            <li className="my-5 mx-6 font-dm font-medium">
+              <Link to="/">Home</Link>
+            </li>
+            <li className="my-5 mx-6 font-dm font-medium">
+              <Link to="/about">About Us</Link>
+            </li>
+            <li className="my-5 mx-6 font-dm font-medium">
+              <Link to="/faqs">FAQ'S</Link>
+            </li>
+
+            <button className="bg-white m-3 px-3 py-2 rounded-md text-normal text-md font-bold">
+              Download App
+            </button>
+          </ul>
+        </nav>
+      </header>
     </>
   );
 };

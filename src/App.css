@@ -1,5 +1,6 @@
 body {
   font-family: "Poppins", sans-serif;
+  overflow-x : hidden;
 }
 @font-face {
   font-family: "aeonik-bold";
@@ -13,6 +14,12 @@ body {
   font-family: "aeonik-regular";
   src: url("./fonts/AeonikProTRIAL-Regular.otf");
 }
+input, textarea {
+  outline : none;
+}
+input::focus {
+  outline : none;
+}
 .font-aeonik {
   font-family: "aeonik-regular", sans-serif;
 }
@@ -21,6 +28,9 @@ body {
 }
 .font-rubik {
   font-family: "Rubik", sans-serif;
+}
+.font-dm {
+  font-family: "DM Sans", sans-serif;
 }
 .bg-normal {
   background: #130160;
@@ -48,7 +58,7 @@ body {
 .bg-secondary {
   background-color: #fca34d;
 }
-text-normal {
+.text-normal {
   color: #001b87;
 }
 .text-primary {
@@ -78,13 +88,43 @@ text-normal {
   color: #ffffff;
 }
 
-.text-success {
+.text-info {
+  
   color: #008640;
 }
 .text-dark {
   color: #000000;
 }
+.text-dark-100 {
+  color: #9d9d9d;
+}
 
 .border-primary {
   border: 2px solid #001b87;
+}
+.category_image::before {
+  content: "";
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+  border-radius: 0.8rem;
+  background: rgba(0, 0, 0, 0.4);
+}
+.download-app {
+  background-image: url("./assets/small-bg.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.home-container {
+  background: linear-gradient(278.21deg, #130160 1.66%, #3915d1 96.78%);
+  color : white;
+}
+@media (max-width : 640px) {
+  .home-container {
+    background: white;
+    color: #001b87;
+  
+  }
 }

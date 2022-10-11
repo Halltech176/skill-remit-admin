@@ -12,13 +12,22 @@
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "@mui/icons-material": "^5.10.6",
+    "@mui/lab": "^5.0.0-alpha.102",
     "@mui/material": "^5.10.8",
+    "apexcharts": "^3.35.5",
+    "chart.js": "^3.9.1",
     "framer-motion": "^7.5.2",
     "react": "^18.2.0",
+    "react-apexcharts": "^1.4.0",
+    "react-chartjs-2": "^4.3.1",
     "react-dom": "^18.2.0",
     "react-icons": "^4.4.0",
+    "react-modal": "^3.15.1",
     "react-router": "^6.4.1",
-    "react-router-dom": "^6.4.1"
+    "react-router-dom": "^6.4.1",
+    "react-slick": "^0.29.0",
+    "recharts": "^2.1.14",
+    "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
     "@types/react": "^18.0.17",

@@ -1,0 +1,38 @@
+[
+  {
+    "name": "User",
+    "route": "/admin/all account"
+  },
+  {
+    "name": "Transactions",
+    "route": "/admin/transactions"
+  },
+  {
+    "name": "Dispute",
+    "route": "/admin/dispute"
+  },
+  {
+    "name": "Commission",
+    "route": "/admin/commission"
+  },
+  {
+    "name": "Update",
+    "route": "/admin/update"
+  },
+  {
+    "name": "Admin Priviledges",
+    "route": "/admin/admin-priviledges"
+  },
+  {
+    "name": "Broadcast",
+    "route": "/admin/broadcast"
+  },
+  {
+    "name": "Settings",
+    "route": "/admin/settings"
+  },
+  {
+    "name": "Logout",
+    "route": "/admin/logout"
+  }
+]

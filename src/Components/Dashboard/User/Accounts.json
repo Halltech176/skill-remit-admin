@@ -1,0 +1,38 @@
+[
+  {
+    "username": "bluenose",
+    "status": "verified",
+    "ratings": 40,
+    "projects": 400,
+    "balance": "400,000",
+    "size": "increase",
+    "percent": 4
+  },
+  {
+    "username": "pennywise",
+    "status": "pending",
+    "ratings": 57,
+    "projects": 200,
+    "balance": "400,000",
+    "size": "decrease",
+    "percent": 8
+  },
+  {
+    "username": "flotsman",
+    "status": "verified",
+    "ratings": 89,
+    "projects": 19,
+    "balance": "40,000",
+    "size": "increase",
+    "percent": 4
+  },
+  {
+    "username": "Gregata",
+    "status": "unverified",
+    "ratings": null,
+    "projects": 400,
+    "balance": "400,000",
+    "size": "decrease",
+    "percent": 4
+  }
+]

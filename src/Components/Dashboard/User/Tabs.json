@@ -1,0 +1,32 @@
+[
+  {
+    "name": "All Account",
+    "data": "allAccount",
+    "active": true
+  },
+  {
+    "name": "Pending Account",
+    "data": "pendingAccount",
+    "active": false
+  },
+  {
+    "name": "Suspended Account",
+    "data": "suspendedAccount",
+    "active": false
+  },
+  {
+    "name": "Active Account",
+    "data": "activ4eAccount",
+    "active": false
+  },
+  {
+    "name": "User Account",
+    "data": "userAccount",
+    "active": false
+  },
+  {
+    "name": "Vendor Account",
+    "data": "vendorAccount",
+    "active": false
+  }
+]

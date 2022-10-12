@@ -65,7 +65,7 @@ const Admin = () => {
           Add New
         </button>
       </section>
-      <div className="grid grid-cols-3">{renderUsers}</div>
+      <div className="md:grid  flex flex-wrap grid-cols-3">{renderUsers}</div>
     </div>
   );
 };

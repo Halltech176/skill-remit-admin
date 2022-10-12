@@ -39,7 +39,7 @@ const UserDetail = () => {
 
   const renderStats = stats.map((data, index) => {
     return (
-      <section className="flex flex-col shadow-xl bg-white py-8 w-64 rounded-md items-center">
+      <section className="flex flex-col my-2 shadow-xl bg-white py-8 w-64 rounded-md items-center">
         <h1
           className={`${
             data.status === "balance"
@@ -47,11 +47,11 @@ const UserDetail = () => {
               : data.status === "completed"
               ? "text-info"
               : "text-primary"
-          } text-6xl`}
+          } text-4xl md:text-6xl`}
         >
           {data.value}
         </h1>
-        <p style={{ color: "#111114" }} className="text-2xl my-2">
+        <p style={{ color: "#111114" }} className="md:text-2xl text-xl my-2">
           {data.purpose}
         </p>
       </section>
@@ -99,35 +99,35 @@ const UserDetail = () => {
 
   return (
     <main className="">
-      <div className="flex justify-between items-center">
+      <div className="md:flex block justify-between items-center">
         <div className="image">
           <span>
-            <img className="w-72" src={user} alt="user" />
+            <img className=" w-56 md:w-72" src={user} alt="user" />
           </span>
         </div>
-        <div className="w-2/3 pl-4  ">
-          <div className="buttons justify-center flex items-center">
-            <button className="bg-info-normal text-white w-44 text-xl rounded-md p-4 mx-4 ">
+        <div className="md:w-2/3 w-full pl-4  ">
+          <div className="buttons justify-center mt-5 flex items-center">
+            <button className="bg-info-normal text-white w-full md:w-44 text-md md:text-xl rounded-md p-2 md:p-4 mx-4 ">
               Active
             </button>
             <button
               onClick={() => navigate("/admin/dispute")}
-              className="bg-normal text-white w-44 text-xl rounded-md p-4 mx-4 "
+              className="bg-normal text-white w-full md:w-44 text-md md:text-xl rounded-md p-2 md:p-4 mx-4 "
             >
               Message
             </button>
           </div>
           <div className="flex my-14">
             <div className="details ">
-              <p className="text-3xl my-3 flex items-center text-primary font-inter">
+              <p className="md:text-3xl text-md  my-3 flex items-center text-primary font-inter">
                 <span className="font-extralight">Full Name:</span>
                 <span className="font-bold mx-3">Ajani Ben Dara</span>
               </p>
-              <p className="text-3xl my-3 flex items-center text-primary font-inter">
+              <p className="md:text-3xl text-md  my-3 flex items-center text-primary font-inter">
                 <span className="font-extralight">Phone Number:</span>
                 <span className="font-bold mx-3">08123456789</span>
               </p>
-              <div className="text-3xl my-3 flex flex-col   font-inter">
+              <div className="md:text-3xl text-md  my-3 flex flex-col   font-inter">
                 <p className="font-extralight text-primary">Skills:</p>
                 <div className="flex flex-wrap my-3">{renderSkills}</div>
               </div>
@@ -136,8 +136,10 @@ const UserDetail = () => {
           </div>
         </div>
       </div>
-      <div className="flex justify-between mb-10">{renderStats}</div>
-      <div className="flex flex-wrap  mb-10">{renderReviews}</div>
+      <div className="flex md:justify-between justify-center flex-wrap md:flex-nowrap md:mb-10">
+        {renderStats}
+      </div>
+      <div className="flex flex-wrap  md:mb-10">{renderReviews}</div>
     </main>
   );
 };

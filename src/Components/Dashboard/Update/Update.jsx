@@ -43,7 +43,7 @@ const Update = () => {
 
   return (
     <main className="">
-      <div className="flex items-center my-5 justify-center">
+      <div className="flex items-center flex-wrap overflow-x-scroll my-5 justify-center">
         <TabContext value={value}>
           <TabList onChange={handleChange}>{renderTitles}</TabList>
         </TabContext>

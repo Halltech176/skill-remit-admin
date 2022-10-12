@@ -37,7 +37,7 @@ function App() {
             // borderTopLeftRadius: "4rem",
             // borderBottomLeftRadius: "4rem",
           }}
-          className=" md:ml-60 scroll_container md:rounded-tl-3xl md:rounded-bl-3xl   app_container    px-10   md:px-14  "
+          className=" md:ml-60 scroll_container md:rounded-tl-3xl md:rounded-bl-3xl   app_container    px-10   md:px-8  "
         >
           <Header title={title_text} />
           <Routes>

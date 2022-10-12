@@ -5,7 +5,7 @@ const Oveview = () => {
     return (
       <section
         style={{ background: "#4F46BA" }}
-        className="flex text-white mr-5 w-44 p-4 rounded-md"
+        className="flex shrink-0 text-white mr-5 w-56 md:w-44 p-4 rounded-md"
       >
         <div className="flex flex-col">
           <p className="capitalize">{data.title}</p>
@@ -24,10 +24,10 @@ const Oveview = () => {
             : data.status === "active"
             ? "bg-secondary-dark"
             : "bg-primary-dark"
-        } my-4 p-5 h-36 w-96 flex justify-between text-white`}
+        } my-4 p-5 h-36 md:w-96 w-full flex justify-between text-white`}
       >
         <div className="">
-          <h1 className="text-2xl">{data.title}</h1>
+          <h1 className="text-2xl ">{data.title}</h1>
           <p>{data.percent}%</p>
         </div>
         <span></span>
@@ -38,9 +38,11 @@ const Oveview = () => {
     );
   });
   return (
-    <main className="flex">
+    <main className="md:flex">
       <div className="max-w-xl  mr-4">
-        <div className="flex justify-between">{renderSummary}</div>
+        <div className="flex md:overflow-x-hidden overflow-x-scroll justify-between">
+          {renderSummary}
+        </div>
         <div className="flex flex-col my-4">
           <div className="my-4">
             <LineChart />
@@ -51,7 +53,7 @@ const Oveview = () => {
           </div>
         </div>
       </div>
-      <div className="w-ful">
+      <div className="w-full">
         <h1 className="font-bold  mb-3">statistics</h1>
         <div className="flex flex-col my-5">{renderStats}</div>
       </div>

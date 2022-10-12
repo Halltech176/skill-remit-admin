@@ -42,7 +42,7 @@ export const CreateAccount = ({ open, ToggleModal }) => {
       <Modal
         isOpen={open}
         onRequestClose={ToggleModal}
-        className=" absolute h-4/12 relative shadow-md app_container  overflow-scroll bg-white border-2  rounded-xl p-14 w-2/4 top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4"
+        className=" absolute h-4/12 relative shadow-md app_container  overflow-scroll bg-white border-2  rounded-xl p-14 md:w-2/4 w-full top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4"
       >
         <form className="    ">
           <span onClick={ToggleModal}>
@@ -105,7 +105,7 @@ export const EditAccount = ({ open, ToggleModal }) => {
         isOpen={open}
         onRequestClose={ToggleModal}
         contentLabel="Example Modal"
-        className=" absolute h-4/12 relative shadow-md app_container  overflow-scroll bg-white border-2  rounded-xl p-14 w-2/4 top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4"
+        className=" absolute h-4/12 relative shadow-md app_container  overflow-scroll bg-white border-2  rounded-xl p-14 md:w-2/4 w-full top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4"
       >
         <form className=" my-4   ">
           <span onClick={ToggleModal}>

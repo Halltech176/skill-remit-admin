@@ -228,7 +228,7 @@ input::-webkit-inner-spin-button {
 }
 .ReactModal__Overlay {
   opacity: 0;
-  transition: opacity 1000ms ease-in-out;
+  transition: opacity 500ms ease-in-out;
 }
 
 .ReactModal__Overlay--after-open {
@@ -274,8 +274,8 @@ input::-webkit-inner-spin-button {
   }
   .scroll_container {
     height: auto;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
+    /* margin-top: 2rem;
+    margin-bottom: 2rem; */
     /* overflow-y: scroll; */
   }
 }

@@ -16,22 +16,22 @@ const User = () => {
       <section
         onClick={() => navigate(`/admin/${index}`)}
         style={{ color: "#808080" }}
-        className="flex capitalize border-b-2 py-5 text-md font-bold font-manrope my-5 items-center justify-between"
+        className="flex  capitalize border-b-2 py-5 text-md font-bold font-manrope my-5 items-center justify-between"
       >
-        <p className="flex  mr-6 items-center w-64">
+        <p className="flex shrink-0 mr-6 items-center w-64">
           <span>
             {" "}
-            <img src={images[index]} className="w-32" alt="user" />{" "}
+            <img src={images[index]} className="w-8" alt="user" />{" "}
           </span>
           <span className="mx-3">{data.username} </span>
         </p>
         <p
-          className={`${data.status} text-center mr-7 rounded-md w-64  py-1 px-3`}
+          className={`${data.status} shrink-0 text-center mr-7 rounded-md w-64  py-1 px-3`}
         >
           {" "}
           {data.status}
         </p>
-        <p className="flex items-center mr-7 w-2/3 justify-between">
+        <p className="flex shrink-0 items-center mr-7 w-2/3 justify-between">
           {data.ratings === null ? (
             ""
           ) : (
@@ -52,7 +52,7 @@ const User = () => {
               : data.ratings + "%"}{" "}
           </span>
           <p
-            className={`${data.size} mr-7 mx-2 flex p-1 rounded-md items-center`}
+            className={`${data.size} mr-7 shrink-0 mx-2 flex p-1 rounded-md items-center`}
           >
             <span>
               {" "}
@@ -61,43 +61,51 @@ const User = () => {
             <span> {data.percent}%</span>
           </p>
         </p>
-        <p className="w-64 mr-7"> {data.projects}</p>
-        <p className="w-64 mr-7"> ${data.balance}</p>
+        <p className="w-64 shrink-0 mr-7"> {data.projects}</p>
+        <p className="w-64 shrink-0 mr-7"> ${data.balance}</p>
       </section>
     );
   });
 
   const renderTabs = Tabs.map((data, index) => {
     return (
-      <button
+      <div
+        key={index}
+        // style={{ flexShrink: "0" }}
         className={`${
           data.active
             ? "bg-normal text-white"
             : "bg-white text-normal border-primary-100  "
-        } md:py-5 font-nunito text-sm md:text-md font-medium w-32 my-2  md:px-10 md:w-64 rounded-md md:my-5   md:mx-2 `}
+        }  font-nunito  text-center md:text-xl shrink-0 text-xs font-medium  rounded-md py-2  px-3  md:w-64 md:py-5 my-5  mx-2 `}
       >
         {data.name}
-      </button>
+      </div>
     );
   });
   return (
     <main className="  ">
-      <section className="flex  justify-between flex-wrap items-center md:justify-center">
+      <section className="flex  md:overflow-x-hidden overflow-x-scroll md:flex-wrap items-center md:justify-center">
         {renderTabs}
       </section>
-      <section
-        style={{ color: " #4C4C4C" }}
-        className="flex font-manrope my-5 justify-between items-center text-md
+      <div className="overflow-x-scroll">
+        <section
+          style={{ color: " #4C4C4C" }}
+          className="flex font-manrope shrink-0   my-5 justify-between items-center text-md
         font-bold"
-      >
-        <h2 className="w-64">User</h2>
-        <h2 className="w-64 ">Status</h2>
-        <h2 className="w-2/3 text-center ">Ratings</h2>
-        <h2 className="w-64 ">Project</h2>
-        <h4 className="w-64 ">Wallet balance</h4>
-      </section>
-      <div className=" mb-5">{renderAccounts}</div>
-      <div className=" mb-5">{renderAccounts}</div>
+        >
+          <h2 className="w-64 md:mr-0 mr-5 md:p-0 p-4">User</h2>
+          <h2 className="w-64 md:mr-0 mr-5 md:p-0 p-4 ">Status</h2>
+          <h2 className="w-2/3 md:mr-0 mr-5 md:p-0 p-4 text-center ">
+            Ratings
+          </h2>
+          <h2 className="w-64 md:mr-0 mr-5 md:p-0 p-4">Project</h2>
+          <h4 className="w-64 md:mr-0 mr-5 md:p-0 p-4 shrink-0 ">
+            Wallet balance
+          </h4>
+        </section>
+        <div className=" md:mr-0 mr-5 md:p-0 p-4 mb-5">{renderAccounts}</div>
+      </div>
+      <div className=" md:mr-0 mr-5 md:p-0 p-4 mb-5">{renderAccounts}</div>
     </main>
   );
 };

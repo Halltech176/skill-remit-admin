@@ -1,7 +1,7 @@
 body {
-  font-family: "Poppins", sans-serif;
+  font-family: "Poppins", sans-serif !important;
   overflow: hidden;
-  background-color: #130160;
+  background-color: #130160 !important;
 }
 @font-face {
   font-family: "aeonik-bold";

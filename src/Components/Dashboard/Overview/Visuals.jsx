@@ -27,7 +27,7 @@ ChartJS.register(
   Legend
 );
 
-export const DoughnutChart = () => {
+export const DoughnutChart = ({ percent }) => {
   const data = {
     options: {
       legend: {
@@ -46,7 +46,7 @@ export const DoughnutChart = () => {
       {
         label: "# of Votes",
         radius: 20,
-        data: [12, 19],
+        data: [percent, 100 - percent],
         backgroundColor: ["#F9896B", "#fff"],
         // borderColor: ["rgba(255, 99, 132, 1)", "rgba(54, 162, 235, 1)"],
         borderJoinStyle: "round",

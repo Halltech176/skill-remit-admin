@@ -11,6 +11,8 @@ const Tab2 = () => {
     setIsOpen(!isOpen);
   };
   const [isOpen2, setIsOpen2] = useState(false);
+  console.log("open1", isOpen);
+  console.log("open2", isOpen2);
   const ToggleModal2 = (e) => {
     e.preventDefault();
     setIsOpen2(!isOpen2);
@@ -57,15 +59,19 @@ const Tab2 = () => {
     return (
       <div
         onClick={ToggleModal2}
-        className="w-52   flex flex-col h-48 items-center justify-center relative"
+        className={`${
+          !isOpen && !isOpen2 ? "overlay" : ""
+        }  md:w-52 w-36   flex flex-col h:h-48 h-32 items-center justify-center relative`}
       >
-        <div className="overlay"></div>
+        {/* <div className="overlay"></div> */}
         <img
           className="absolute w-full h-full object-cover top-0 left-0 bottom-0 right-0"
           src={data.img}
           alt="img"
         />
-        <span className=" z-10 font-bold text-md text-white">{data.title}</span>
+        <span className=" z-10 font-bold text-sm md:text-md text-white">
+          {data.title}
+        </span>
       </div>
     );
   });
@@ -78,7 +84,7 @@ const Tab2 = () => {
           Add
         </button>
       </div>
-      <div className="grid md:grid-cols-4 grid-cols-2 gap-2  ">
+      <div className="flex md:justify-start justify-center my-5 flex-wrap md:grid md:grid-cols-4  gap-2  ">
         {renderSections}
       </div>
     </section>

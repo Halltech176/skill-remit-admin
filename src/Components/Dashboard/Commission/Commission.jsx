@@ -1,6 +1,6 @@
 const Commission = () => {
   return (
-    <div className="">
+    <div className="h-screen overflow-hidden">
       <p
         // style={{ color: "#001B87" }}
         className="font-aeonik-light my-5 text-normal text-2xl font-extralight md:text-4xl"
@@ -13,8 +13,8 @@ const Commission = () => {
           type="number"
         />
       </section>
-      <section className="md:my-32 my-16">
-        <button className="btn w-full md:w-80">Update</button>
+      <section className="md:my-32  my-16">
+        <button className="btn w-56 md:mx:0  mx-auto md:w-64">Update</button>
       </section>
     </div>
   );

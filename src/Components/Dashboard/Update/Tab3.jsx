@@ -56,8 +56,8 @@ const Tab3 = () => {
   const images = [section1, section2, section3, section2, section3, section1];
   const renderSections = images.map((data, index) => {
     return (
-      <div onClick={ToggleModal2} className=" m-3 p-3">
-        <img className="w-96" src={data} alt="images" />
+      <div onClick={ToggleModal2} className=" shrink-0 m-3 p-3">
+        <img className="w-96 shrink-0" src={data} alt="images" />
       </div>
     );
   });
@@ -70,8 +70,10 @@ const Tab3 = () => {
           Add
         </button>
       </div>
-      <Slider {...settings}>{renderSections}</Slider>
-      {/* <div className="flex flex-wrap items-center">{renderSections}</div> */}
+      {/* <Slider {...settings}>{renderSections}</Slider> */}
+      <div className="flex app_container overflow-x-scroll items-center">
+        {renderSections}
+      </div>
     </main>
   );
 };

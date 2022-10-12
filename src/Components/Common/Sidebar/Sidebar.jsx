@@ -127,7 +127,14 @@ const Sidebar = () => {
                       <RiNodeTree size="1.5rem" />
                     )}
                   </ListItemIcon> */}
-                  <ListItemText primary={data.name} />
+                  <ListItemText
+                    className={` ${
+                      data.route === path
+                        ? "bg-normal text-white"
+                        : "text-norml"
+                    }  font-aeonik-light font-medium  text-xl  p-2 `}
+                    primary={data.name}
+                  />
                 </ListItemButton>
               </Link>
             ))}

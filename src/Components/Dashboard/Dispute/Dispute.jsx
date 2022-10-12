@@ -29,7 +29,7 @@ const Dispute = () => {
     );
   });
   return (
-    <main className="md:flex   justify-between pt-14">
+    <main className="md:flex   justify-between pt-5 md:pt-14">
       <div className=" hidden  md:block  w-2/4 mr-8">
         <div className="flex  items-center bg-primary text-white p-4 rounded-md justify-between">
           <p>Dispute </p>
@@ -52,29 +52,29 @@ const Dispute = () => {
           {renderDisputes}
         </div>
       </div>
-      <div className="w-full md:w-5/6">
-        <div className="flex  items-center bg-primary text-white p-5 rounded-md justify-between">
-          <div className="flex items-center">
+      <div className=" md:w-5/6">
+        <div className="flex w-full overflow-x-scroll app_container items-center bg-primary text-white p-3 md:p-5 rounded-md justify-between">
+          <div className="flex shrink-0 items-center">
             <span>
-              <img className="w-16" src={user_vendor} alt="arrow" />
+              <img className="md:w-16 w-10" src={user_vendor} alt="arrow" />
             </span>
             <div className="mx-3">
-              <h4 className="text-sm">Annete Black </h4>
-              <p>Vendor </p>
+              <h4 className="md:text-sm  text-xs  shrink-0">Annete Black </h4>
+              <p className="md:text-normal text-xs">Vendor </p>
             </div>
           </div>
 
-          <div className="flex items-center">
+          <div className="flex shrink-0 items-center">
             <span>
-              <img className="w-16" src={user_vendor} alt="arrow" />
+              <img className="md:w-16 w-10" src={user_vendor} alt="arrow" />
             </span>
             <div className="mx-3">
-              <h4 className="text-sm">Annete Black </h4>
-              <p>user </p>
+              <h4 className="md:text-sm  text-xs shrink-0">Annete Black </h4>
+              <p className="md:text-normal text-xs">user </p>
             </div>
           </div>
 
-          <button className="border-white text-xs border-2 p-3 rounded-md">
+          <button className="border-white shrink-0 text-xs border-2 p-2 md:p-3 rounded-md">
             {" "}
             Resolve Disputes{" "}
           </button>
@@ -144,17 +144,17 @@ const Dispute = () => {
               </p>
             </div>
           </section>
-          <div className="input bg-white p-2 flex items-center ">
+          <div className="input bg-white p-1 md:p-2 flex items-center ">
             <input
               style={{ background: "#F7F7FD" }}
-              className="w-full text-xl p-5"
+              className="w-full text-xl p-2 md:p-5"
               type="text"
             />
             <span>
-              <img src={copy} className="w-8 mx-2" alt="copy" />
+              <img src={copy} className="md:w-8 w-4 mx-2" alt="copy" />
             </span>
             <span>
-              <img src={send} className="w-8 mx-3" alt="send" />
+              <img src={send} className="md:w-8 w-4 mx-3" alt="send" />
             </span>
           </div>
         </div>

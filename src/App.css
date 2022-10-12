@@ -247,7 +247,7 @@ input::-webkit-inner-spin-button {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.3);
 }
 .bg-info-dark {
   background: #43be83;
@@ -258,9 +258,10 @@ input::-webkit-inner-spin-button {
 .bg-primary-dark {
   background: #51459e;
 }
-.overlay {
+.overlay::before {
+  content: "";
   position: absolute;
-  /* z-index: 1; */
+  z-index: 1;
   top: 0;
   left: 0;
   right: 0;
@@ -270,7 +271,7 @@ input::-webkit-inner-spin-button {
 @media (max-width: 600px) {
   body {
     overflow: scroll;
-    background: none;
+    background: none !important;
   }
   .scroll_container {
     height: auto;

@@ -2,7 +2,7 @@ import * as React from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import { useState } from "react";
 import broadcast from "../../../assets/Broadcast.png";
-import users2 from "../../../assets/users.png";
+import users2 from "../../../assets/Users.png";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";

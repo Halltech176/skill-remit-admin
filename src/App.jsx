@@ -14,6 +14,7 @@ import Transactions from "./Components/Dashboard/Transactions/Transactions";
 import Dispute from "./Components/Dashboard/Dispute/Dispute";
 import Update from "./Components/Dashboard/Update/Update";
 import Overview from "./Components/Dashboard/Overview/Overview";
+import Login from "./Components/Form/Login";
 
 import "./App.css";
 
@@ -43,6 +44,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Overview />} />
             <Route path="/admin/all account" element={<User />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/admin/commission" element={<Commission />} />
             <Route path="/admin/admin-priviledges" element={<Admin />} />
             <Route path="/admin/settings" element={<Settings />} />

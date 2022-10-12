@@ -4,7 +4,7 @@ const Commission = () => {
     return (
       <section className="flex text-center">
         <input className="" name="snedTo" type="radio" />
-        <label className="mx-3 text-dark font-medium text-sm md:text-xl">
+        <label className="mx-3 shrink-0 text-dark font-medium text-sm md:text-xl">
           {data.label}
         </label>
       </section>

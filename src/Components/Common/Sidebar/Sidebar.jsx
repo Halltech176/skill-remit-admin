@@ -1,8 +1,26 @@
 import * as React from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import { useState } from "react";
-import broadcast from "../../../assets/Broadcast.png";
-import users2 from "../../../assets/Users.png";
+
+import users1 from "../../../assets/users1.png";
+import transaction1 from "../../../assets/transactions1.png";
+import weight1 from "../../../assets/weight1.png";
+import judge1 from "../../../assets/judge1.png";
+import update1 from "../../../assets/update1.png";
+import admin1 from "../../../assets/admin1.png";
+import broadcast1 from "../../../assets/broadcast1.png";
+import settings1 from "../../../assets/settings1.png";
+import logout1 from "../../../assets/logout1.png";
+
+import users2 from "../../../assets/users2.png";
+import transaction2 from "../../../assets/transactions2.png";
+import weight2 from "../../../assets/weight2.png";
+import judge2 from "../../../assets/judge2.png";
+import update2 from "../../../assets/update2.png";
+import admin2 from "../../../assets/admin2.png";
+import broadcast2 from "../../../assets/broadcast2.png";
+import settings2 from "../../../assets/settings2.png";
+
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -24,8 +42,30 @@ import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import RouteLinks from "./RouteLinks.json";
 
-const drawerWidth = 240;
+const drawerWidth = 250;
 const Sidebar = () => {
+  const inactives = [
+    users1,
+    transaction1,
+    judge1,
+    weight1,
+    update1,
+    admin1,
+    broadcast1,
+    settings1,
+    logout1,
+  ];
+  const actives = [
+    users2,
+    transaction2,
+    judge2,
+    weight2,
+    update2,
+    admin2,
+    broadcast2,
+    settings2,
+    logout1,
+  ];
   const [side, setSide] = useState("right");
 
   const [open, setOpen] = useState(false);
@@ -46,7 +86,7 @@ const Sidebar = () => {
     return (
       <Link
         to={data.route}
-        key={index}
+        key={data.name}
         className={` font-aeonik-light font-medium  text-xl`}
         // style={{ color: "white" }}
       >
@@ -60,8 +100,8 @@ const Sidebar = () => {
           <span>
             <img
               className="w-5 mr-2"
-              src={data.route === path ? users2 : broadcast}
-              alt="broadcast"
+              src={data.route === path ? actives[index] : inactives[index]}
+              alt="icons"
             />
           </span>{" "}
           <span>{data.name}</span>
@@ -69,6 +109,7 @@ const Sidebar = () => {
       </Link>
     );
   });
+  console.log(RouteLinks.slice(0, RouteLinks.length - 1));
   return (
     <>
       <main className="flex md:hidden">
@@ -76,7 +117,7 @@ const Sidebar = () => {
         <AppBar position="fixed" elevation={0} open={open}>
           <Toolbar className="bg-primary border-transparent">
             <Box noWrap sx={{ flexGrow: 1 }} component="div">
-              <h1>Logo</h1>
+              <h1 onClick={() => navigate("/")}>Logo</h1>
             </Box>
             <IconButton
               color="inherit"
@@ -111,32 +152,35 @@ const Sidebar = () => {
           </IconButton>
           {/* </DrawerHeader> */}
           <Divider />
-          <List className="text-normal font-black text-md">
-            {RouteLinks.map((data, index) => (
-              <Link
-                to={data.route}
-                key={data.name}
-                onClick={handleDrawerClose}
-                disablePadding
+          <List className="text-normal  font-black text-md">
+            {RouteLinks.slice(0, RouteLinks.length - 1).map((data, index) => (
+              <li
+                className={` ${
+                  data.route === path ? "bg-normal  text-white" : "text-norml"
+                }  font-aeonik-light mx-1 font-medium  text-xl  p-2 `}
               >
-                <ListItemButton>
-                  {/* <ListItemIcon>
-                    {index % 2 === 0 ? (
-                      <FaHome size="1.5rem" />
-                    ) : (
-                      <RiNodeTree size="1.5rem" />
-                    )}
-                  </ListItemIcon> */}
-                  <ListItemText
-                    className={` ${
-                      data.route === path
-                        ? "bg-normal text-white"
-                        : "text-norml"
-                    }  font-aeonik-light font-medium  text-xl  p-2 `}
-                    primary={data.name}
-                  />
-                </ListItemButton>
-              </Link>
+                <Link
+                  to={data.route}
+                  key={data.name}
+                  onClick={handleDrawerClose}
+                  disablePadding
+                >
+                  <ListItemButton>
+                    <ListItemIcon>
+                      <img
+                        className="w-5 mr-2"
+                        src={
+                          data.route === path
+                            ? inactives[index]
+                            : actives[index]
+                        }
+                        alt="icons"
+                      />
+                    </ListItemIcon>
+                    <ListItemText primary={data.name} />
+                  </ListItemButton>
+                </Link>
+              </li>
             ))}
           </List>
           <Divider />

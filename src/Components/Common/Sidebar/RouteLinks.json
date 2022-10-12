@@ -33,6 +33,6 @@
   },
   {
     "name": "Logout",
-    "route": "/admin/logout"
+    "route": "/logout"
   }
 ]

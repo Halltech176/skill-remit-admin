@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router";
 import user from "../../../assets/user1.png";
 import user_review from "../../../assets/user_review.png";
+import toggle_arrow from "../../../assets/toggle_arrow.png";
 import star1 from "../../../assets/Star.png";
 import star2 from "../../../assets/Star-1.png";
 import star3 from "../../../assets/Star-2.png";
@@ -107,8 +108,11 @@ const UserDetail = () => {
         </div>
         <div className="md:w-2/3 w-full pl-4  ">
           <div className="buttons justify-center mt-5 flex items-center">
-            <button className="bg-info-normal text-white w-full md:w-44 text-md md:text-xl rounded-md p-2 md:p-4 mx-4 ">
-              Active
+            <button className="bg-info-normal flex  items-center justify-center text-white w-full md:w-44 text-md md:text-xl rounded-md p-2 md:p-4 mx-4 ">
+              Active{" "}
+              <span className="mx-3">
+                <img src={toggle_arrow} alt="arrow" />
+              </span>
             </button>
             <button
               onClick={() => navigate("/admin/dispute")}

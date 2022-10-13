@@ -1,7 +1,7 @@
 [
   {
     "name": "User",
-    "route": "/admin/all account"
+    "route": "/admin/allAccount"
   },
   {
     "name": "Transactions",
@@ -33,6 +33,6 @@
   },
   {
     "name": "Logout",
-    "route": "/logout"
+    "route": "/login"
   }
 ]

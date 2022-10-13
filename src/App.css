@@ -271,7 +271,7 @@ input::-webkit-inner-spin-button {
 @media (max-width: 600px) {
   body {
     overflow: scroll;
-    background: none !important;
+    background: rgb(248, 253, 249) !important;
   }
   .scroll_container {
     height: auto;

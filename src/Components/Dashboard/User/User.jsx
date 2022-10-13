@@ -14,11 +14,11 @@ const User = () => {
   const renderAccounts = Accounts.map((data, index) => {
     return (
       <section
-        onClick={() => navigate(`/admin/${index}`)}
+        onClick={() => navigate(`/admin/allAccount/${data.username}`)}
         style={{ color: "#808080" }}
-        className="flex  capitalize border-b-2 py-5 text-md font-bold font-manrope my-5 items-center justify-between"
+        className="flex  capitalize border-b-2 py-5 text-md font-bold font-manrope my-2 md:my-5 items-center justify-between"
       >
-        <p className="flex shrink-0 mr-6 items-center w-64">
+        <p className="flex shrink-0  items-center w-36">
           <span>
             {" "}
             <img src={images[index]} className="w-8" alt="user" />{" "}
@@ -26,12 +26,12 @@ const User = () => {
           <span className="mx-3">{data.username} </span>
         </p>
         <p
-          className={`${data.status} shrink-0 text-center mr-7 rounded-md w-64  py-1 px-3`}
+          className={`${data.status} shrink-0 text-center  rounded-md w-36  py-1 px-3`}
         >
           {" "}
           {data.status}
         </p>
-        <p className="flex shrink-0 items-center mr-7 w-2/3 justify-between">
+        <p className="flex shrink-0 items-center  w-72 justify-between">
           {data.ratings === null ? (
             ""
           ) : (
@@ -61,8 +61,8 @@ const User = () => {
             <span> {data.percent}%</span>
           </p>
         </p>
-        <p className="w-64 shrink-0 mr-7"> {data.projects}</p>
-        <p className="w-64 shrink-0 mr-7"> ${data.balance}</p>
+        <p className="w-36 shrink-0 "> {data.projects}</p>
+        <p className="w-36 shrink-0 "> ${data.balance}</p>
       </section>
     );
   });
@@ -84,28 +84,27 @@ const User = () => {
   });
   return (
     <main className="  ">
-      <section className="flex  md:overflow-x-hidden overflow-x-scroll md:flex-wrap items-center md:justify-center">
+      <section className="flex  overflow-x-scroll app_container md:flex-wrap items-center md:justify-center">
         {renderTabs}
       </section>
-      <div className="overflow-x-scroll">
+      <div className="app_container overflow-x-scroll">
         <section
           style={{ color: " #4C4C4C" }}
-          className="flex font-manrope shrink-0   my-5 justify-between items-center text-md
+          className="flex font-manrope  my-1  md:my-5 justify-between items-center text-md
         font-bold"
         >
-          <h2 className="w-64 md:mr-0 mr-5 md:p-0 p-4">User</h2>
-          <h2 className="w-64 md:mr-0 mr-5 md:p-0 p-4 ">Status</h2>
-          <h2 className="w-2/3 md:mr-0 mr-5 md:p-0 p-4 text-center ">
-            Ratings
-          </h2>
-          <h2 className="w-64 md:mr-0 mr-5 md:p-0 p-4">Project</h2>
-          <h4 className="w-64 md:mr-0 mr-5 md:p-0 p-4 shrink-0 ">
+          <h2 className="w-36 md:mr-0 shrink-0  md:p-0 p-4">User</h2>
+          <h2 className="w-36 md:mr-0 shrink-0  md:p-0 p-4 ">Status</h2>
+          <h2 className="w-72 md:mr-0 shrink-0 md:p-0 p-4  ">Ratings</h2>
+          <h2 className="w-36 md:mr-0  shrink-0 md:p-0 p-4">Project</h2>
+          <h2 className="w-36 md:mr-0   shrink-0 md:p-0 p-4  ">
             Wallet balance
-          </h4>
+          </h2>
         </section>
         <div className=" md:mr-0 mr-5 md:p-0 p-4 mb-5">{renderAccounts}</div>
+
+        <div className=" md:mr-0 mr-5 md:p-0 p-4 mb-5">{renderAccounts}</div>
       </div>
-      <div className=" md:mr-0 mr-5 md:p-0 p-4 mb-5">{renderAccounts}</div>
     </main>
   );
 };

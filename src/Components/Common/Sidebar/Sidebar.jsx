@@ -43,7 +43,7 @@ import MailIcon from "@mui/icons-material/Mail";
 import RouteLinks from "./RouteLinks.json";
 
 const drawerWidth = 250;
-const Sidebar = () => {
+const Sidebar = ({ route }) => {
   const inactives = [
     users1,
     transaction1,
@@ -82,7 +82,9 @@ const Sidebar = () => {
     setOpen(false);
   };
   console.log(path);
+  console.log(route[2]);
   const routes = RouteLinks.map((data, index) => {
+    console.log(data.route.split("/")[2]);
     return (
       <Link
         to={data.route}
@@ -92,7 +94,9 @@ const Sidebar = () => {
       >
         <li
           className={`${
-            data.route === path
+            data.route.split("/")[2] === undefined
+              ? "text-white"
+              : data.route.split("/")[2] === route[2]
               ? "text-primary-100 font-black bg-white "
               : "text-white"
           } my-1 w-full z-10 flex p-3 items-center`}
@@ -100,7 +104,11 @@ const Sidebar = () => {
           <span>
             <img
               className="w-5 mr-2"
-              src={data.route === path ? actives[index] : inactives[index]}
+              src={
+                data.route.split("/")[2] === route[2]
+                  ? actives[index]
+                  : inactives[index]
+              }
               alt="icons"
             />
           </span>{" "}

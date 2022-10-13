@@ -14,6 +14,7 @@ import Transactions from "./Components/Dashboard/Transactions/Transactions";
 import Dispute from "./Components/Dashboard/Dispute/Dispute";
 import Update from "./Components/Dashboard/Update/Update";
 import Overview from "./Components/Dashboard/Overview/Overview";
+import NoMatch from "./Components/Common/NoMatch";
 import Login from "./Components/Form/Login";
 
 import "./App.css";
@@ -27,23 +28,32 @@ function App() {
       ? "Overview"
       : path.split("/")[2] === "admin-priviledges"
       ? "Admin"
+      : path.split("/")[2] === "allAccount"
+      ? "All Account"
       : path.split("/")[2];
   return (
     <div className="  ">
       <div className="App       ">
-        <Sidebar />
+        {path === "/login" ? "" : <Sidebar route={path.split("/")} />}
+
         <div
           style={{
             background: "#F8FDF9",
             // borderTopLeftRadius: "4rem",
             // borderBottomLeftRadius: "4rem",
           }}
-          className=" md:ml-60 scroll_container md:rounded-tl-3xl md:rounded-bl-3xl   app_container    px-3  md:px-8  "
+          className={` ${
+            path === "/login"
+              ? ""
+              : "md:ml-60 scroll_container md:rounded-tl-3xl md:rounded-bl-3xl"
+          }   overflow-x-hidden    app_container    px-3  md:px-8 `}
         >
-          <Header title={title_text} />
+          {path === "/login" ? "" : <Header title={title_text} />}
+
           <Routes>
             <Route path="/" element={<Overview />} />
-            <Route path="/admin/all account" element={<User />} />
+            <Route path="/admin" element={<Overview />} />
+            <Route path="/admin/allAccount" element={<User />} />
             <Route path="/login" element={<Login />} />
             <Route path="/admin/commission" element={<Commission />} />
             <Route path="/admin/admin-priviledges" element={<Admin />} />
@@ -53,7 +63,8 @@ function App() {
 
             <Route path="/admin/dispute" element={<Dispute />} />
             <Route path="/admin/update" element={<Update />} />
-            <Route path="/admin/:id" element={<UserDetail />} />
+            <Route path="/admin/allAccount/:id" element={<UserDetail />} />
+            <Route path="*" element={<NoMatch />} />
           </Routes>
         </div>
       </div>

@@ -54,10 +54,11 @@ export const CreateAccount = ({ open, ToggleModal }) => {
           </span>
           <h1 className="text-primary text-2xl">Create Admin</h1>
           <div className="flex flex-col">{renderInputs}</div>
+
+          <div className="flex justify-center my-3">
+            <button className="btn w-32 ">Add</button>
+          </div>
         </form>
-        <div className="flex justify-center my-3">
-          <button className="btn w-32 ">Add</button>
-        </div>
       </Modal>
     </main>
   );

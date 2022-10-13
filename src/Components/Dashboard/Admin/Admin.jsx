@@ -17,7 +17,7 @@ const Admin = () => {
   const renderUsers = users.map((data, index) => {
     return (
       <section
-        className=" my-5 mx-3 bg-white shadow-md rounded-xl p-5"
+        className=" my-5 mx-3 shrink-0 bg-white shadow-md rounded-xl p-4"
         key={index}
       >
         <div className="flex items-center justify-between">
@@ -43,11 +43,11 @@ const Admin = () => {
         <div className="">
           <p className="flex items-center">
             <span className="font-aeonik-light ">Email :</span>
-            <span className="mx-2">j.doe@extensionafrica.com</span>
+            <span className="ml-1">j.doe@extensionafrica.com</span>
           </p>
           <p className="flex items-center">
             <span className="font-aeonik-light 6 ">Phone :</span>
-            <span className="mx-2">+234 (070) 123-4567</span>
+            <span className="ml-1">+234 (070) 123-4567</span>
           </p>
         </div>
       </section>

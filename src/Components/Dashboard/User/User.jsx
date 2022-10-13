@@ -77,7 +77,7 @@ const User = () => {
           data.active
             ? "bg-normal text-white"
             : "bg-white text-normal border-primary-100  "
-        }  font-nunito  text-center md:text-xl shrink-0 text-xs font-medium  rounded-md py-2  px-3  md:w-64 md:py-5 my-5  mx-2 `}
+        }  font-nunito  text-center md:text-xl shrink-0 text-xs font-medium  rounded-md py-4  px-4  md:w-64 md:py-5 my-5  mx-2 `}
       >
         {data.name}
       </div>

@@ -48,19 +48,20 @@ const Login = () => {
   // console.log(GetValue("toke"));
   const handleLogin = async (e) => {
     e.preventDefault();
-    try {
-      console.log(values);
-      const response = await axios.post(`${BASE_URL}/auth/login`, values);
+    // try {
+    //   console.log(values);
+    //   const response = await axios.post(`${BASE_URL}/auth/login`, values);
 
-      console.log(response.status);
-      if (response?.status === 200) {
-        document.cookie = `token=${response?.data?.data.token}`;
-        navigate("/");
-        console.log(response?.data?.data.token);
-      }
-    } catch (err) {
-      console.log(err);
-    }
+    //   console.log(response.status);
+    //   if (response?.status === 200) {
+    //     document.cookie = `token=${response?.data?.data.token}`;
+    //     navigate("/");
+    //     console.log(response?.data?.data.token);
+    //   }
+    // } catch (err) {
+    //   console.log(err);
+    // }
+    navigate("/");
   };
   const renderInputs = inputs.map((data, index) => {
     return (

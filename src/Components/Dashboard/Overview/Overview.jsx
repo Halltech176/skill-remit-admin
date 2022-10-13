@@ -1,7 +1,17 @@
 import { summary, stats } from "./Statistics";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { Users } from "../../../Redux/Actions";
 import { DoughnutChart, LineChart, AreaChart } from "./Visuals";
 const Oveview = () => {
-  // const shapes =
+  const dispatch = useDispatch();
+
+  const { user, loading, error } = useSelector((state) => state.users);
+  // console.log(user?.firstName);
+  console.log(user);
+  useEffect(() => {
+    dispatch(Users());
+  }, []);
   const renderSummary = summary.map((data, index) => {
     return (
       <section
@@ -50,8 +60,11 @@ const Oveview = () => {
           <p>{data.percent}%</p>
         </div>
         <span></span>
-        <div className="w-24">
+        <div className="w-24 relative">
           <DoughnutChart percent={data.percent} />
+          <span className="absolute top-14 left-12 text-2xl -translate-x-2/4 -translate-y-2/4 ">
+            {data.percent}%
+          </span>
         </div>
       </section>
     );
@@ -84,7 +97,7 @@ const Oveview = () => {
         <h1 className="font-black text-xl text-dark font-aeonik-light mb-2">
           Statistics
         </h1>
-        <div className="flex flex-col my-2">{renderStats}</div>
+        <div className="flex  flex-col my-2">{renderStats}</div>
       </div>
     </main>
   );

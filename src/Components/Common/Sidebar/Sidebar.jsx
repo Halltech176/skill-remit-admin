@@ -81,6 +81,11 @@ const Sidebar = ({ route }) => {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  const handleLogout = () => {
+    setOpen(false);
+    navigate("/login");
+  };
   console.log(path);
   console.log(route[2]);
   const routes = RouteLinks.map((data, index) => {
@@ -193,7 +198,10 @@ const Sidebar = ({ route }) => {
           </List>
           <Divider />
 
-          <button className="bg-primary m-3 px-3 py-2 rounded-md text-white text-md font-bold">
+          <button
+            onClick={handleLogout}
+            className="bg-primary m-3 px-3 py-2 rounded-md text-white text-md font-bold"
+          >
             Logout
           </button>
         </Drawer>

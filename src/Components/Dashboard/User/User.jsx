@@ -14,11 +14,12 @@ const User = () => {
   const renderAccounts = Accounts.map((data, index) => {
     return (
       <section
+        key={index}
         onClick={() => navigate(`/admin/allAccount/${data.username}`)}
         style={{ color: "#808080" }}
         className="flex  capitalize border-b-2 py-5 text-md font-bold font-manrope my-2 md:my-5 items-center justify-between"
       >
-        <p className="flex shrink-0  items-center w-36">
+        <p className="flex mr-5 md:mr-0 shrink-0  items-center w-36">
           <span>
             {" "}
             <img src={images[index]} className="w-8" alt="user" />{" "}
@@ -26,12 +27,12 @@ const User = () => {
           <span className="mx-3">{data.username} </span>
         </p>
         <p
-          className={`${data.status} shrink-0 text-center  rounded-md w-36  py-1 px-3`}
+          className={`${data.status} mr-5 md:mr-0  shrink-0 text-center  rounded-md w-36  py-1 px-3`}
         >
           {" "}
           {data.status}
         </p>
-        <p className="flex shrink-0 items-center  w-72 justify-between">
+        <div className="flex shrink-0 mr-5 md:mr-0 items-center  w-72 justify-between">
           {data.ratings === null ? (
             ""
           ) : (
@@ -60,9 +61,9 @@ const User = () => {
             </span>
             <span> {data.percent}%</span>
           </p>
-        </p>
-        <p className="w-36 shrink-0 "> {data.projects}</p>
-        <p className="w-36 shrink-0 "> ${data.balance}</p>
+        </div>
+        <p className="w-36 mr-5  md:mr-0 shrink-0 "> {data.projects}</p>
+        <p className="w-36 mr-5 md:mr-0 shrink-0 "> ${data.balance}</p>
       </section>
     );
   });
@@ -93,17 +94,17 @@ const User = () => {
           className="flex font-manrope  my-1  md:my-5 justify-between items-center text-md
         font-bold"
         >
-          <h2 className="w-36 md:mr-0 shrink-0  md:p-0 p-4">User</h2>
-          <h2 className="w-36 md:mr-0 shrink-0  md:p-0 p-4 ">Status</h2>
-          <h2 className="w-72 md:mr-0 shrink-0 md:p-0 p-4  ">Ratings</h2>
-          <h2 className="w-36 md:mr-0  shrink-0 md:p-0 p-4">Project</h2>
-          <h2 className="w-36 md:mr-0   shrink-0 md:p-0 p-4  ">
+          <h2 className="w-36 md:mr-0 mr-5 shrink-0  md:p-0 p-4">User</h2>
+          <h2 className="w-36 md:mr-0 mr-5 shrink-0  md:p-0 p-4 ">Status</h2>
+          <h2 className="w-72 md:mr-0 mr-5 shrink-0 md:p-0 p-4  ">Ratings</h2>
+          <h2 className="w-36 md:mr-0 mr-5  shrink-0 md:p-0 p-4">Project</h2>
+          <h2 className="w-36 md:mr-0 mr-5   shrink-0 md:p-0 p-4  ">
             Wallet balance
           </h2>
         </section>
         <div className=" md:mr-0 mr-5 md:p-0 p-4 mb-5">{renderAccounts}</div>
 
-        <div className=" md:mr-0 mr-5 md:p-0 p-4 mb-5">{renderAccounts}</div>
+        <div className=" md:mr-0  md:p-0 p-4 mb-5">{renderAccounts}</div>
       </div>
     </main>
   );

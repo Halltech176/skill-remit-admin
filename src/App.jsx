@@ -17,6 +17,8 @@ import Overview from "./Components/Dashboard/Overview/Overview";
 import NoMatch from "./Components/Common/NoMatch";
 import Login from "./Components/Form/Login";
 
+import { RequireAuth } from "./Redux/Auth";
+
 import "./App.css";
 
 function App() {
@@ -51,8 +53,23 @@ function App() {
           {path === "/login" ? "" : <Header title={title_text} />}
 
           <Routes>
-            <Route path="/" element={<Overview />} />
-            <Route path="/admin" element={<Overview />} />
+            <Route
+              path="/admin"
+              element={
+                <RequireAuth>
+                  <Overview />{" "}
+                </RequireAuth>
+              }
+            />
+
+            <Route
+              path="/"
+              element={
+                <RequireAuth>
+                  <Overview />{" "}
+                </RequireAuth>
+              }
+            />
             <Route path="/admin/allAccount" element={<User />} />
             <Route path="/login" element={<Login />} />
             <Route path="/admin/commission" element={<Commission />} />

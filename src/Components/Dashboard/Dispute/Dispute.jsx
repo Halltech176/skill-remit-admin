@@ -12,7 +12,7 @@ const Dispute = () => {
           border: "1px solid #E8EBF2",
           background: "#FBFCFE",
         }}
-        className="mb-3 app_container p-3 flex rounded-md justify-between"
+        className="mb-3  relative app_container p-3 flex rounded-md justify-between"
       >
         <div className="flex items-center">
           <span>
@@ -25,11 +25,14 @@ const Dispute = () => {
         </div>
 
         <span>11:30</span>
+        <span className="absolute bg-red-400 text-xs p-1 px-2  text-white rounded-3xl bottom-3 right-4">
+          4
+        </span>
       </section>
     );
   });
   return (
-    <main className="md:flex   justify-between pt-5 md:pt-14">
+    <main className="md:flex  h-full justify-between pt-5 md:pt-14">
       <div className=" hidden  md:block  w-2/4 mr-8">
         <div className="flex  items-center bg-primary text-white p-4 rounded-md justify-between">
           <p>Dispute </p>
@@ -39,10 +42,10 @@ const Dispute = () => {
         </div>
         <div className="my-4">
           <input
-            className="p-2 rounded-md w-5/6"
+            className="p-3 text-dark rounded-md w-5/6"
             style={{
               border: " 1px  solid #E8EBF2",
-              color: "rgba(26, 35, 78, 0.4)",
+              // color: "rgba(26, 35, 78, 0.8)",
             }}
             type="text"
             placeholder="search for patient"
@@ -107,26 +110,16 @@ const Dispute = () => {
           <section className="flex  flex-col">
             <div
               style={{ background: "#F7F7FD" }}
-              className="  my-5 text-primary-100 rounded-md  max-w-sm p-3"
+              className="  my-5 text-primary-100 rounded-md md:text-base w-52 md:w-full text-sm p-2 md:max-w-sm md:p-3"
             >
               <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem
-                feugiat tempor faucibus gravida.
+                feugiat tempor
               </p>
             </div>
             <div
               style={{ background: "#F7F7FD" }}
-              className="  my-5 text-primary-100 rounded-md  max-w-sm p-3"
-            >
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem
-                feugiat tempor faucibus gravida.
-              </p>
-            </div>
-
-            <div
-              style={{ background: "#F7F7FD" }}
-              className="  my-5 text-primary-100 rounded-md  max-w-sm p-3"
+              className="  my-5 text-primary-100 rounded-md  md:text-base w-52 md:w-full text-sm p-2 md:max-w-sm md:p-3"
             >
               <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem
@@ -136,7 +129,17 @@ const Dispute = () => {
 
             <div
               style={{ background: "#F7F7FD" }}
-              className=" my-5  max-w-sm self-end   text-primary-100 rounded-md  p-3"
+              className="  my-5 text-primary-100 rounded-md  md:text-base w-52 md:w-full text-sm p-2 md:max-w-sm md:p-3"
+            >
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem
+                feugiat tempor faucibus gravida.
+              </p>
+            </div>
+
+            <div
+              style={{ background: "#F7F7FD" }}
+              className=" my-5  max-w-sm self-end   text-primary-100 rounded-md  md:text-base w-52 md:w-full text-sm p-2 md:max-w-sm md:p-3"
             >
               <p className="">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem

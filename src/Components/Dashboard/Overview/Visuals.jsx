@@ -29,30 +29,25 @@ ChartJS.register(
 
 export const DoughnutChart = ({ percent }) => {
   const data = {
-    options: {
-      legend: {
-        display: false,
-      },
-      tooltips: {
-        callbacks: {
-          label: function (tooltipItem) {
-            return tooltipItem.yLabel;
-          },
-        },
-      },
-    },
-    labels: ["orange", "Blue"],
+    label: false,
     datasets: [
       {
         label: "# of Votes",
-        radius: 20,
+        // radius: 40,
         data: [percent, 100 - percent],
         backgroundColor: ["#F9896B", "#fff"],
+
         // borderColor: ["rgba(255, 99, 132, 1)", "rgba(54, 162, 235, 1)"],
-        borderJoinStyle: "round",
-        borderRadius: 2,
-        weight: 2,
-        borderWidth: 0.1,
+        // animation.animateScale: ,
+        borderJoinStyle: "bevel",
+        cutout: 35,
+        // circumference: 360,
+        // clip: { left: 5, top: false, right: -2, bottom: 0 },
+        borderRadius: 1,
+        // spacing: "0.1px",
+        weight: 1,
+        // borderWidth: 3,
+        borderAlign: "inner",
       },
     ],
   };

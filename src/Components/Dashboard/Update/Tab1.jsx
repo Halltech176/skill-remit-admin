@@ -7,6 +7,9 @@ const Tab1 = () => {
     "Target Oriented",
     "Consistent",
   ];
+  const AddSkill = (e) => {
+    e.preventDefault();
+  };
   const renderSkills = skills.map((data, index) => {
     return (
       <div
@@ -33,7 +36,12 @@ const Tab1 = () => {
           className="bg-primary-100 p-3 text-normal font-aeonik font-semibold text-md rounded-md  md:w-96"
           type="text"
         />
-        <button className="btn px-10 w-32 my-3 mx-5 md:mx-48">Add</button>
+        <button
+          onClick={AddSkill}
+          className="btn px-10 w-32 my-3 mx-5 md:mx-48"
+        >
+          Add
+        </button>
       </form>
       <div className="flex items-center flex-wrap my-10">{renderSkills}</div>
     </>

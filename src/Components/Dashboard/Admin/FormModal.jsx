@@ -26,7 +26,7 @@ export const CreateAccount = ({ open, ToggleModal }) => {
       <section className="my-5">
         <div className="relative">
           <input
-            className="border-light bg-info-100 px-3 pb-2 pt-8 text-xl w-full rounded-md"
+            className="border-light bg-info-100 px-3 pb-2 pt-8 text-md md:text-xl w-full rounded-md"
             type={data.type}
           />
           <span className="text-normal absolute top-2 left-3 text-primary">
@@ -42,7 +42,7 @@ export const CreateAccount = ({ open, ToggleModal }) => {
       <Modal
         isOpen={open}
         onRequestClose={ToggleModal}
-        className=" absolute h-4/12 relative shadow-md app_container  overflow-scroll bg-white border-2  rounded-xl p-14 md:w-2/4 w-full top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4"
+        className=" absolute md:h-4/12 relative shadow-md app_container  overflow-y-scroll bg-white border-2  rounded-xl p-14 md:w-2/4 w-full md:top-2/4   top-12 left-0 right-0 md:left-2/4 md:-translate-y-2/4 md:-translate-x-2/4"
       >
         <form className="    ">
           <span onClick={ToggleModal}>
@@ -106,7 +106,7 @@ export const EditAccount = ({ open, ToggleModal }) => {
         isOpen={open}
         onRequestClose={ToggleModal}
         contentLabel="Example Modal"
-        className=" absolute h-4/12 relative shadow-md app_container  overflow-scroll bg-white border-2  rounded-xl p-14 md:w-2/4 w-full top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4"
+        className=" absolute md:h-4/12 relative shadow-md app_container  overflow-y-scroll bg-white border-2  rounded-xl p-14 md:w-2/4 w-full md:top-2/4   top-12 left-0 right-0 md:left-2/4 bottom-4 py-5 md:-translate-y-2/4 md:-translate-x-2/4"
       >
         <form className=" my-4   ">
           <span onClick={ToggleModal}>

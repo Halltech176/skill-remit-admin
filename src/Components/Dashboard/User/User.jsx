@@ -7,11 +7,23 @@ import person3 from "../../../assets/person3.png";
 import person4 from "../../../assets/person4.png";
 import arrowUp from "../../../assets/arrow-up.png";
 import arrowDown from "../../../assets/arrow-down.png";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { Users } from "../../../Redux/Actions";
+import { Loader1 } from "../../Common/Loader";
 
 const User = () => {
   const navigate = useNavigate();
-  const images = [person1, person3, person3, person4];
-  const renderAccounts = Accounts.map((data, index) => {
+  const dispatch = useDispatch();
+  const user_credentials = useSelector((state) => state.users?.user);
+  const { loading } = useSelector((state) => state.users);
+  console.log(user_credentials?.docs);
+
+  useEffect(() => {
+    dispatch(Users());
+  }, []);
+
+  const renderAccounts = user_credentials?.docs?.map((data, index) => {
     return (
       <section
         key={index}
@@ -19,12 +31,18 @@ const User = () => {
         style={{ color: "#808080" }}
         className="flex  capitalize border-b-2 py-5 text-md font-bold font-manrope my-2 md:my-5 items-center justify-between"
       >
-        <p className="flex mr-5 md:mr-0 shrink-0  items-center w-36">
+        <p className="flex mr-5 md:mr-0 shrink-0  items-center w-48">
           <span>
             {" "}
-            <img src={images[index]} className="w-8" alt="user" />{" "}
+            <img
+              src={index % 2 === 0 ? person1 : person2}
+              className="w-8"
+              alt="user"
+            />{" "}
           </span>
-          <span className="mx-3">{data.username} </span>
+          <span className="mx-3">
+            {data.firstName} {data.lastName}
+          </span>
         </p>
         <p
           className={`${data.status} mr-5 md:mr-0  shrink-0 text-center  rounded-md w-36  py-1 px-3`}
@@ -40,7 +58,7 @@ const User = () => {
               className="w-36"
               max={100}
               min={0}
-              value={data.ratings}
+              value={30}
               high={75}
               low={25}
               optimum={50}
@@ -48,7 +66,7 @@ const User = () => {
           )}
           <span className="mx-2">
             {" "}
-            {data.ratings === null
+            {data.ratings === undefined
               ? "no ratings available"
               : data.ratings + "%"}{" "}
           </span>
@@ -59,11 +77,11 @@ const User = () => {
               {" "}
               <img src={data.size === "increase" ? arrowUp : arrowDown} />{" "}
             </span>
-            <span> {data.percent}%</span>
+            <span> 30%</span>
           </p>
         </div>
-        <p className="w-36 mr-5  md:mr-0 shrink-0 "> {data.projects}</p>
-        <p className="w-36 mr-5 md:mr-0 shrink-0 "> ${data.balance}</p>
+        <p className="w-36 mr-5  md:mr-0 shrink-0 "> 200</p>
+        <p className="w-36 mr-5 md:mr-0 shrink-0 "> $500,000</p>
       </section>
     );
   });
@@ -84,29 +102,41 @@ const User = () => {
     );
   });
   return (
-    <main className="  ">
-      <section className="flex  overflow-x-scroll app_container md:flex-wrap items-center md:justify-center">
-        {renderTabs}
-      </section>
-      <div className="app_container overflow-x-scroll">
-        <section
-          style={{ color: " #4C4C4C" }}
-          className="flex font-manrope  my-1  md:my-5 justify-between items-center text-md
+    <>
+      {loading ? (
+        <Loader1 />
+      ) : (
+        <main className="  ">
+          <section className="flex  overflow-x-scroll app_container md:flex-wrap items-center md:justify-center">
+            {renderTabs}
+          </section>
+          <div className="app_container overflow-x-scroll">
+            <section
+              style={{ color: " #4C4C4C" }}
+              className="flex font-manrope  my-1  md:my-5 justify-between items-center text-md
         font-bold"
-        >
-          <h2 className="w-36 md:mr-0 mr-5 shrink-0  md:p-0 p-4">User</h2>
-          <h2 className="w-36 md:mr-0 mr-5 shrink-0  md:p-0 p-4 ">Status</h2>
-          <h2 className="w-72 md:mr-0 mr-5 shrink-0 md:p-0 p-4  ">Ratings</h2>
-          <h2 className="w-36 md:mr-0 mr-5  shrink-0 md:p-0 p-4">Project</h2>
-          <h2 className="w-36 md:mr-0 mr-5   shrink-0 md:p-0 p-4  ">
-            Wallet balance
-          </h2>
-        </section>
-        <div className=" md:mr-0 mr-5 md:p-0 p-4 mb-5">{renderAccounts}</div>
-
-        <div className=" md:mr-0  md:p-0 p-4 mb-5">{renderAccounts}</div>
-      </div>
-    </main>
+            >
+              <h2 className="w-48 md:mr-0 mr-5 shrink-0  md:p-0 p-4">User</h2>
+              <h2 className="w-36 text-center md:mr-0 mr-5 shrink-0  md:p-0 p-4 ">
+                Status
+              </h2>
+              <h2 className="w-72 md:mr-0 mr-5 shrink-0 md:p-0 p-4  ">
+                Ratings
+              </h2>
+              <h2 className="w-36 md:mr-0 mr-5  shrink-0 md:p-0 p-4">
+                Project
+              </h2>
+              <h2 className="w-36 md:mr-0 mr-5   shrink-0 md:p-0 p-4  ">
+                Wallet balance
+              </h2>
+            </section>
+            <div className=" md:mr-0 mr-5 md:p-0 p-4 mb-5">
+              {renderAccounts}
+            </div>
+          </div>
+        </main>
+      )}
+    </>
   );
 };
 export default User;

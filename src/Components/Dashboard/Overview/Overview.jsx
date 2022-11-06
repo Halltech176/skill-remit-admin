@@ -1,16 +1,29 @@
 import { summary, stats } from "./Statistics";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { Users } from "../../../Redux/Actions";
+import { Users, SuspendedUsers, ActiveUsers } from "../../../Redux/Actions";
 import { DoughnutChart, LineChart, AreaChart } from "./Visuals";
 const Oveview = () => {
   const dispatch = useDispatch();
 
   const { user, loading, error } = useSelector((state) => state.users);
-  // console.log(user?.firstName);
-  console.log(user);
+  const actives = useSelector((state) => state.actives);
+  const suspended = useSelector((state) => state.suspended);
+  const selector = useSelector((state) => state);
+  const values = [
+    actives?.user?.totalDocs,
+    user?.totalDocs,
+    user?.totalDocs,
+    user?.totalDocs,
+  ];
+
+  console.log(selector?.login?.login);
+  console.log(selector?.users?.user);
+
   useEffect(() => {
     dispatch(Users());
+    dispatch(SuspendedUsers());
+    dispatch(ActiveUsers());
   }, []);
   const renderSummary = summary.map((data, index) => {
     return (
@@ -23,7 +36,7 @@ const Oveview = () => {
             {data.title}
           </p>
           <p className="font-aeonik-light  tracking-widest py-1">
-            {data.value}
+            {values[index]}
           </p>
         </div>
 

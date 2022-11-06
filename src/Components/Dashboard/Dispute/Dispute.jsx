@@ -7,6 +7,7 @@ const Dispute = () => {
   const renderDisputes = arr.map((data, index) => {
     return (
       <section
+        key={index}
         style={{
           cursor: "pointer",
           border: "1px solid #E8EBF2",

@@ -1,15 +1,15 @@
 export const sendTo = [
   {
     label: "All Member",
-    value: "all member",
+    value: "admin" || "user" || "vendor",
   },
   {
     label: "All User",
-    value: "all user",
+    value: "user",
   },
   {
     label: "All Vendor",
-    value: "all vendor",
+    value: "vendor",
   },
 ];
 export const sendAs = [
@@ -23,6 +23,6 @@ export const sendAs = [
   },
   {
     label: "Notifications",
-    value: "notifications",
+    value: "notification",
   },
 ];

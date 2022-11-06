@@ -1,9 +1,19 @@
 import { useNavigate } from "react-router";
 import { useState } from "react";
 import { BASE_URL } from "../../../Api";
+import { Login as SignIn } from "../../Redux/Actions";
+import { useSelector, useDispatch } from "react-redux";
+import { Loader2 } from "../../Components/Common/Loader";
+import { ErrorNotification, SuccessNotification } from "../Common/Toastify";
+import { HandleError } from "../Common/HandleError";
+import { ToastContainer, Zoom } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 const Login = () => {
   console.log(BASE_URL);
+  const { loading, login, error } = useSelector((state) => state.login);
+  const dispatch = useDispatch();
+  console.log(loading);
   const initial_values = {
     username: "admin@SkillRemit.com",
     password: "Admin@1234",
@@ -28,40 +38,27 @@ const Login = () => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-  // const GetValue = (key) => {
-  //   const decode = document.cookie.split(" ").join("").trim().split(";");
-  //   const mp = decode.map((data, index) => {
-  //     return data.split("=");
-  //   });
-
-  //   // console.log(mp);
-
-  //   const fd = mp.flat().findIndex((data, index) => {
-  //     return data === key;
-  //   });
-  //   if (fd === -1) {
-  //     return undefined;
-  //   }
-  //   console.log(fd);
-  //   return mp.flat()[fd + 1];
-  // };
-  // console.log(GetValue("toke"));
   const handleLogin = async (e) => {
     e.preventDefault();
-    // try {
-    //   console.log(values);
-    //   const response = await axios.post(`${BASE_URL}/auth/login`, values);
+    try {
+      const response = await dispatch(SignIn(values)).unwrap();
+      console.log(response);
 
-    //   console.log(response.status);
-    //   if (response?.status === 200) {
-    //     document.cookie = `token=${response?.data?.data.token}`;
-    //     navigate("/");
-    //     console.log(response?.data?.data.token);
-    //   }
-    // } catch (err) {
-    //   console.log(err);
-    // }
-    navigate("/");
+      if (response?.status === 200) {
+        window.localStorage.setItem(
+          "token",
+          JSON.stringify(response?.data?.data.token)
+        );
+
+        console.log(response.data);
+        SuccessNotification(response.data.message);
+        navigate("/");
+      }
+    } catch (err) {
+      HandleError(err);
+
+      console.log(err?.response?.data?.message);
+    }
   };
   const renderInputs = inputs.map((data, index) => {
     return (
@@ -81,22 +78,36 @@ const Login = () => {
       </section>
     );
   });
-  return (
-    <main className=" md:w-96 w-full py-10 mx-auto  h-screen">
-      <form className="    ">
-        <h1 className="text-primary font-bold text-4xl">Login</h1>
-        <div className="flex flex-col my-6">{renderInputs}</div>
 
-        <div className="flex justify-center my-3">
-          <button
-            onClick={handleLogin}
-            className="bg-normal p-3 rounded-md text-white w-32 "
-          >
-            Sign In
-          </button>
-        </div>
-      </form>
-    </main>
+  const ResetPasswords = () => {
+    console.log("forgotten password");
+    navigate("/email-verification");
+  };
+  return (
+    <>
+      {loading ? (
+        <Loader2 />
+      ) : (
+        <main className=" md:w-96 w-full py-10 mx-auto  h-screen">
+          <ToastContainer transition={Zoom} autoClose={800} />
+          <form className="    ">
+            <h1 className="text-primary font-bold text-4xl">Login</h1>
+            <div className="flex flex-col mt-6">{renderInputs}</div>
+            <p onClick={ResetPasswords} className="text-dark pointer text-end ">
+              Forgotten Password?
+            </p>
+            <div className="flex justify-center my-3">
+              <button
+                onClick={handleLogin}
+                className="bg-normal p-3 rounded-md text-white w-32 "
+              >
+                Sign In
+              </button>
+            </div>
+          </form>
+        </main>
+      )}
+    </>
   );
 };
 export default Login;

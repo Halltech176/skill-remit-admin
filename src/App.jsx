@@ -16,6 +16,8 @@ import Update from "./Components/Dashboard/Update/Update";
 import Overview from "./Components/Dashboard/Overview/Overview";
 import NoMatch from "./Components/Common/NoMatch";
 import Login from "./Components/Form/Login";
+import EmailVerification from "./Components/Form/EmailVerification";
+import PasswordReset from "./Components/Form/PasswordReset";
 
 import { RequireAuth } from "./Redux/Auth";
 
@@ -25,6 +27,13 @@ function App() {
   const location = useLocation();
   const path = location.pathname;
   console.log(path.split("/"));
+  const exemptedPaths = ["/login", "/email-verification", "/password-reset"];
+  const checkPath = exemptedPaths.find((data, index) => {
+    console.log(data);
+    return data === path;
+  });
+  console.log("present path", path);
+  console.log("path", checkPath);
   const title_text =
     path === "/"
       ? "Overview"
@@ -34,56 +43,62 @@ function App() {
       ? "All Account"
       : path.split("/")[2];
   return (
-    <div className="  ">
-      <div className="App       ">
-        {path === "/login" ? "" : <Sidebar route={path.split("/")} />}
+    <div className="App       ">
+      {checkPath ? "" : <Sidebar route={path.split("/")} />}
 
-        <div
-          style={{
-            background: "#F8FDF9",
-            // borderTopLeftRadius: "4rem",
-            // borderBottomLeftRadius: "4rem",
-          }}
-          className={` ${
-            path === "/login"
-              ? ""
-              : "md:ml-60 scroll_container md:rounded-tl-3xl md:rounded-bl-3xl"
-          }   overflow-x-hidden    app_container    px-3  md:px-8 `}
-        >
-          {path === "/login" ? "" : <Header title={title_text} />}
+      <div
+        style={{
+          background: "#F8FDF9",
+        }}
+        className={` ${
+          checkPath
+            ? ""
+            : "md:ml-60 scroll_container md:rounded-tl-3xl md:rounded-bl-3xl"
+        }   overflow-x-hidden    app_container    px-3  md:px-8 `}
+      >
+        {checkPath ? "" : <Header title={title_text} />}
 
-          <Routes>
-            <Route
-              path="/admin"
-              element={
-                <RequireAuth>
-                  <Overview />{" "}
-                </RequireAuth>
-              }
-            />
+        <Routes>
+          <Route
+            path="/admin"
+            element={
+              <RequireAuth>
+                <Overview />{" "}
+              </RequireAuth>
+            }
+          />
 
-            <Route
-              path="/"
-              element={
-                <RequireAuth>
-                  <Overview />{" "}
-                </RequireAuth>
-              }
-            />
-            <Route path="/admin/allAccount" element={<User />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/admin/commission" element={<Commission />} />
-            <Route path="/admin/admin-priviledges" element={<Admin />} />
-            <Route path="/admin/settings" element={<Settings />} />
-            <Route path="/admin/broadcast" element={<Broadcast />} />
-            <Route path="/admin/transactions" element={<Transactions />} />
+          <Route
+            path="/"
+            element={
+              <RequireAuth>
+                <Overview />{" "}
+              </RequireAuth>
+            }
+          />
+          <Route path="/admin/allAccount" element={<User />} />
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/admin/commission"
+            element={
+              <RequireAuth>
+                {" "}
+                <Commission />
+              </RequireAuth>
+            }
+          />
+          <Route path="/admin/admin-priviledges" element={<Admin />} />
+          <Route path="/admin/settings" element={<Settings />} />
+          <Route path="/admin/broadcast" element={<Broadcast />} />
+          <Route path="/admin/transactions" element={<Transactions />} />
 
-            <Route path="/admin/dispute" element={<Dispute />} />
-            <Route path="/admin/update" element={<Update />} />
-            <Route path="/admin/allAccount/:id" element={<UserDetail />} />
-            <Route path="*" element={<NoMatch />} />
-          </Routes>
-        </div>
+          <Route path="/admin/dispute" element={<Dispute />} />
+          <Route path="/admin/update" element={<Update />} />
+          <Route path="/email-verification" element={<EmailVerification />} />
+          <Route path="/password-reset" element={<PasswordReset />} />
+          <Route path="/admin/allAccount/:id" element={<UserDetail />} />
+          <Route path="*" element={<NoMatch />} />
+        </Routes>
       </div>
     </div>
   );

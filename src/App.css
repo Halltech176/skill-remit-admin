@@ -113,6 +113,7 @@ input::focus {
 .text-neutral {
   color: #6e7191;
 }
+
 .btn {
   background: linear-gradient(278.21deg, #130160 1.66%, #3915d1 96.78%);
   color: #ffffff;

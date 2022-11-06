@@ -29,6 +29,8 @@
     "react-router": "^6.4.1",
     "react-router-dom": "^6.4.1",
     "react-slick": "^0.29.0",
+    "react-spinners": "^0.13.6",
+    "react-toastify": "^9.0.8",
     "recharts": "^2.1.14",
     "slick-carousel": "^1.8.1"
   },

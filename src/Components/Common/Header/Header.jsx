@@ -2,12 +2,14 @@ import user_image from "../../../assets/user.png";
 import search_sm from "../../../assets/search_sm.png";
 import bell from "../../../assets/bell.png";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
 import { useEffect } from "react";
 import { User } from "../../../Redux/Actions";
 const Header = ({ title }) => {
   const dispatch = useDispatch();
   const { loading, user, error } = useSelector((state) => state.user);
   const selector = useSelector((state) => state.user);
+  const navigate = useNavigate();
   console.log(user?.firstName);
   console.log(selector);
   useEffect(() => {
@@ -16,7 +18,7 @@ const Header = ({ title }) => {
   return (
     <>
       {loading ? (
-        <h1>loading... </h1>
+        ""
       ) : (
         <header className="md:flex md:py-10 md:pt-5 pt-20 justify-between items-center">
           <div className="flex justify-between">
@@ -41,10 +43,14 @@ const Header = ({ title }) => {
               <img src={bell} alt="bell" />
             </span>
             {/* <input type="search" /> */}
-            <span className="mx-2">
+            <span onClick={() => navigate("/admin/settings")} className="mx-2">
               <img src={user_image} className="w-12" alt="user" />
             </span>
-            <h3 style={{ color: "#0D0140" }} className="font-aeonik-light ml-1">
+            <h3
+              onClick={() => navigate("/admin/settings")}
+              style={{ color: "#0D0140" }}
+              className="font-aeonik-light ml-1"
+            >
               {user?.firstName} {user?.lastName}
             </h3>
           </div>

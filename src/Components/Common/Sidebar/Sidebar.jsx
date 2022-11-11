@@ -84,7 +84,13 @@ const Sidebar = ({ route }) => {
 
   const handleLogout = () => {
     setOpen(false);
+    console.log("we are already logging out");
+    localStorage.clear();
     navigate("/login");
+  };
+
+  const Logout = () => {
+    console.log("we are already logging out");
   };
   console.log(path);
   console.log(route[2]);
@@ -98,6 +104,7 @@ const Sidebar = ({ route }) => {
         // style={{ color: "white" }}
       >
         <li
+          onClick={data.name === "Logout" ? handleLogout : ""}
           className={`${
             data.route.split("/")[2] === undefined
               ? "text-white"

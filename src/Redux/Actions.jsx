@@ -27,6 +27,21 @@ export const User = createAsyncThunk("user", async () => {
   }
 });
 
+export const ClickedUser = createAsyncThunk("clickeduser", async () => {
+  try {
+    const user_id = JSON.parse(localStorage.getItem("ACTIVE_USER_ID"));
+    const response = await axios.get(
+      `${BASE_URL}//data/user/${user_id}`,
+      HEADER
+    );
+    // /profile?populate=wallet&populate=bankAccounts&populate=avatar&populate=wallet&populate=wallet.histories
+    return response.data.data;
+  } catch (err) {
+    throw err;
+    // console.log(err);
+  }
+});
+
 export const Users = createAsyncThunk("users", async (value) => {
   try {
     const response = await axios.get(
@@ -125,7 +140,10 @@ export const SiteData = createAsyncThunk("sitedata", async () => {
 
 export const FetchChat = createAsyncThunk("chat", async () => {
   try {
-    const response = await axios.get(`${BASE_URL}chat?populate=users`, HEADER);
+    const response = await axios.get(
+      `${BASE_URL}/chat?populate=users.avatar`,
+      HEADER
+    );
     return response.data.data;
   } catch (err) {
     console.log(err);

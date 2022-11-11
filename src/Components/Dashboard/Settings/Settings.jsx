@@ -1,4 +1,5 @@
 import user_img from "../../../assets/user1.png";
+
 import { DetailsInput, Passwords } from "./Inputs";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
@@ -7,6 +8,7 @@ import TabPanel from "@mui/lab/TabPanel";
 import Tabs from "@mui/material/Tabs";
 import { useState, useEffect } from "react";
 import { User } from "../../../Redux/Actions";
+import OtherSettings from "./OtherSettings";
 import { useSelector, useDispatch } from "react-redux";
 import { BASE_URL, HEADER } from "../../../../Api";
 import { HandleError } from "../../../Components/Common/HandleError";
@@ -24,7 +26,7 @@ const Settings = () => {
   useEffect(() => {
     dispatch(User());
   }, []);
-  console.log(user);
+
   const initialState = {
     email: user?.email,
     firstName: user?.firstName,
@@ -172,7 +174,7 @@ const Settings = () => {
               </main>
             </TabPanel>
             <TabPanel value="2">
-              <h1>Account settings</h1>
+              <OtherSettings />
             </TabPanel>
           </TabContext>
         </main>

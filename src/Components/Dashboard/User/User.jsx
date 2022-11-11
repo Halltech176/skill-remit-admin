@@ -7,27 +7,51 @@ import person3 from "../../../assets/person3.png";
 import person4 from "../../../assets/person4.png";
 import arrowUp from "../../../assets/arrow-up.png";
 import arrowDown from "../../../assets/arrow-down.png";
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { Users } from "../../../Redux/Actions";
+import { Users, ClickedUser } from "../../../Redux/Actions";
 import { Loader1 } from "../../Common/Loader";
+import Pagination from "@mui/material/Pagination";
+import PaginationItem from "@mui/material/PaginationItem";
+import Stack from "@mui/material/Stack";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 const User = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user_credentials = useSelector((state) => state.users?.user);
   const { loading } = useSelector((state) => state.users);
-  console.log(user_credentials?.docs);
 
   useEffect(() => {
     dispatch(Users());
   }, []);
+  const [page, setPage] = useState("1");
+  const handlePaginate = (e, value) => {
+    setPage(value);
+    dispatch(Users({ page: value }));
+  };
+
+  const GetUserDetails = (id) => {
+    console.log("Getting user details");
+    window.localStorage.setItem("ACTIVE_USER_ID", JSON.stringify(id));
+    dispatch(Users());
+    dispatch(ClickedUser());
+    const clickedUser = user_credentials?.docs.find((data) => {
+      return data._id === id;
+    });
+    console.log(clickedUser);
+    console.log(id);
+    navigate(`/admin/allAccount/${clickedUser?._id}`);
+  };
 
   const renderAccounts = user_credentials?.docs?.map((data, index) => {
     return (
       <section
         key={index}
-        onClick={() => navigate(`/admin/allAccount/${data.username}`)}
+        onClick={() => GetUserDetails(data?._id)}
+        // onClick={() => navigate(`/admin/allAccount/${data.username}`)}
         style={{ color: "#808080" }}
         className="flex  capitalize border-b-2 py-5 text-md font-bold font-manrope my-2 md:my-5 items-center justify-between"
       >
@@ -132,6 +156,23 @@ const User = () => {
             </section>
             <div className=" md:mr-0 mr-5 md:p-0 p-4 mb-5">
               {renderAccounts}
+            </div>
+            <div className="flex justify-center my-5 items-center">
+              <Stack spacing={2}>
+                <Pagination
+                  count={user_credentials?.totalPages}
+                  onChange={handlePaginate}
+                  renderItem={(item) => (
+                    <PaginationItem
+                      components={{
+                        previous: ArrowBackIcon,
+                        next: ArrowForwardIcon,
+                      }}
+                      {...item}
+                    />
+                  )}
+                />
+              </Stack>
             </div>
           </div>
         </main>

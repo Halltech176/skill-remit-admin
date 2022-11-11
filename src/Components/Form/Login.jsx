@@ -44,20 +44,36 @@ const Login = () => {
       const response = await dispatch(SignIn(values)).unwrap();
       console.log(response);
 
-      if (response?.status === 200) {
+      if (
+        (response?.status === 200 &&
+          response?.data?.data?.user?.type === "super") ||
+        response?.data?.data?.user?.type === "admin"
+      ) {
         window.localStorage.setItem(
           "token",
           JSON.stringify(response?.data?.data.token)
         );
 
-        console.log(response.data);
+        console.log(response.data.data.user.type);
         SuccessNotification(response.data.message);
-        navigate("/");
+        setTimeout(() => {
+          navigate("/");
+        }, 2000);
+      } else if (
+        response?.data?.data?.user?.type !== "super" &&
+        response?.data?.data?.user?.type !== "admin"
+      ) {
+        console.log(response.data.data.user.type);
+        throw "not super";
       }
     } catch (err) {
-      HandleError(err);
+      if (err === "not super") {
+        ErrorNotification("Dashboard Not accessible for this user");
+      } else {
+        HandleError(err);
+      }
 
-      console.log(err?.response?.data?.message);
+      console.log(err);
     }
   };
   const renderInputs = inputs.map((data, index) => {

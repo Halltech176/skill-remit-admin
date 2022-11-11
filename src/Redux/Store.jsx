@@ -13,6 +13,8 @@ import {
 import { LoginReducer } from "./Slices/LoginSlice";
 import { TransactionsReducer } from "./Slices/TransactionsSlice";
 import { SiteDataReducer } from "./Slices/SiteSlice";
+import { FetchChatReducer } from "./Slices/ChatSlice";
+import { ClickedUserReducer } from "./Slices/ClickedUser";
 const reducers = combineReducers({
   user: UserReducer,
   users: UsersReducer,
@@ -23,6 +25,8 @@ const reducers = combineReducers({
   editadmin: EditAdminReducer,
   createadmin: CreateAdminReducer,
   sitedata: SiteDataReducer,
+  chats: FetchChatReducer,
+  clickeduser: ClickedUserReducer,
 });
 
 const Store = configureStore({

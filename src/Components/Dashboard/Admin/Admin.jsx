@@ -49,7 +49,7 @@ const Admin = () => {
     setPage(value);
     dispatch(Users({ page: value }));
   };
-  console.log(page);
+
   const renderUsers = user?.docs
     ?.filter((data, index) => {
       return data?.type === "admin";
@@ -83,7 +83,7 @@ const Admin = () => {
             className=" w-full h-0.5 block my-10 "
           ></span>
           <div className="">
-            <p className="flex items-center">
+            <p className="flex shrink-0 items-center">
               <span className="font-aeonik-light ">Email :</span>
               <span className="ml-1">{data?.email}</span>
             </p>

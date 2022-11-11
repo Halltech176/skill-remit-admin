@@ -42,9 +42,9 @@ export const CreateAccount = ({ open, ToggleModal, setIsOpen, setIsOpen2 }) => {
   console.log(user);
   Modal.setAppElement("#root");
   const initialState = {
-    email: "dev",
-    firstName: "ola",
-    lastName: "ayo",
+    email: "olayemi.ayomide642@gmail.com",
+    firstName: "olajide",
+    lastName: "ayomide",
     password: "pass111",
   };
   const [values, setValues] = useState(initialState);
@@ -60,8 +60,9 @@ export const CreateAccount = ({ open, ToggleModal, setIsOpen, setIsOpen2 }) => {
       const response = await dispatch(CreateAdmin(values)).unwrap();
       console.log(response.data);
       if (response.status === 200) {
-        const response2 = await axios.get(
-          `${BASE_URL}//auth/request-email-verification?email=${response?.data?.data?.email}`
+        const response2 = await axios.post(
+          `${BASE_URL}//auth/request-email-verification`,
+          { email: response?.data?.data?.email }
         );
         console.log(response2);
         SuccessNotification(response2.data.message);

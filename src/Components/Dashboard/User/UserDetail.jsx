@@ -7,10 +7,21 @@ import star2 from "../../../assets/Star-1.png";
 import star3 from "../../../assets/Star-2.png";
 import star4 from "../../../assets/Star-3.png";
 import star5 from "../../../assets/Star-4.png";
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { Users, ClickedUser } from "../../../Redux/Actions";
+import { Loader1 } from "../../Common/Loader";
 
 const UserDetail = () => {
   const navigate = useNavigate();
   const reviews = new Array(4).fill(0);
+  const selector = useSelector((state) => state?.clickeduser);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(ClickedUser());
+  }, []);
+  console.log(selector);
 
   const starRatings = [star1, star2, star3, star4, star5];
   const skills = [
@@ -99,52 +110,60 @@ const UserDetail = () => {
   });
 
   return (
-    <main className="">
-      <div className="md:flex block justify-between items-center">
-        <div className="image">
-          <span>
-            <img className=" w-56 md:w-72" src={user} alt="user" />
-          </span>
-        </div>
-        <div className="md:w-2/3 w-full pl-4  ">
-          <div className="buttons justify-center mt-5 flex items-center">
-            <button className="bg-info-normal flex  items-center justify-center text-white w-full md:w-44 text-md md:text-xl rounded-md p-2 md:p-4 mx-4 ">
-              Active{" "}
-              <span className="mx-3">
-                <img src={toggle_arrow} alt="arrow" />
+    <>
+      {selector?.loading ? (
+        <Loader1 />
+      ) : (
+        <main className="">
+          <div className="md:flex block justify-between items-center">
+            <div className="image">
+              <span>
+                <img className=" w-56 md:w-72" src={user} alt="user" />
               </span>
-            </button>
-            <button
-              onClick={() => navigate("/admin/dispute")}
-              className="bg-normal text-white w-full md:w-44 text-md md:text-xl rounded-md p-2 md:p-4 mx-4 "
-            >
-              Message
-            </button>
-          </div>
-          <div className="flex my-14">
-            <div className="details ">
-              <p className="md:text-3xl text-md  my-3 flex items-center text-primary font-inter">
-                <span className="font-extralight">Full Name:</span>
-                <span className="font-bold mx-3">Ajani Ben Dara</span>
-              </p>
-              <p className="md:text-3xl text-md  my-3 flex items-center text-primary font-inter">
-                <span className="font-extralight">Phone Number:</span>
-                <span className="font-bold mx-3">08123456789</span>
-              </p>
-              <div className="md:text-3xl text-md  my-3 flex flex-col   font-inter">
-                <p className="font-extralight text-primary">Skills:</p>
-                <div className="flex flex-wrap my-3">{renderSkills}</div>
+            </div>
+            <div className="md:w-2/3 w-full pl-4  ">
+              <div className="buttons justify-center mt-5 flex items-center">
+                <button className="bg-info-normal flex  items-center justify-center text-white w-full md:w-44 text-md md:text-xl rounded-md p-2 md:p-4 mx-4 ">
+                  {selector?.user?.status?.toUpperCase()}
+                  <span className="mx-3">
+                    <img src={toggle_arrow} alt="arrow" />
+                  </span>
+                </button>
+                <button
+                  onClick={() => navigate("/admin/dispute")}
+                  className="bg-normal text-white w-full md:w-44 text-md md:text-xl rounded-md p-2 md:p-4 mx-4 "
+                >
+                  MESSAGE
+                </button>
+              </div>
+              <div className="flex my-14">
+                <div className="details ">
+                  <p className="md:text-3xl text-md  my-3 flex items-center text-primary font-inter">
+                    <span className="font-extralight">Full Name:</span>
+                    <span className="font-bold mx-3">
+                      {selector?.user?.firstName} {selector?.user?.lastName}
+                    </span>
+                  </p>
+                  <p className="md:text-3xl text-md  my-3 flex items-center text-primary font-inter">
+                    <span className="font-extralight">Phone Number:</span>
+                    <span className="font-bold mx-3">08123456789</span>
+                  </p>
+                  <div className="md:text-3xl text-md  my-3 flex flex-col   font-inter">
+                    <p className="font-extralight text-primary">Skills:</p>
+                    <div className="flex flex-wrap my-3">{renderSkills}</div>
+                  </div>
+                </div>
+                <div className="flex my-5">{renderRatings}</div>
               </div>
             </div>
-            <div className="flex my-5">{renderRatings}</div>
           </div>
-        </div>
-      </div>
-      <div className="flex md:justify-between justify-center flex-wrap md:flex-nowrap md:mb-10">
-        {renderStats}
-      </div>
-      <div className="flex flex-wrap  md:mb-10">{renderReviews}</div>
-    </main>
+          <div className="flex md:justify-between justify-center flex-wrap md:flex-nowrap md:mb-10">
+            {renderStats}
+          </div>
+          <div className="flex flex-wrap  md:mb-10">{renderReviews}</div>
+        </main>
+      )}
+    </>
   );
 };
 export default UserDetail;

@@ -2,8 +2,17 @@ import arrowRight from "../../../assets/arrow-right.png";
 import user_vendor from "../../../assets/user_vendor.png";
 import send from "../../../assets/send.png";
 import copy from "../../../assets/copy.png";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { FetchChat } from "../../../Redux/Actions";
 const Dispute = () => {
   const arr = new Array(6).fill(0);
+  const dispatch = useDispatch();
+  const selector = useSelector((state) => state);
+  useEffect(() => {
+    dispatch(FetchChat());
+  }, []);
+  console.log(selector?.chats);
   const renderDisputes = arr.map((data, index) => {
     return (
       <section

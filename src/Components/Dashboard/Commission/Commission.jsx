@@ -15,26 +15,13 @@ const Commission = () => {
   const UpdateCommission = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put(
-        `${BASE_URL}//settings`,
-        {
-          referralBonusPercent: 50,
-          minimumBonusPayout: 3000,
-          bankName: "UBA",
-          accountName: "Viscio",
-          accountNumber: "2344",
-          bankCode: "081",
-          chargePercent: 10,
-          deliveryFee: 20,
-        },
-        HEADER
-      );
+      const response = await axios.put(`${BASE_URL}//settings`, {}, HEADER);
       console.log(response);
     } catch (err) {
       console.log(err);
     }
     e.preventDefault();
-    console.log("commission updated");
+    // console.log("commission updated");
   };
 
   console.log(sitedata?.sitedata);

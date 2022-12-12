@@ -2,40 +2,44 @@ import { useNavigate } from "react-router";
 import user from "../../../assets/user1.png";
 import user_review from "../../../assets/user_review.png";
 import toggle_arrow from "../../../assets/toggle_arrow.png";
+import StarRatings from "./StarRatings";
 import star1 from "../../../assets/Star.png";
-import star2 from "../../../assets/Star-1.png";
-import star3 from "../../../assets/Star-2.png";
+
 import star4 from "../../../assets/Star-3.png";
-import star5 from "../../../assets/Star-4.png";
+
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { Users, ClickedUser } from "../../../Redux/Actions";
+import { Users, ClickedUser, GetReview } from "../../../Redux/Actions";
 import { BASE_URL, TOKEN, HEADER } from "../../../../Api";
 import { Loader1 } from "../../Common/Loader";
 import { HandleError } from "../../Common/HandleError";
+import { HandleSuccess } from "../../Common/HandleSuccess";
+import { ToastContainer, Zoom } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
 const UserDetail = () => {
   const navigate = useNavigate();
-  const reviews = new Array(4).fill(0);
+  const reviewss = new Array(4).fill(0);
   const selector = useSelector((state) => state?.clickeduser);
+  const { review, loading } = useSelector((state) => state?.review);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(ClickedUser());
+    dispatch(GetReview());
   }, []);
   console.log(selector);
 
-  const starRatings = [star1, star2, star3, star4, star5];
   const stats = [
     {
-      value: 990,
+      value: ` ₦ ${selector?.user?.wallet?.balance}`,
       purpose: "Wallet Balance",
       status: "balance",
     },
     {
       value: 90,
-      purpose: "Completed Jon",
+      purpose: "Completed Job",
       status: "completed",
     },
     {
@@ -44,6 +48,16 @@ const UserDetail = () => {
       status: "pending",
     },
   ];
+
+  const ratingsSum = review?.docs?.reduce((acc, cur) => {
+    console.log(cur?.rating);
+    return acc + cur?.rating;
+  }, 0);
+  const averageRatings = ratingsSum / review?.totalDocs;
+  console.log(averageRatings);
+  const activeRatings = new Array(4).fill(star1);
+  const inactiveRatings = new Array(5 - 4).fill(star4);
+  const starRatings = activeRatings.concat(inactiveRatings);
 
   const renderStats = stats.map((data, index) => {
     return (
@@ -83,7 +97,7 @@ const UserDetail = () => {
     );
   });
 
-  const renderReviews = reviews.map((data, index) => {
+  const renderReviews = review?.docs?.map((data, index) => {
     return (
       <section
         style={{ background: "#F3F1FF" }}
@@ -91,60 +105,68 @@ const UserDetail = () => {
       >
         <div className="flex my-1 items-center justify-between">
           <span>
-            <img src={user_review} />
+            <img
+              src={
+                data?.createdBy?.avatar
+                  ? data?.createdBy?.avatar?.url
+                  : user_review
+              }
+            />
           </span>
-          <div className="flex">{renderRatings}</div>
+          <div className="flex">
+            <StarRatings ratings={data?.rating} />
+          </div>
         </div>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. A debitis
-          numquam optio molestias porro. Deleniti veritatis libero suscipit
-          voluptas quas necessitatibus est quam vitae eius, sint rerum explicabo
-          debitis repellat.
-        </p>
+        <p>{data?.description}</p>
       </section>
     );
   });
 
-  const changeState = async () => {
+  const changeState = async (status) => {
     try {
       const response = await axios.put(
         `${BASE_URL}//admin/users/${selector?.user?._id}`,
-        { status: "suspended" },
+        { status: status === "active" ? "suspended" : "active" },
         HEADER
       );
+      // dispatch(ClickedUser());
+      HandleSuccess(response);
       console.log(response);
     } catch (err) {
       HandleError(err);
       console.log(err);
     }
-    console.log("changing state");
+    console.log(status);
+    // console.log("changing state");
   };
-
   return (
     <>
+      <ToastContainer transition={Zoom} autoClose={800} />
       {selector?.loading ? (
         <Loader1 />
       ) : (
         <main className="">
           <div className="md:flex block justify-between items-center">
             <div className="image w-56 rounded-full shrink-0 md:h-64 md:w-64">
-              <span>
-                <img
-                  className="rounded-full h-56 w-56 "
-                  src={
-                    selector?.user?.avatar?.url
-                      ? selector?.user?.avatar?.url
-                      : user
-                  }
-                  alt="user"
-                />
-              </span>
+              <img
+                className="object-cover w-64 h-64 rounded-full "
+                src={
+                  selector?.user?.avatar?.url
+                    ? selector?.user?.avatar?.url
+                    : user
+                }
+                alt="user"
+              />
             </div>
             <div className="md:w-2/3 w-full pl-4  ">
               <div className="buttons justify-center mt-5 flex items-center">
                 <button
-                  onClick={changeState}
-                  className="bg-info-normal flex   items-center justify-center text-white w-full md:w-44 text-md md:text-xl rounded-md p-2 md:p-4 mx-4 "
+                  onClick={() => changeState(selector?.user?.status)}
+                  className={` ${
+                    selector?.user?.status === "active"
+                      ? "bg-info-normal"
+                      : "bg-red-500"
+                  }  flex   items-center justify-center text-white w-full md:w-44 text-md md:text-xl rounded-md p-2 md:p-4 mx-4 `}
                 >
                   {selector?.user?.status?.toUpperCase()}
                   <span className="mx-3">
@@ -170,6 +192,16 @@ const UserDetail = () => {
                     <span className="font-extralight">Phone Number:</span>
                     <span className="font-bold mx-3">08123456789</span>
                   </p>
+                  <div className="flex md:text-2xl text-md  my-3 font-extralight items-center text-primary font-inter my-5">
+                    <p>Ratings:</p>
+                    {review?.docs?.length ? (
+                      <div className="flex mx-3">{renderRatings}</div>
+                    ) : (
+                      <p className="mx-3 text-red-300">
+                        No reviews available yet
+                      </p>
+                    )}
+                  </div>
 
                   {selector?.user?.skills?.length === 0 ? (
                     ""
@@ -183,7 +215,6 @@ const UserDetail = () => {
                     </div>
                   )}
                 </div>
-                <div className="flex my-5">{renderRatings}</div>
               </div>
             </div>
           </div>

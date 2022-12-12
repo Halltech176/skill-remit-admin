@@ -10,7 +10,7 @@ import arrowDown from "../../../assets/arrow-down.png";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { Users, ClickedUser } from "../../../Redux/Actions";
+import { Users, ClickedUser, Feedbacks } from "../../../Redux/Actions";
 import { Loader1 } from "../../Common/Loader";
 import { AllAccounts } from "./AccountsStatus";
 import PaginateComponent from "../../Common/Paginate.component";
@@ -20,7 +20,8 @@ const User = () => {
   const dispatch = useDispatch();
   const user_credentials = useSelector((state) => state.users?.user);
   const { loading, user } = useSelector((state) => state.users);
-  console.log(user_credentials);
+  const feed = useSelector((state) => state);
+  console.log(feed);
 
   useEffect(() => {
     dispatch(Users({ status: "" }));

@@ -96,21 +96,31 @@ export const ActiveUsers = createAsyncThunk("activeusers", async () => {
 
 export const AllTransactions = createAsyncThunk(
   "transactions",
-  async ({ page = 1 }) => {
+  async (data, THUNKAPI) => {
     try {
-      // const response = await axios.get(`${BASE_URL}//transaction/`, HEADER);
-      const response = await axios.get(
-        "https://skill-remit.herokuapp.com/api//transaction/",
-        HEADER
-      );
-      console.log(response);
-      return response;
+      const response = await axios.get(`${BASE_URL}//transaction/`, HEADER);
+
+      return THUNKAPI.fulfillWithValue(response.data.data);
     } catch (err) {
       console.log(err);
-      throw err;
+      throw THUNKAPI.rejectWithValue(err);
     }
   }
 );
+
+export const Jobs = createAsyncThunk("jobs", async (data, THUNKAPI) => {
+  try {
+    const response = await axios.get(
+      `${BASE_URL}//job?populate=createdBy.avatar&populate=images`,
+      HEADER
+    );
+
+    return THUNKAPI.fulfillWithValue(response.data.data);
+  } catch (err) {
+    console.log(err);
+    throw THUNKAPI.rejectWithValue(err);
+  }
+});
 
 export const CreateAdmin = createAsyncThunk(
   "createaccount",
@@ -147,6 +157,23 @@ export const EditAdmin = createAsyncThunk(
   }
 );
 
+export const Feedbacks = createAsyncThunk(
+  "feedbacks",
+  async (data, THUNKAPI) => {
+    try {
+      const response = await axios.get(
+        `${BASE_URL}//feedback?populate=createdBy&populate=receiver`,
+        HEADER
+      );
+
+      return THUNKAPI.fulfillWithValue(response.data.data);
+    } catch (err) {
+      console.log(err);
+      throw THUNKAPI.rejectWithValue(err);
+    }
+  }
+);
+
 // Note the following action would be changed later, its  for gettin the admins
 export const SuspendedUsers = createAsyncThunk(
   "admins",
@@ -167,7 +194,7 @@ export const SuspendedUsers = createAsyncThunk(
       return response.data.data;
     } catch (err) {
       console.log(err);
-      // HandleError(err)
+
       throw THUNKAPI.rejectWithValue(err);
     }
   }
@@ -183,15 +210,44 @@ export const SiteData = createAsyncThunk("sitedata", async () => {
   }
 });
 
-export const FetchChat = createAsyncThunk("chat", async () => {
+export const FetchChat = createAsyncThunk("chats", async (data, THUNKAPI) => {
   try {
     const response = await axios.get(
       `${BASE_URL}/chat?populate=users.avatar`,
       HEADER
     );
-    return response.data.data;
+
+    return THUNKAPI.fulfillWithValue(response.data.data);
   } catch (err) {
     console.log(err);
-    throw err;
+    throw THUNKAPI.rejectWithValue(err);
+  }
+});
+
+export const Banks = createAsyncThunk("banks", async (data, THUNKAPI) => {
+  try {
+    const response = await axios.get(`${BASE_URL}//wallet/banks`, HEADER);
+
+    return THUNKAPI.fulfillWithValue(response.data.data);
+  } catch (err) {
+    console.log(err);
+    HandleError(err);
+    throw THUNKAPI.rejectWithValue(err);
+  }
+});
+
+export const GetReview = createAsyncThunk("reviews", async (_, THUNKAPI) => {
+  try {
+    const user_id = JSON.parse(localStorage.getItem("ACTIVE_USER_ID"));
+    const response = await axios.get(
+      `${BASE_URL}//feedback/${user_id}?populate=createdBy&populate=receiver&populate=receiver.wallet`,
+      HEADER
+    );
+
+    return THUNKAPI.fulfillWithValue(response.data.data);
+  } catch (err) {
+    console.log(err);
+    HandleError(err);
+    throw THUNKAPI.rejectWithValue(err);
   }
 });

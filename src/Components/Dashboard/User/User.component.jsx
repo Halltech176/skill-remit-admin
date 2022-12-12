@@ -5,7 +5,7 @@ import person3 from "../../../assets/person3.png";
 import person4 from "../../../assets/person4.png";
 import arrowUp from "../../../assets/arrow-up.png";
 import arrowDown from "../../../assets/arrow-down.png";
-import { Users, ClickedUser } from "../../../Redux/Actions";
+import { Users, ClickedUser, GetReview } from "../../../Redux/Actions";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import NoData from "../../Common/NoData";
@@ -18,7 +18,9 @@ const UserComponent = ({ user_credentials }) => {
   const GetUserDetails = (id) => {
     console.log("Getting user details");
     window.localStorage.setItem("ACTIVE_USER_ID", JSON.stringify(id));
+
     dispatch(ClickedUser());
+    dispatch(GetReview());
     const response = user_credentials?.docs.find((data) => {
       return data._id === id;
     });
@@ -41,7 +43,7 @@ const UserComponent = ({ user_credentials }) => {
             {" "}
             <img
               src={data?.avatar?.url ? data?.avatar?.url : person1}
-              className="w-8"
+              className="w-8 rounded-full h-8"
               alt="user"
             />{" "}
           </span>

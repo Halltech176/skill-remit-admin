@@ -1,7 +1,13 @@
 import { summary, stats } from "./Statistics";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { Users, SuspendedUsers, ActiveUsers } from "../../../Redux/Actions";
+import {
+  Users,
+  SuspendedUsers,
+  ActiveUsers,
+  Feedbacks,
+  Jobs,
+} from "../../../Redux/Actions";
 import { DoughnutChart, LineChart, AreaChart } from "./Visuals";
 const Oveview = () => {
   const dispatch = useDispatch();
@@ -9,21 +15,23 @@ const Oveview = () => {
   const { user, loading, error } = useSelector((state) => state.users);
   const actives = useSelector((state) => state.actives);
   const suspended = useSelector((state) => state.suspended);
+  const { feedbacks } = useSelector((state) => state.feedback);
   const selector = useSelector((state) => state);
   const values = [
     actives?.user?.totalDocs,
     user?.totalDocs,
-    user?.totalDocs,
-    user?.totalDocs,
+    feedbacks?.totalDocs,
+    feedbacks?.totalDocs,
   ];
 
-  console.log(selector?.login?.login);
-  console.log(selector?.users?.user);
+  console.log(selector);
 
   useEffect(() => {
-    dispatch(Users());
+    dispatch(Users({ status: "" }));
     dispatch(SuspendedUsers());
     dispatch(ActiveUsers());
+    dispatch(Feedbacks());
+    dispatch(Jobs());
   }, []);
   const renderSummary = summary.map((data, index) => {
     return (

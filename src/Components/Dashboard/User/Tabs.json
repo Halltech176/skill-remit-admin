@@ -19,7 +19,7 @@
   },
   {
     "name": "Active Account",
-    "data": "activ4eAccount",
+    "data": "activeAccount",
     "active": false,
     "state": "active"
   },

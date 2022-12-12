@@ -6,14 +6,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { FetchChat } from "../../../Redux/Actions";
 const Dispute = () => {
-  const arr = new Array(6).fill(0);
   const dispatch = useDispatch();
-  const selector = useSelector((state) => state);
+  const { chats, loading, error } = useSelector((state) => state.chats);
   useEffect(() => {
     dispatch(FetchChat());
   }, []);
-  console.log(selector?.chats);
-  const renderDisputes = arr.map((data, index) => {
+  console.log(chats);
+  const renderDisputes = chats?.docs?.map((data, index) => {
     return (
       <section
         key={index}
@@ -26,10 +25,21 @@ const Dispute = () => {
       >
         <div className="flex items-center">
           <span>
-            <img className="w-16" src={user_vendor} alt="user" />
+            <img
+              className="w-16 h-16 rounded-full"
+              src={
+                data?.users[0]?.avatar
+                  ? data?.users[0]?.avatar.url
+                  : user_vendor
+              }
+              alt="user"
+            />
           </span>
           <div className="mx-2">
-            <h3 className="text-primary text-md capitalize">Annete Black</h3>
+            <h3 className="text-primary text-md capitalize">
+              {" "}
+              {data?.users[0]?.firstName} {data?.users[0]?.lastName}
+            </h3>
             <p>How are you doing??</p>
           </div>
         </div>

@@ -1,8 +1,17 @@
+import { useEffect } from "react";
 import { BankInputs, AdditionalInputs } from "./Inputs";
+import { Banks } from "../../../Redux/Actions";
+import { useDispatch, useSelector } from "react-redux";
 const OtherSettings = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(Banks());
+  }, []);
+  const selector = useSelector((state) => state);
+  console.log(selector?.banks);
   const renderInputs = BankInputs.map((data, index) => {
     return (
-      <section className="my-5">
+      <section key={index} className="my-5">
         <div className="relative">
           <input
             required

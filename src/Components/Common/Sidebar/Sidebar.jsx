@@ -5,7 +5,7 @@ import { useState } from "react";
 import MobileNav from "./MobileNav";
 
 import logo from "../../../assets/logo_md.jpg";
-import { LightLogo } from "../logo";
+import { LightLogo } from "../Logo";
 
 import users1 from "../../../assets/users1.png";
 import transaction1 from "../../../assets/transactions1.png";
@@ -111,7 +111,7 @@ const Sidebar = ({ route }) => {
       </main>
 
       <aside className=" hidden md:block  overflow-y-scroll py-2 app_container h-full text-white z-20 p-5 top-0 left-0      absolute">
-        <div className="h-24 ">
+        <div className="h-24 my-5 ">
           <span onClick={() => navigate("/")}>
             <LightLogo />
           </span>

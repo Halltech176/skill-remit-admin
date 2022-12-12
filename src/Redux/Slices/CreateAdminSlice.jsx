@@ -7,7 +7,7 @@ const initialState = {
   error: false,
 };
 const Create = createSlice({
-  name: "login",
+  name: "create_admin",
   initialState,
   reducers: {},
   extraReducers: {
@@ -30,7 +30,7 @@ const Create = createSlice({
 });
 
 const Edit = createSlice({
-  name: "login",
+  name: "edit_admin",
   initialState,
   reducers: {},
   extraReducers: {

@@ -37,7 +37,7 @@ const inputs = [
   },
 ];
 
-export const CreateAccount = ({ open, ToggleModal, setIsOpen, setIsOpen2 }) => {
+export const CreateAccount = ({ open, ToggleModal, setIsOpen }) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(Users());
@@ -97,6 +97,7 @@ export const CreateAccount = ({ open, ToggleModal, setIsOpen, setIsOpen2 }) => {
             inputs={inputs}
             type="create"
             handleSubmit={handleSubmit}
+            setIsOpen={setIsOpen}
           />
         )}
       </AnimatePresence>
@@ -104,22 +105,28 @@ export const CreateAccount = ({ open, ToggleModal, setIsOpen, setIsOpen2 }) => {
   );
 };
 
-export const EditAccount = ({ open, active, ToggleModal, setActiveUser }) => {
+export const EditAccount = ({
+  open,
+  active,
+  ToggleModal,
+  setActiveUser,
+  setIsOpen,
+}) => {
   Modal.setAppElement("#root");
   const dispatch = useDispatch();
-
+  console.log(active);
   const handleChange = (e) => {
-    setActiveUser({ ...values, [e.target.name]: e.target.value });
+    setActiveUser({ ...active, [e.target.name]: e.target.value });
   };
 
   const handleEdit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await dispatch(EditAdmin(values)).unwrap();
+      const response = await dispatch(EditAdmin(active));
       console.log(response);
 
-      console.log(response2);
+      console.log(response);
     } catch (err) {
       HandleError(err);
       console.log(err);
@@ -137,6 +144,7 @@ export const EditAccount = ({ open, active, ToggleModal, setActiveUser }) => {
             handleChange={handleChange}
             ToggleModal={ToggleModal}
             open={open}
+            setIsOpen={setIsOpen}
             inputs={inputs.slice(0, -1)}
             handleSubmit={handleEdit}
           />

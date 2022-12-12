@@ -142,14 +142,16 @@ export const CreateAdmin = createAsyncThunk(
 
 export const EditAdmin = createAsyncThunk(
   "editaccount",
+
   async (data, THUNKAPI) => {
+    const user_id = JSON.parse(localStorage.getItem("EDIT_ID"));
     try {
       const response = await axios.put(
-        `${BASE_URL}//transaction`,
+        `${BASE_URL}//admin/users/${user_id}`,
         data,
         HEADER
       );
-      return response.data.data;
+      return THUNKAPI.fulfillWithValue(response.data.data);
     } catch (err) {
       console.log(err);
       throw err;

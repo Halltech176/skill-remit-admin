@@ -10,6 +10,7 @@ const ModalComponent = ({
   handleChange,
   handleSubmit,
   type,
+  setIsOpen,
 }) => {
   console.log(values);
   const renderInputs = inputs?.map((data, index) => {
@@ -50,7 +51,7 @@ const ModalComponent = ({
           className=" backdrop absolute  bg-white rounded-xl shadow-md md:left-0 md:right-0 md:h-full md:w-auto    p-3 w-full  mx-auto md:p-14 md:max-w-3xl md:mx-auto   "
         >
           <form className="    ">
-            <span onClick={ToggleModal}>
+            <span onClick={() => setIsOpen(false)}>
               <img
                 className="w-10 absolute top-5 right-5"
                 src={cancel}

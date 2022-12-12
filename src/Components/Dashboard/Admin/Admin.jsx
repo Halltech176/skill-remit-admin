@@ -41,6 +41,7 @@ const Admin = () => {
   const [isOpen2, setIsOpen2] = useState(false);
   const ToggleModal2 = (id) => {
     UserToEdit(id);
+    window.localStorage.setItem("EDIT_ID", JSON.stringify(id));
     setIsOpen2(!isOpen2);
   };
   const [isOpen3, setIsOpen3] = useState(false);
@@ -118,6 +119,7 @@ const Admin = () => {
             setActiveUser={setActiveUser}
             open={isOpen2}
             ToggleModal={ToggleModal2}
+            setIsOpen={setIsOpen2}
           />
           <section className="text-end my-10">
             <button

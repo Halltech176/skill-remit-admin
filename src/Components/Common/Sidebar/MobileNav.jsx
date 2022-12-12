@@ -3,7 +3,7 @@ import { useState } from "react";
 import { styled, useTheme } from "@mui/material/styles";
 
 import logo from "../../../assets/logo_md.jpg";
-import { LightLogo } from "../logo";
+import { LightLogo } from "../Logo";
 
 import logout1 from "../../../assets/logout1.png";
 

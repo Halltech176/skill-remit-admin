@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Transactions } from "../Actions";
+import { AllTransactions } from "../Actions";
 const initialState = {
   loading: false,
   transactions: null,
@@ -10,17 +10,17 @@ const Transaction = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
-    [Transactions.fulfilled]: (state, action) => {
+    [AllTransactions.fulfilled]: (state, action) => {
       state.loading = false;
       state.transactions = action.payload;
       state.error = false;
     },
-    [Transactions.pending]: (state) => {
+    [AllTransactions.pending]: (state) => {
       state.loading = true;
       state.error = false;
       state.transactions = null;
     },
-    [Transactions.rejected]: (state) => {
+    [AllTransactions.rejected]: (state) => {
       state.loading = false;
       state.error = true;
       state.transactions = null;

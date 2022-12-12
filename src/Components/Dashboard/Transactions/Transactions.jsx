@@ -1,7 +1,8 @@
 import users_transactions from "./Transactions.json";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { Transactions as AllTransactions } from "../../../Redux/Actions";
+import { AllTransactions } from "../../../Redux/Actions";
+import PaginateComponent from "../../Common/Paginate.component";
 import { Loader1 } from "../../Common/Loader";
 import debit from "../../../assets/debit.png";
 import credit from "../../../assets/credit.png";
@@ -11,18 +12,17 @@ import Pattern3 from "../../../assets/Pattern3.png";
 import Pattern4 from "../../../assets/Pattern4.png";
 import Pattern5 from "../../../assets/Pattern5.png";
 import Pattern6 from "../../../assets/Pattern6.png";
-import Pagination from "@mui/material/Pagination";
-import PaginationItem from "@mui/material/PaginationItem";
-import Stack from "@mui/material/Stack";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-const Transactions = () => {
+import NoData from "../../Common/NoData";
+const TransactionsComponent = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(AllTransactions());
   }, []);
-  const transactions = useSelector((state) => state.transactions);
-  console.log(transactions);
+  const { transactions, loading, error } = useSelector(
+    (state) => state?.transactions
+  );
+  const trans = useSelector((state) => state);
+  console.log(trans);
   const renderTransactions = users_transactions.map((data, index) => {
     return (
       <section
@@ -49,7 +49,7 @@ const Transactions = () => {
   });
   return (
     <>
-      {transactions?.loading ? (
+      {loading ? (
         <Loader1 />
       ) : (
         <main className="   ">
@@ -78,7 +78,7 @@ const Transactions = () => {
           <div className="overflow-x-scroll ">
             <section
               style={{ color: " #828282" }}
-              className="flex font-nirmala shrink-0 md:justify-between items-center text-md md:text-3xl font-light"
+              className="flex font-nirmala shrink-0 md:justify-between items-center text-md md:text-2xl font-light"
             >
               <h2 className="md:w-64 shrink-0 w-48 md:py-0 py-3 ">Name</h2>
               <h2 className="md:w-64 w-48 shrink-0 md:py-0 py-3  md:text-center">
@@ -95,25 +95,15 @@ const Transactions = () => {
               {renderTransactions}
             </div>
           </div>
-          <div className="flex justify-center my-5 items-center">
-            <Stack spacing={2}>
-              <Pagination
-                count={10}
-                renderItem={(item) => (
-                  <PaginationItem
-                    components={{
-                      previous: ArrowBackIcon,
-                      next: ArrowForwardIcon,
-                    }}
-                    {...item}
-                  />
-                )}
-              />
-            </Stack>
+          <div>
+            <PaginateComponent
+              action="transactions"
+              count={transactions?.docs?.length}
+            />
           </div>
         </main>
       )}
     </>
   );
 };
-export default Transactions;
+export default TransactionsComponent;

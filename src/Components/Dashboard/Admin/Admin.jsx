@@ -3,23 +3,25 @@ import { CreateAccount, EditAccount, VerifyAccount } from "./FormModal";
 import user_image from "../../../assets/user_admin.png";
 import more from "../../../assets/more.png";
 import { useSelector, useDispatch } from "react-redux";
-import { Users } from "../../../Redux/Actions";
+import { SuspendedUsers } from "../../../Redux/Actions";
 import { Loader1 } from "../../Common/Loader";
+import { HandleError } from "../../Common/HandleError";
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
 import Stack from "@mui/material/Stack";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import PaginateComponent from "../../Common/Paginate.component";
 
 const Admin = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(Users());
+    dispatch(SuspendedUsers());
   }, []);
-  const { user, loading, error } = useSelector((state) => state.users);
-  console.log(user);
+  const { user, loading, error } = useSelector((state) => state?.suspended);
+  console.log(user, loading, error);
   // const loading = false;
-  console.log(loading);
+  // console.log(loading);
 
   const [isOpen, setIsOpen] = useState(false);
   const [id, setId] = useState("");
@@ -27,27 +29,23 @@ const Admin = () => {
   const ToggleModal = () => {
     setIsOpen(!isOpen);
   };
+
+  const UserToEdit = (id) => {
+    const response = user?.docs?.find((data, index) => {
+      return data?._id === id;
+    });
+    console.log(response);
+    setActiveUser(response);
+  };
+  console.log(activeUser);
   const [isOpen2, setIsOpen2] = useState(false);
   const ToggleModal2 = (id) => {
-    setId(id);
+    UserToEdit(id);
     setIsOpen2(!isOpen2);
   };
   const [isOpen3, setIsOpen3] = useState(false);
   const ToggleModal3 = (id) => {
-    setId(id);
     setIsOpen3(!isOpen3);
-  };
-  const getActiveUser = user?.docs?.find((data, index) => {
-    return data?._id === id;
-  });
-  console.log(id);
-  console.log(getActiveUser);
-
-  const [page, setPage] = useState("1");
-
-  const handlePaginate = (e, value) => {
-    setPage(value);
-    dispatch(Users({ page: value }));
   };
 
   const renderUsers = user?.docs
@@ -83,9 +81,9 @@ const Admin = () => {
             className=" w-full h-0.5 block my-10 "
           ></span>
           <div className="">
-            <p className="flex shrink-0 items-center">
+            <p className="flex flex-wrap shrink-0 overflow-x-scroll app_container items-center">
               <span className="font-aeonik-light ">Email :</span>
-              <span className="ml-1">{data?.email}</span>
+              <span className="ml-1 shrink-0">{data?.email}</span>
             </p>
             <p className="flex items-center">
               <span className="font-aeonik-light 6 ">status :</span>
@@ -98,56 +96,41 @@ const Admin = () => {
 
   return (
     <>
-      {/* {loading ? (
+      {loading ? (
         <Loader1 />
-      ) : ( */}
-      <div className="">
-        <CreateAccount
-          open={isOpen}
-          open2={isOpen3}
-          setIsOpen={setIsOpen}
-          setIsOpen2={setIsOpen3}
-          ToggleModal2={ToggleModal3}
-          ToggleModal={ToggleModal}
-        />
-        <VerifyAccount
-          open={isOpen3}
-          setOpen={setIsOpen3}
-          ToggleModal={ToggleModal3}
-        />
-        <EditAccount
-          active={getActiveUser}
-          open={isOpen2}
-          ToggleModal={ToggleModal2}
-        />
-        <section className="text-end my-10">
-          <button
-            onClick={ToggleModal}
-            className="btn w-52 py-4 font-semibold font-inter px-6"
-          >
-            Add New
-          </button>
-        </section>
-        <div className="md:grid block grid-cols-3">{renderUsers}</div>
-        <div className="flex justify-center my-5 items-center">
-          <Stack spacing={2}>
-            <Pagination
-              count={user?.totalPages}
-              onChange={handlePaginate}
-              renderItem={(item) => (
-                <PaginationItem
-                  components={{
-                    previous: ArrowBackIcon,
-                    next: ArrowForwardIcon,
-                  }}
-                  {...item}
-                />
-              )}
-            />
-          </Stack>
+      ) : (
+        <div className="">
+          <CreateAccount
+            open={isOpen}
+            open2={isOpen3}
+            setIsOpen={setIsOpen}
+            setIsOpen2={setIsOpen3}
+            ToggleModal2={ToggleModal3}
+            ToggleModal={ToggleModal}
+          />
+          <VerifyAccount
+            open={isOpen3}
+            setOpen={setIsOpen3}
+            ToggleModal={ToggleModal3}
+          />
+          <EditAccount
+            active={activeUser}
+            setActiveUser={setActiveUser}
+            open={isOpen2}
+            ToggleModal={ToggleModal2}
+          />
+          <section className="text-end my-10">
+            <button
+              onClick={ToggleModal}
+              className="btn md:w-52 md:py-4 py-2 font-semibold font-inter px-6"
+            >
+              Add New
+            </button>
+          </section>
+          <div className="md:grid block grid-cols-3">{renderUsers}</div>
+          <PaginateComponent action="suspended" count={user?.totalPages} />
         </div>
-      </div>
-      {/* )} */}
+      )}
     </>
   );
 };

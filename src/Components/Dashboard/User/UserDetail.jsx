@@ -11,7 +11,10 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { Users, ClickedUser } from "../../../Redux/Actions";
+import { BASE_URL, TOKEN, HEADER } from "../../../../Api";
 import { Loader1 } from "../../Common/Loader";
+import { HandleError } from "../../Common/HandleError";
+import axios from "axios";
 
 const UserDetail = () => {
   const navigate = useNavigate();
@@ -24,13 +27,6 @@ const UserDetail = () => {
   console.log(selector);
 
   const starRatings = [star1, star2, star3, star4, star5];
-  const skills = [
-    "Leadership",
-    "Teamwork",
-    "Visioner",
-    "Target oriented",
-    "Consistent",
-  ];
   const stats = [
     {
       value: 990,
@@ -69,7 +65,7 @@ const UserDetail = () => {
       </section>
     );
   });
-  const renderSkills = skills.map((data, index) => {
+  const renderSkills = selector?.user?.skills?.map((data, index) => {
     return (
       <button
         style={{ color: "#524B6B" }}
@@ -109,6 +105,21 @@ const UserDetail = () => {
     );
   });
 
+  const changeState = async () => {
+    try {
+      const response = await axios.put(
+        `${BASE_URL}//admin/users/${selector?.user?._id}`,
+        { status: "suspended" },
+        HEADER
+      );
+      console.log(response);
+    } catch (err) {
+      HandleError(err);
+      console.log(err);
+    }
+    console.log("changing state");
+  };
+
   return (
     <>
       {selector?.loading ? (
@@ -116,14 +127,25 @@ const UserDetail = () => {
       ) : (
         <main className="">
           <div className="md:flex block justify-between items-center">
-            <div className="image">
+            <div className="image w-56 rounded-full shrink-0 md:h-64 md:w-64">
               <span>
-                <img className=" w-56 md:w-72" src={user} alt="user" />
+                <img
+                  className="rounded-full h-56 w-56 "
+                  src={
+                    selector?.user?.avatar?.url
+                      ? selector?.user?.avatar?.url
+                      : user
+                  }
+                  alt="user"
+                />
               </span>
             </div>
             <div className="md:w-2/3 w-full pl-4  ">
               <div className="buttons justify-center mt-5 flex items-center">
-                <button className="bg-info-normal flex  items-center justify-center text-white w-full md:w-44 text-md md:text-xl rounded-md p-2 md:p-4 mx-4 ">
+                <button
+                  onClick={changeState}
+                  className="bg-info-normal flex   items-center justify-center text-white w-full md:w-44 text-md md:text-xl rounded-md p-2 md:p-4 mx-4 "
+                >
                   {selector?.user?.status?.toUpperCase()}
                   <span className="mx-3">
                     <img src={toggle_arrow} alt="arrow" />
@@ -138,26 +160,34 @@ const UserDetail = () => {
               </div>
               <div className="flex my-14">
                 <div className="details ">
-                  <p className="md:text-3xl text-md  my-3 flex items-center text-primary font-inter">
+                  <p className="md:text-2xl text-md  my-3 flex items-center text-primary font-inter">
                     <span className="font-extralight">Full Name:</span>
                     <span className="font-bold mx-3">
                       {selector?.user?.firstName} {selector?.user?.lastName}
                     </span>
                   </p>
-                  <p className="md:text-3xl text-md  my-3 flex items-center text-primary font-inter">
+                  <p className="md:text-2xl text-md  my-3 flex items-center text-primary font-inter">
                     <span className="font-extralight">Phone Number:</span>
                     <span className="font-bold mx-3">08123456789</span>
                   </p>
-                  <div className="md:text-3xl text-md  my-3 flex flex-col   font-inter">
-                    <p className="font-extralight text-primary">Skills:</p>
-                    <div className="flex flex-wrap my-3">{renderSkills}</div>
-                  </div>
+
+                  {selector?.user?.skills?.length === 0 ? (
+                    ""
+                  ) : (
+                    <div className="md:text-2xl text-md  my-3 flex flex-col   font-inter">
+                      {" "}
+                      <p className="font-extralight text-primary">Skills:</p>
+                      <div className="flex flex-wrap my-3">
+                        {renderSkills}
+                      </div>{" "}
+                    </div>
+                  )}
                 </div>
                 <div className="flex my-5">{renderRatings}</div>
               </div>
             </div>
           </div>
-          <div className="flex md:justify-between justify-center flex-wrap md:flex-nowrap md:mb-10">
+          <div className="flex md:justify-between justify-center flex-wrap md:flex-nowrap md:m-10">
             {renderStats}
           </div>
           <div className="flex flex-wrap  md:mb-10">{renderReviews}</div>

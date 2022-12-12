@@ -1,5 +1,4 @@
 import user_img from "../../../assets/user1.png";
-
 import { DetailsInput, Passwords } from "./Inputs";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
@@ -23,9 +22,6 @@ import axios from "axios";
 const Settings = () => {
   const { user, loading, error } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(User());
-  }, []);
 
   const initialState = {
     email: user?.email,
@@ -39,6 +35,7 @@ const Settings = () => {
   const [values, setValues] = useState(initialState);
   const [passwords, setPasswords] = useState(initialPassword);
   const [value, setValue] = useState("1");
+  const [profileImage, setProfileImage] = useState("");
 
   const handlePaginate = (event, newValue) => {
     setValue(newValue);
@@ -120,66 +117,130 @@ const Settings = () => {
       console.log(err);
     }
   };
+
+  const GetImage = (e) => {
+    setProfileImage(e.target.files[0]);
+  };
+  console.log(user?.avatar?.url);
+
+  const updateProfileImage = async () => {
+    try {
+      let formData = new FormData();
+      formData.append("image", profileImage);
+      console.log("profile image updating");
+      const response = await axios.post(
+        `${BASE_URL}/users/profile-image`,
+        formData,
+        HEADER
+      );
+      console.log(response);
+      if (response.status === 200) {
+        SuccessNotification(response?.data?.message);
+        setTimeout(() => {
+          dispatch(User());
+        }, 2000);
+      }
+    } catch (err) {
+      console.log(err);
+      HandleError(err);
+    }
+  };
   return (
     <>
-      {loading ? (
-        <Loader1 />
-      ) : (
-        <main>
-          <div className="my-5">
-            <ToastContainer transition={Zoom} autoClose={800} />
-            <Tabs
-              value={value}
-              onChange={handlePaginate}
-              aria-label="basic tabs example"
-            >
-              {renderSettings}
-            </Tabs>
-          </div>
-          <TabContext value={value}>
-            <TabPanel value="1">
-              <main className="block  md:flex justify-between">
-                <div className="">
-                  <span>
-                    <img
-                      className="md:w-80 w-48 mx-auto"
-                      src={user_img}
-                      alt="user"
-                    />
-                  </span>
+      <main>
+        <div className="my-5">
+          <ToastContainer transition={Zoom} autoClose={800} />
+          <Tabs
+            value={value}
+            onChange={handlePaginate}
+            aria-label="basic tabs example"
+          >
+            {renderSettings}
+          </Tabs>
+        </div>
+        <TabContext value={value}>
+          <TabPanel value="1">
+            <main className="block  md:flex justify-between">
+              <div className="flex flex-col">
+                <span>
+                  <img
+                    className="md:w-80 md:h-80 w-48 my-3 h-48 mx-auto"
+                    src={user?.avatar ? user?.avatar?.url : user_img}
+                    alt="user"
+                  />
+                </span>
+                <div className="flex items-center flex-col">
+                  {" "}
+                  <input
+                    onChange={(e) => GetImage(e)}
+                    className="p-6 my-5 w-full"
+                    type="file"
+                    name=""
+                    id=""
+                  />{" "}
+                  <button
+                    onClick={updateProfileImage}
+                    style={{ background: "#001B87" }}
+                    className="bg-normal font-inter font-semibold text-xl text-white py-4 rounded-md w-56 md:w-72"
+                  >
+                    Update Image
+                  </button>{" "}
                 </div>
-                <div className="md:w-2/4 h-full overflow-scroll app_container md:mx-14">
-                  <form className="flex  flex-col  items-center ">
-                    {renderInputs}
-                    <button
-                      onClick={updateProfile}
-                      style={{ background: "#001B87" }}
-                      className="bg-normal font-inter font-semibold text-xl text-white py-4 rounded-md w-56 md:w-72"
-                    >
-                      Update Profile
-                    </button>
-                  </form>
+              </div>
+              <div className="md:w-2/4 h-full overflow-scroll app_container md:mx-14">
+                <form className="flex  flex-col  items-center ">
+                  {renderInputs}
+                  <button
+                    onClick={updateProfile}
+                    style={{ background: "#001B87" }}
+                    className="bg-normal font-inter font-semibold text-xl text-white py-4 rounded-md w-56 md:w-72"
+                  >
+                    Update Profile
+                  </button>
+                </form>
 
-                  <form className="flex flex-col  items-center ">
-                    {renderPasswords}
-                    <button
-                      onClick={updatePassword}
-                      style={{ background: "#001B87" }}
-                      className="bg-normal font-inter font-semibold text-xl text-white my-5 py-4 rounded-md w-56 md:w-72"
-                    >
-                      Change Password
-                    </button>
-                  </form>
-                </div>
-              </main>
-            </TabPanel>
-            <TabPanel value="2">
-              <OtherSettings />
-            </TabPanel>
-          </TabContext>
-        </main>
-      )}
+                <form className="flex flex-col  items-center ">
+                  {renderPasswords}
+                  <button
+                    onClick={updatePassword}
+                    style={{ background: "#001B87" }}
+                    className="bg-normal font-inter font-semibold text-xl text-white my-5 py-4 rounded-md w-56 md:w-72"
+                  >
+                    Change Password
+                  </button>
+                </form>
+              </div>
+            </main>
+          </TabPanel>
+          <TabPanel value="2">
+            <OtherSettings />
+          </TabPanel>
+        </TabContext>
+      </main>
     </>
   );
 };
 export default Settings;
+
+// const Settings = () => {
+
+//   const { user, loading, error } = useSelector((state) => state.user);
+//   const dispatch = useDispatch();
+
+//   const initialState = {
+//     email: user?.email,
+//     firstName: user?.firstName,
+//     lastName: user?.lastName,
+//   };
+//   const initialPassword = {
+//     oldPassword: "Admin@1234",
+//     newPassword: "12345678",
+//   };
+//   const [values, setValues] = useState(initialState);
+//   const [passwords, setPasswords] = useState(initialPassword);
+//   const [value, setValue] = useState("1");
+//   const [profileImage, setProfileImage] = useState("");
+
+//   return <h1>settings</h1>;
+// };
+// export default Settings;

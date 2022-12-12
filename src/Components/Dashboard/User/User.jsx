@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router";
-import Tabs from "./Tabs.json";
+import TabValues from "./Tabs.json";
 import Accounts from "./Accounts.json";
 import person1 from "../../../assets/person1.png";
 import person2 from "../../../assets/person2.png";
@@ -12,114 +12,42 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { Users, ClickedUser } from "../../../Redux/Actions";
 import { Loader1 } from "../../Common/Loader";
-import Pagination from "@mui/material/Pagination";
-import PaginationItem from "@mui/material/PaginationItem";
-import Stack from "@mui/material/Stack";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { AllAccounts } from "./AccountsStatus";
+import PaginateComponent from "../../Common/Paginate.component";
 
 const User = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user_credentials = useSelector((state) => state.users?.user);
-  const { loading } = useSelector((state) => state.users);
+  const { loading, user } = useSelector((state) => state.users);
+  console.log(user_credentials);
 
   useEffect(() => {
-    dispatch(Users());
+    dispatch(Users({ status: "" }));
   }, []);
-  const [page, setPage] = useState("1");
-  const handlePaginate = (e, value) => {
-    setPage(value);
-    dispatch(Users({ page: value }));
+
+  const [value, setValue] = useState(0);
+
+  const handleChange = (newValue) => {};
+
+  const handleState = (status, newValue) => {
+    dispatch(Users({ status }));
+    window.localStorage.setItem("STATUS", status);
+    setValue(newValue);
   };
+  console.log(user);
 
-  const GetUserDetails = (id) => {
-    console.log("Getting user details");
-    window.localStorage.setItem("ACTIVE_USER_ID", JSON.stringify(id));
-    dispatch(Users());
-    dispatch(ClickedUser());
-    const clickedUser = user_credentials?.docs.find((data) => {
-      return data._id === id;
-    });
-    console.log(clickedUser);
-    console.log(id);
-    navigate(`/admin/allAccount/${clickedUser?._id}`);
-  };
-
-  const renderAccounts = user_credentials?.docs?.map((data, index) => {
-    return (
-      <section
-        key={index}
-        onClick={() => GetUserDetails(data?._id)}
-        // onClick={() => navigate(`/admin/allAccount/${data.username}`)}
-        style={{ color: "#808080" }}
-        className="flex  capitalize border-b-2 py-5 text-md font-bold font-manrope my-2 md:my-5 items-center justify-between"
-      >
-        <p className="flex mr-5 md:mr-0 shrink-0  items-center w-48">
-          <span>
-            {" "}
-            <img
-              src={index % 2 === 0 ? person1 : person2}
-              className="w-8"
-              alt="user"
-            />{" "}
-          </span>
-          <span className="mx-3">
-            {data.firstName} {data.lastName}
-          </span>
-        </p>
-        <p
-          className={`${data.status} mr-5 md:mr-0  shrink-0 text-center  rounded-md w-36  py-1 px-3`}
-        >
-          {" "}
-          {data.status}
-        </p>
-        <div className="flex shrink-0 mr-5 md:mr-0 items-center  w-72 justify-between">
-          {data.ratings === null ? (
-            ""
-          ) : (
-            <meter
-              className="w-36"
-              max={100}
-              min={0}
-              value={30}
-              high={75}
-              low={25}
-              optimum={50}
-            ></meter>
-          )}
-          <span className="mx-2">
-            {" "}
-            {data.ratings === undefined
-              ? "no ratings available"
-              : data.ratings + "%"}{" "}
-          </span>
-          <p
-            className={`${data.size} mr-7 shrink-0 mx-2 flex p-1 rounded-md items-center`}
-          >
-            <span>
-              {" "}
-              <img src={data.size === "increase" ? arrowUp : arrowDown} />{" "}
-            </span>
-            <span> 30%</span>
-          </p>
-        </div>
-        <p className="w-36 mr-5  md:mr-0 shrink-0 "> 200</p>
-        <p className="w-36 mr-5 md:mr-0 shrink-0 "> $500,000</p>
-      </section>
-    );
-  });
-
-  const renderTabs = Tabs.map((data, index) => {
+  const renderTabs = TabValues.map((data, index) => {
     return (
       <div
+        onClick={(e) => handleState(data.state, index)}
         key={index}
-        // style={{ flexShrink: "0" }}
-        className={`${
-          data.active
+        className={`
+        ${
+          `${value}` === `${index}`
             ? "bg-normal text-white"
-            : "bg-white text-normal border-primary-100  "
-        }  font-nunito  text-center md:text-xl shrink-0 text-xs font-medium  rounded-md py-4  px-4  md:w-64 md:py-5 my-5  mx-2 `}
+            : "bg-white text-normal"
+        }  font-nunito  text-center md:text-xl shrink-0 text-xs font-medium  rounded-md py-4  px-4  md:w-64 md:py-5 my-5  mx-2`}
       >
         {data.name}
       </div>
@@ -141,39 +69,22 @@ const User = () => {
         font-bold"
             >
               <h2 className="w-48 md:mr-0 mr-5 shrink-0  md:p-0 p-4">User</h2>
-              <h2 className="w-36 text-center md:mr-0 mr-5 shrink-0  md:p-0 p-4 ">
-                Status
-              </h2>
-              <h2 className="w-72 md:mr-0 mr-5 shrink-0 md:p-0 p-4  ">
+
+              <h2 className="w-90 md:mr-0 mr-5 shrink-0 md:p-0 p-4  ">
                 Ratings
               </h2>
-              <h2 className="w-36 md:mr-0 mr-5  shrink-0 md:p-0 p-4">
+              <h2 className="w-32 md:mr-0 mr-5 text-center shrink-0 md:p-0 p-4">
                 Project
               </h2>
               <h2 className="w-36 md:mr-0 mr-5   shrink-0 md:p-0 p-4  ">
                 Wallet balance
               </h2>
             </section>
-            <div className=" md:mr-0 mr-5 md:p-0 p-4 mb-5">
-              {renderAccounts}
-            </div>
-            <div className="flex justify-center my-5 items-center">
-              <Stack spacing={2}>
-                <Pagination
-                  count={user_credentials?.totalPages}
-                  onChange={handlePaginate}
-                  renderItem={(item) => (
-                    <PaginationItem
-                      components={{
-                        previous: ArrowBackIcon,
-                        next: ArrowForwardIcon,
-                      }}
-                      {...item}
-                    />
-                  )}
-                />
-              </Stack>
-            </div>
+            <AllAccounts />
+            <PaginateComponent
+              action="users"
+              count={user_credentials?.totalPages}
+            />
           </div>
         </main>
       )}

@@ -9,7 +9,7 @@ export const Loader1 = () => {
         // color={color}
         loading={loading}
         // cssOverride={{ border: "3px solid red" }}
-        size={80}
+        size={50}
         aria-label="Loading Spinner"
         data-testid="loader"
       />
@@ -27,7 +27,7 @@ export const Loader2 = () => {
           // color={color}
           loading={loading}
           // cssOverride={{ border: "3px solid red" }}
-          size={80}
+          size={50}
           aria-label="Loading Spinner"
           data-testid="loader"
         />

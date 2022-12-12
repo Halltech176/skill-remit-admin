@@ -17,10 +17,8 @@ const Header = ({ title }) => {
   }, []);
   return (
     <>
-      {loading ? (
-        ""
-      ) : (
-        <header className="md:flex md:py-10 md:pt-5 pt-20 justify-between items-center">
+    
+        <header className="md:flex md:py-10 md:pt-5 pt-24 justify-between items-center">
           <div className="flex justify-between">
             <h1 className="text-xl text-dark font-aeonik md:text-3xl capitalize font-medium">
               {title}
@@ -55,7 +53,7 @@ const Header = ({ title }) => {
             </h3>
           </div>
         </header>
-      )}
+    
     </>
   );
 };

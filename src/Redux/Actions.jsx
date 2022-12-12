@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { BASE_URL, TOKEN, HEADER } from "../../Api";
 import axios from "axios";
+import { HandleError } from "../Components/Common/HandleError";
 
 export const Login = createAsyncThunk("login", async (data, THUNKAPI) => {
   try {
@@ -31,7 +32,7 @@ export const ClickedUser = createAsyncThunk("clickeduser", async () => {
   try {
     const user_id = JSON.parse(localStorage.getItem("ACTIVE_USER_ID"));
     const response = await axios.get(
-      `${BASE_URL}//data/user/${user_id}`,
+      `${BASE_URL}//data/user/${user_id}?populate=wallet.histories&populate=avatar`,
       HEADER
     );
     // /profile?populate=wallet&populate=bankAccounts&populate=avatar&populate=wallet&populate=wallet.histories
@@ -44,12 +45,35 @@ export const ClickedUser = createAsyncThunk("clickeduser", async () => {
 
 export const Users = createAsyncThunk("users", async (value) => {
   try {
+    let user_values = "user" || "vendor";
+    const request = `${BASE_URL}//admin/users?${
+      value?.status === ""
+        ? ""
+        : value?.status === user_values
+        ? `type=${value?.status}`
+        : `status=${value?.status}`
+    }&populate=wallet.histories&populate=avatar&page=${
+      value?.page || 1
+    }&limit=${value?.limit || 10}`;
+
+    console.log(request);
+    console.log(value);
+
     const response = await axios.get(
-      `${BASE_URL}//admin/users?wallet.histories&page=${
+      `${BASE_URL}//admin/users?${
+        value?.status === ""
+          ? ""
+          : value?.status === "user"
+          ? `type=${value?.status}`
+          : value?.status === "vendor"
+          ? `type=${value?.status}`
+          : `status=${value?.status}`
+      }&populate=avatar&populate=wallet.histories&page=${
         value?.page || 1
-      }$limit=${value?.limit || 10}`,
+      }&limit=${value?.limit || 10}`,
       HEADER
     );
+
     return response.data.data;
   } catch (err) {
     throw err;
@@ -70,28 +94,23 @@ export const ActiveUsers = createAsyncThunk("activeusers", async () => {
   }
 });
 
-export const SuspendedUsers = createAsyncThunk("suspendedusers", async () => {
-  try {
-    const response = await axios.get(
-      `${BASE_URL}//admin/users?status=suspended`,
-      HEADER
-    );
-    return response.data.data;
-  } catch (err) {
-    throw err;
-    // console.log(err);
+export const AllTransactions = createAsyncThunk(
+  "transactions",
+  async ({ page = 1 }) => {
+    try {
+      // const response = await axios.get(`${BASE_URL}//transaction/`, HEADER);
+      const response = await axios.get(
+        "https://skill-remit.herokuapp.com/api//transaction/",
+        HEADER
+      );
+      console.log(response);
+      return response;
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
   }
-});
-
-export const Transactions = createAsyncThunk("transactions", async () => {
-  try {
-    const response = await axios.get(`${BASE_URL}//transaction`, HEADER);
-    return response.data.data;
-  } catch (err) {
-    console.log(err);
-    throw err;
-  }
-});
+);
 
 export const CreateAdmin = createAsyncThunk(
   "createaccount",
@@ -124,6 +143,32 @@ export const EditAdmin = createAsyncThunk(
     } catch (err) {
       console.log(err);
       throw err;
+    }
+  }
+);
+
+// Note the following action would be changed later, its  for gettin the admins
+export const SuspendedUsers = createAsyncThunk(
+  "admins",
+  async (value, THUNKAPI) => {
+    try {
+      // const response = await axios.get(
+      //   `${BASE_URL}//admin/users?type=admin&page=${page}`,
+      //   HEADER
+      // );
+
+      const response = await axios.get(
+        `${BASE_URL}//admin/users?type=admin&page=${
+          value?.page ? value?.page : 1
+        }`,
+        HEADER
+      );
+
+      return response.data.data;
+    } catch (err) {
+      console.log(err);
+      // HandleError(err)
+      throw THUNKAPI.rejectWithValue(err);
     }
   }
 );

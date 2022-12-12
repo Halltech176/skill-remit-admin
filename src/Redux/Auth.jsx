@@ -2,26 +2,34 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { TOKEN } from "../../Api";
-import { User } from "../Redux/Actions";
+import { User, AllTransactions } from "../Redux/Actions";
 import { Loader1 } from "../Components/Common/Loader";
 
 export const RequireAuth = ({ children }) => {
   const val = JSON.parse(localStorage.getItem("val"));
-  console.log(val);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { loading, user, error } = useSelector((state) => state.user);
-  console.log(user);
+
   useEffect(() => {
     dispatch(User());
-  }, []);
+    dispatch(AllTransactions());
+  }, [dispatch]);
+
+  const trans = useSelector((state) => state);
+  const { loading, user, error } = useSelector((state) => state.user);
+  // console.log(loading, error, user);
+  // console.log(trans);
+
   if (TOKEN === null) {
-    useEffect(() => {
-      navigate("/login");
-    }, []);
+    navigate("/login");
   } else if (TOKEN !== null && loading) {
     return <Loader1 />;
-  } else {
+  }
+  // else if(TOKEN !== null && !loading && error) {
+  //   return <h1> Please Check your internet coonections  </h1>
+  // }
+  else {
     return children;
   }
 };

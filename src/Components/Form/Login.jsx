@@ -4,6 +4,7 @@ import { BASE_URL } from "../../../Api";
 import { Login as SignIn } from "../../Redux/Actions";
 import { useSelector, useDispatch } from "react-redux";
 import { Loader2 } from "../../Components/Common/Loader";
+import { LightLogo } from "../Common/Logo";
 import { ErrorNotification, SuccessNotification } from "../Common/Toastify";
 import { HandleError } from "../Common/HandleError";
 import { ToastContainer, Zoom } from "react-toastify";
@@ -106,6 +107,7 @@ const Login = () => {
       ) : (
         <main className=" md:w-96 w-full py-10 mx-auto  h-screen">
           <ToastContainer transition={Zoom} autoClose={800} />
+          <LightLogo />
           <form className="    ">
             <h1 className="text-primary font-bold text-4xl">Login</h1>
             <div className="flex flex-col mt-6">{renderInputs}</div>

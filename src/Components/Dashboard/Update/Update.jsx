@@ -10,11 +10,11 @@ import TabPanel from "@mui/lab/TabPanel";
 import Tabs from "@mui/material/Tabs";
 
 const Update = () => {
-  const [value, setValue] = useState("1");
+  const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
-    console.log(value);
-    setValue(`${newValue}`);
+    setValue(newValue);
+    // setValue(`${newValue}`);
   };
   console.log(value);
   const titles = [
@@ -33,20 +33,11 @@ const Update = () => {
   ];
   const renderTitles = titles.map((data, index) => {
     return (
-      // <Tab
-      //   textColor="secondary"
-      //   indicatorColor="secondary"
-      //   scrollButtons={false}
-      //   label={data.name}
-      //   value={`${index + 1}`}
-      //   className={`
-      //     md:w-64 w-48 p-3 text-md  md:text-xl capitalize font-bold font-nunito rounded-md mx-4`}
-      // />
       <button
-        onClick={(e) => handleChange(e, index + 1)}
+        onClick={(e) => handleChange(e, index)}
         className={`
         ${
-          `${value}` === `${index + 1}`
+          `${value}` === `${index}`
             ? "bg-normal text-white"
             : "bg-white text-normal"
         } md:w-64 w-48 shrink-0 p-3 text-md md:text-xl capitalize font-bold font-nunito rounded-md mx-4`}
@@ -69,14 +60,14 @@ const Update = () => {
         </Tabs>
       </div>
       <TabContext value={value}>
-        <TabPanel value="1" className="">
+        <TabPanel value={0} className="">
           <FirstTab />
         </TabPanel>
 
-        <TabPanel value="2">
+        <TabPanel value={1}>
           <SecondTab />
         </TabPanel>
-        <TabPanel value="3">
+        <TabPanel value={2}>
           <ThirdTab />
         </TabPanel>
       </TabContext>

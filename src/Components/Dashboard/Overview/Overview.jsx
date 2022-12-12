@@ -64,7 +64,7 @@ const Oveview = () => {
             : data.status === "active"
             ? "bg-secondary-dark"
             : "bg-primary-dark"
-        } my-4 p-5 h-36 md:w-96 w-full flex items-center justify-between text-white`}
+        } my-4 p-5 h-36  w-full flex items-center justify-between text-white`}
       >
         <div className="">
           <h1 className="text-2xl font-aeonik-light capitalize tracking-widest font-medium ">
@@ -83,12 +83,13 @@ const Oveview = () => {
     );
   });
   return (
-    <main className="md:flex">
-      <div className="max-w-xl  mr-4">
+    <main className="md:flex flex-wrap lg:flex-nowrap  w-full">
+      <div className=" mr-4 md:h-1/5 md:overflow-x-scroll lg:w-4/6 ">
         <div className="flex app_container pb-5 overflow-x-scroll justify-between">
           {renderSummary}
         </div>
-        <div className="flex flex-col my-4">
+
+        <div className="flex flex-col  my-4">
           <div className="my-4">
             <h1
               className="font-aeonik-light mb-4 text-xl tracking-widest font-bold"
@@ -106,11 +107,13 @@ const Oveview = () => {
           </div>
         </div>
       </div>
-      <div className="w-full">
+      <div className="lg:w-4/12 w-full ">
         <h1 className="font-black text-xl text-dark font-aeonik-light mb-2">
           Statistics
         </h1>
-        <div className="flex  flex-col my-2">{renderStats}</div>
+        <div className="flex  flex-col h-full  justify-evenly my-2">
+          {renderStats}
+        </div>
       </div>
     </main>
   );

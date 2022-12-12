@@ -2,31 +2,37 @@
   {
     "name": "All Account",
     "data": "allAccount",
-    "active": true
+    "active": true,
+    "state": ""
   },
   {
     "name": "Pending Account",
     "data": "pendingAccount",
-    "active": false
+    "active": false,
+    "state": "pending"
   },
   {
     "name": "Suspended Account",
     "data": "suspendedAccount",
-    "active": false
+    "active": false,
+    "state": "suspended"
   },
   {
     "name": "Active Account",
     "data": "activ4eAccount",
-    "active": false
+    "active": false,
+    "state": "active"
   },
   {
     "name": "User Account",
     "data": "userAccount",
-    "active": false
+    "active": false,
+    "state": "user"
   },
   {
     "name": "Vendor Account",
     "data": "vendorAccount",
-    "active": false
+    "active": false,
+    "state": "vendor"
   }
 ]

@@ -26,14 +26,12 @@ import "./App.css";
 function App() {
   const location = useLocation();
   const path = location.pathname;
-  console.log(path.split("/"));
+
   const exemptedPaths = ["/login", "/email-verification", "/password-reset"];
   const checkPath = exemptedPaths.find((data, index) => {
-    console.log(data);
     return data === path;
   });
-  console.log("present path", path);
-  console.log("path", checkPath);
+
   const title_text =
     path === "/"
       ? "Overview"
@@ -54,7 +52,7 @@ function App() {
           checkPath
             ? ""
             : "md:ml-60 scroll_container md:rounded-tl-3xl md:rounded-bl-3xl"
-        }   overflow-x-hidden    app_container    px-3  md:px-8 `}
+        }   overflow-x-hidden    app_container    px-5  md:px-8 `}
       >
         {checkPath ? "" : <Header title={title_text} />}
 
@@ -76,7 +74,14 @@ function App() {
               </RequireAuth>
             }
           />
-          <Route path="/admin/allAccount" element={<User />} />
+          <Route
+            path="/admin/allAccount"
+            element={
+              <RequireAuth>
+                <User />
+              </RequireAuth>
+            }
+          />
           <Route path="/login" element={<Login />} />
           <Route
             path="/admin/commission"
@@ -87,16 +92,67 @@ function App() {
               </RequireAuth>
             }
           />
-          <Route path="/admin/admin-priviledges" element={<Admin />} />
-          <Route path="/admin/settings" element={<Settings />} />
-          <Route path="/admin/broadcast" element={<Broadcast />} />
-          <Route path="/admin/transactions" element={<Transactions />} />
+          <Route
+            path="/admin/admin-priviledges"
+            element={
+              <RequireAuth>
+                {" "}
+                <Admin />{" "}
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/admin/settings"
+            element={
+              <RequireAuth>
+                <Settings />{" "}
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/admin/broadcast"
+            element={
+              <RequireAuth>
+                <Broadcast />{" "}
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/admin/transactions"
+            element={
+              <RequireAuth>
+                <Transactions />{" "}
+              </RequireAuth>
+            }
+          />
 
-          <Route path="/admin/dispute" element={<Dispute />} />
-          <Route path="/admin/update" element={<Update />} />
+          <Route
+            path="/admin/dispute"
+            element={
+              <RequireAuth>
+                <Dispute />{" "}
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/admin/update"
+            element={
+              <RequireAuth>
+                <Update />
+              </RequireAuth>
+            }
+          />
           <Route path="/email-verification" element={<EmailVerification />} />
           <Route path="/password-reset" element={<PasswordReset />} />
-          <Route path="/admin/allAccount/:id" element={<UserDetail />} />
+          <Route
+            path="/admin/allAccount/:id"
+            element={
+              <RequireAuth>
+                {" "}
+                <UserDetail />{" "}
+              </RequireAuth>
+            }
+          />
           <Route path="*" element={<NoMatch />} />
         </Routes>
       </div>

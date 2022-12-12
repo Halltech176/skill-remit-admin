@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import cancel from "../../../assets/cancel.png";
-import { variants, backdrop } from "./animation";
+import { variants, backdrop } from "./Animation";
 const ModalComponent = ({
   inputs,
   ToggleModal,

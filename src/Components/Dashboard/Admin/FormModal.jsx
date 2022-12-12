@@ -11,7 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { BASE_URL } from "../../../../Api";
 import ModalComponent from "./Modal.component";
-import { variants, backdrop } from "./animation";
+import { variants, backdrop } from "./Animation";
 
 const inputs = [
   {

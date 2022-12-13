@@ -1,14 +1,10 @@
 import Accounts from "./Accounts.json";
-import person1 from "../../../assets/person1.png";
-import person2 from "../../../assets/person2.png";
-import person3 from "../../../assets/person3.png";
-import person4 from "../../../assets/person4.png";
-import arrowUp from "../../../assets/arrow-up.png";
+import person1 from "../../../assets/no_avatar.png";
 import arrowDown from "../../../assets/arrow-down.png";
 import { Users, ClickedUser, GetReview } from "../../../Redux/Actions";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import NoData from "../../Common/NoData";
+import { NoUser } from "../../Common/NoData";
 const UserComponent = ({ user_credentials }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -38,7 +34,7 @@ const UserComponent = ({ user_credentials }) => {
         style={{ color: "#808080" }}
         className="flex  capitalize border-b-2 py-5 text-md font-bold font-manrope my-2 md:my-5 items-center justify-between"
       >
-        <p className="flex mr-5 md:mr-0 shrink-0  items-center w-48">
+        <p className="flex mr-5 md:mr-0 shrink-0  items-center w-60">
           <span>
             {" "}
             <img
@@ -52,7 +48,7 @@ const UserComponent = ({ user_credentials }) => {
           </span>
         </p>
 
-        <div className="flex shrink-0 mr-5 md:mr-0 items-center  w-90 justify-between">
+        <div className="flex shrink-0 mr-5 md:mr-0 items-center  w-80 justify-between">
           {data.ratings === null ? (
             ""
           ) : (
@@ -82,12 +78,15 @@ const UserComponent = ({ user_credentials }) => {
             <span> 30%</span>
           </p>
         </div>
-        <p className="w-32 mr-5  md:mr-0 shrink-0 "> 200</p>
-        <p className="w-36 mr-5 md:mr-0 shrink-0 "> ${data?.wallet?.balance}</p>
+        <p className="w-32 md:ml-14 text-center  md:mr-0 shrink-0 "> 200</p>
+        <p className="w-36 mr-5 md:mr-0  text-center shrink-0 ">
+          {" "}
+          ${data?.wallet?.balance}
+        </p>
       </section>
     );
   });
-  return <>{user_credentials?.docs?.length ? renderAccounts : <NoData />}</>;
+  return <>{user_credentials?.docs?.length ? renderAccounts : <NoUser />}</>;
 };
 
 export default UserComponent;

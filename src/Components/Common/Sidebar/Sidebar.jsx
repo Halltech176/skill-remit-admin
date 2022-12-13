@@ -60,7 +60,7 @@ const Sidebar = ({ route }) => {
 
   const handleLogout = () => {
     setOpen(false);
-    console.log("we are already logging out");
+
     localStorage.clear();
     navigate("/login");
   };
@@ -111,7 +111,7 @@ const Sidebar = ({ route }) => {
       </main>
 
       <aside className=" hidden md:block  overflow-y-scroll py-2 app_container h-full text-white z-20 p-5 top-0 left-0      absolute">
-        <div className="h-24 my-5 ">
+        <div className="h-20 flex items-center justify-center mt-10 ">
           <span onClick={() => navigate("/")}>
             <LightLogo />
           </span>

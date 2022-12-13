@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router";
-import user from "../../../assets/user1.png";
+import user from "../../../assets/no_avatar.png";
+import { NoReview } from "../../Common/NoData";
 import user_review from "../../../assets/user_review.png";
 import toggle_arrow from "../../../assets/toggle_arrow.png";
 import StarRatings from "./StarRatings";
@@ -129,7 +130,7 @@ const UserDetail = () => {
         { status: status === "active" ? "suspended" : "active" },
         HEADER
       );
-      // dispatch(ClickedUser());
+      dispatch(ClickedUser());
       HandleSuccess(response);
       console.log(response);
     } catch (err) {
@@ -147,9 +148,9 @@ const UserDetail = () => {
       ) : (
         <main className="">
           <div className="md:flex block justify-between items-center">
-            <div className="image w-56 rounded-full shrink-0 md:h-64 md:w-64">
+            <div className="image w-56 rounded-full mx-auto bg-red-500 overflow-hidden shrink-0 md:h-64 md:w-64">
               <img
-                className="object-cover w-64 h-64 rounded-full "
+                className="object-cover w-full h-full  "
                 src={
                   selector?.user?.avatar?.url
                     ? selector?.user?.avatar?.url
@@ -221,7 +222,9 @@ const UserDetail = () => {
           <div className="flex md:justify-between justify-center flex-wrap md:flex-nowrap md:m-10">
             {renderStats}
           </div>
-          <div className="flex flex-wrap  md:mb-10">{renderReviews}</div>
+          <div className="flex flex-wrap  md:mb-10">
+            {review?.docs?.length === 0 ? <NoReview /> : renderReviews}
+          </div>
         </main>
       )}
     </>

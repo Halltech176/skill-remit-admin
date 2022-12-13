@@ -2,14 +2,9 @@ import logo from "../../assets/logo_md.jpg";
 
 export const LightLogo = () => {
   return (
-    <div>
-      <span>
-        <img
-          className="w-24 h-24 rounded-full mx-auto items-center"
-          src={logo}
-          alt="logo"
-        />
-      </span>
+    <div className="md:h-32 md:w-32 h-24 w-24 relative  my-5 overflow-hidden rounded-full bg-red-700">
+      {/* <h1>logo</h1> */}
+      <img className=" object-cover h-full  w-full" src={logo} alt="logo" />
     </div>
   );
 };

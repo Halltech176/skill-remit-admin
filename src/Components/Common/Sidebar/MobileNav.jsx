@@ -27,7 +27,7 @@ import ListItemText from "@mui/material/ListItemText";
 import RouteLinks from "./RouteLinks.json";
 
 const drawerWidth = 250;
-const MobileNav = ({ actives, inactives, handleLogout }) => {
+const MobileNav = ({ actives, inactives }) => {
   const [side, setSide] = useState("right");
 
   const [open, setOpen] = useState(false);
@@ -35,6 +35,13 @@ const MobileNav = ({ actives, inactives, handleLogout }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const path = location.pathname;
+
+  const handleLogout = () => {
+    setOpen(false);
+
+    localStorage.clear();
+    navigate("/login");
+  };
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -49,12 +56,17 @@ const MobileNav = ({ actives, inactives, handleLogout }) => {
       <main className="flex md:hidden">
         <CssBaseline />
         <AppBar position="fixed" elevation={0} open={open}>
-          <Toolbar className="bg-primary flex p-1 justify-bewteen border-transparent">
-            <Box noWrap sx={{ flexGrow: 1 }} component="div">
+          <nav className="bg-primary flex p-2 items-center justify-between border-transparent">
+            <div className="bg-white h-8 w-8 overflow-hidden rounded-full">
+              {/* <LightLogo /> */}
               <span onClick={() => navigate("/")}>
-                <img className="rounded-full w-8 h-8" src={logo} alt="logo" />
+                <img
+                  className="h-full w-full object-cover"
+                  src={logo}
+                  alt="logo"
+                />{" "}
               </span>
-            </Box>
+            </div>
             <IconButton
               color="inherit"
               aria-label="open drawer"
@@ -64,7 +76,7 @@ const MobileNav = ({ actives, inactives, handleLogout }) => {
             >
               <MenuIcon />
             </IconButton>
-          </Toolbar>
+          </nav>
         </AppBar>
         <Drawer
           sx={{

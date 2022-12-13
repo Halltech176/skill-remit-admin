@@ -12,7 +12,7 @@ import Pattern3 from "../../../assets/Pattern3.png";
 import Pattern4 from "../../../assets/Pattern4.png";
 import Pattern5 from "../../../assets/Pattern5.png";
 import Pattern6 from "../../../assets/Pattern6.png";
-import NoData from "../../Common/NoData";
+import { NoUser } from "../../Common/NoData";
 const TransactionsComponent = () => {
   const dispatch = useDispatch();
   useEffect(() => {

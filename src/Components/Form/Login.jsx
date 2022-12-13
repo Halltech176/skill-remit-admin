@@ -10,6 +10,10 @@ import { HandleError } from "../Common/HandleError";
 import { ToastContainer, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import LoadingButton from "@mui/lab/LoadingButton";
+import SaveIcon from "@mui/icons-material/Save";
+import Stack from "@mui/material/Stack";
+
 const Login = () => {
   console.log(BASE_URL);
   const { loading, login, error } = useSelector((state) => state.login);
@@ -59,7 +63,7 @@ const Login = () => {
         SuccessNotification(response.data.message);
         setTimeout(() => {
           navigate("/");
-        }, 2000);
+        }, 1000);
       } else if (
         response?.data?.data?.user?.type !== "super" &&
         response?.data?.data?.user?.type !== "admin"
@@ -102,29 +106,38 @@ const Login = () => {
   };
   return (
     <>
-      {loading ? (
-        <Loader2 />
-      ) : (
-        <main className=" md:w-96 w-full py-10 mx-auto  h-screen">
-          <ToastContainer transition={Zoom} autoClose={800} />
+      <main className=" md:w-96 w-full py-10 mx-auto  h-screen">
+        <ToastContainer transition={Zoom} autoClose={600} />
+        <div className="flex items-center justify-center">
           <LightLogo />
-          <form className="    ">
-            <h1 className="text-primary font-bold text-4xl">Login</h1>
-            <div className="flex flex-col mt-6">{renderInputs}</div>
-            <p onClick={ResetPasswords} className="text-dark pointer text-end ">
-              Forgotten Password?
-            </p>
-            <div className="flex justify-center my-3">
+        </div>
+        <form className="    ">
+          <h1 className="text-primary font-bold py-3 text-4xl">Login</h1>
+          <div className="flex flex-col mt-6">{renderInputs}</div>
+          <p onClick={ResetPasswords} className="text-dark pointer text-end ">
+            Forgotten Password?
+          </p>
+          <div className="flex justify-center my-3">
+            {loading ? (
+              <LoadingButton
+                loading
+                loadingPosition="start"
+                startIcon={<SaveIcon />}
+                variant="contained"
+              >
+                Logging in
+              </LoadingButton>
+            ) : (
               <button
                 onClick={handleLogin}
                 className="bg-normal p-3 rounded-md text-white w-32 "
               >
                 Sign In
               </button>
-            </div>
-          </form>
-        </main>
-      )}
+            )}
+          </div>
+        </form>
+      </main>
     </>
   );
 };

@@ -1,6 +1,13 @@
 import * as React from "react";
+import user_image from "../../../assets/no_avatar.png";
 import { useState } from "react";
+
 import { styled, useTheme } from "@mui/material/styles";
+import bell from "../../../assets/bell.png";
+import { useSelector, useDispatch } from "react-redux";
+
+import { useEffect } from "react";
+import { User } from "../../../Redux/Actions";
 
 import logo from "../../../assets/logo_md.jpg";
 import { LightLogo } from "../Logo";
@@ -28,7 +35,12 @@ import RouteLinks from "./RouteLinks.json";
 
 const drawerWidth = 250;
 const MobileNav = ({ actives, inactives }) => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(User());
+  }, []);
   const [side, setSide] = useState("right");
+  const { user } = useSelector((state) => state.user);
 
   const [open, setOpen] = useState(false);
   const theme = useTheme();
@@ -50,13 +62,17 @@ const MobileNav = ({ actives, inactives }) => {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+  const handleProfile = () => {
+    setOpen(false);
+    navigate("/admin/settings");
+  };
 
   return (
     <>
       <main className="flex md:hidden">
         <CssBaseline />
         <AppBar position="fixed" elevation={0} open={open}>
-          <nav className="bg-primary flex p-2 items-center justify-between border-transparent">
+          <nav className="bg-primary flex p-2 px-4 items-center justify-between border-transparent">
             <div className="bg-white h-8 w-8 overflow-hidden rounded-full">
               {/* <LightLogo /> */}
               <span onClick={() => navigate("/")}>
@@ -98,13 +114,31 @@ const MobileNav = ({ actives, inactives }) => {
               <ChevronRightIcon />
             )}
           </IconButton>
+          <Divider />
+          <div
+            onClick={handleProfile}
+            className=" flex items-center justify-around p-2 "
+          >
+            <div className="w-6 h-6 block bg-primary rounded-full overflow-hidden">
+              <img
+                src={user?.avatar ? user?.avatar?.url : user_image}
+                className="w-full h-full object-cover "
+                alt="user"
+              />
+            </div>
+            <h3 style={{ color: "#0D0140" }} className="font-aeonik-light ml-1">
+              {user?.firstName} {user?.lastName}
+            </h3>
+          </div>
           {/* </DrawerHeader> */}
           <Divider />
           <List className="text-normal  font-black text-md">
             {RouteLinks.slice(0, RouteLinks.length - 1).map((data, index) => (
               <li
                 className={` ${
-                  data.route === path ? "bg-normal  text-white" : "text-norml"
+                  data.route === path
+                    ? "bg-normal rounded-md text-white"
+                    : "text-norml"
                 }  font-aeonik-light mx-1 font-medium  text-xl  p-2 `}
               >
                 <Link

@@ -15,7 +15,7 @@ const ModalComponent = ({
   console.log(values);
   const renderInputs = inputs?.map((data, index) => {
     return (
-      <section className="md:my-6 my-2">
+      <section className="md:my-6 my-6 ">
         <div className="relative">
           <input
             required
@@ -48,7 +48,7 @@ const ModalComponent = ({
           animate="visible"
           exit="exit"
           style={{ zIndex: "50" }}
-          className=" backdrop absolute  bg-white rounded-xl shadow-md md:left-0 md:right-0 md:top-0 top-20 md:h-full h-3/4 md:w-auto    p-5   md:p-14 md:max-w-3xl md:mx-auto   "
+          className=" backdrop absolute overflow-scroll bg-white rounded-xl shadow-md md:left-0 md:right-0 md:top-0 top-20 md:h-full h-3/4 md:w-auto    p-5   md:p-14 md:max-w-3xl md:mx-auto   "
         >
           <form className="    ">
             <span onClick={() => setIsOpen(false)}>

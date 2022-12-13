@@ -19,6 +19,7 @@ import { banksReducer } from "./Slices/BanksSlice";
 import { FeedbacksReducer } from "./Slices/FeedbackSlice";
 import { JobsReducer } from "./Slices/JobSlice";
 import { GetReviewReducer } from "./Slices/ReviewSlice";
+import { UserChatReducer } from "./Slices/UsersChatSlice";
 
 const reducers = combineReducers({
   user: UserReducer,
@@ -36,6 +37,7 @@ const reducers = combineReducers({
   banks: banksReducer,
   jobs: JobsReducer,
   review: GetReviewReducer,
+  chat: UserChatReducer,
 });
 
 const Store = configureStore({

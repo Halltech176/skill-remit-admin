@@ -5,8 +5,11 @@ import { Users, ClickedUser, GetReview } from "../../../Redux/Actions";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { NoUser } from "../../Common/NoData";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 const UserComponent = ({ user_credentials }) => {
   const navigate = useNavigate();
+
   const dispatch = useDispatch();
   const selector = useSelector((state) => state);
   console.log(selector?.clickeduser);
@@ -37,11 +40,17 @@ const UserComponent = ({ user_credentials }) => {
         <p className="flex mr-5 md:mr-0 shrink-0  items-center w-60">
           <span>
             {" "}
-            <img
+            <LazyLoadImage
+              alt="user"
+              effect="blur"
+              src={data?.avatar?.url ? data?.avatar?.url : person1}
+              className="w-8 rounded-full h-8"
+            />
+            {/* <img
               src={data?.avatar?.url ? data?.avatar?.url : person1}
               className="w-8 rounded-full h-8"
               alt="user"
-            />{" "}
+            /> */}
           </span>
           <span className="mx-3">
             {data.firstName} {data.lastName}

@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { CreateAdmin, EditAdmin, Users } from "../../../Redux/Actions";
 import { ErrorNotification, SuccessNotification } from "../../Common/Toastify";
 import { HandleError } from "../../Common/HandleError";
+import { HandleSuccess } from "../../Common/HandleSuccess";
 import { ToastContainer, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
@@ -123,10 +124,14 @@ export const EditAccount = ({
     e.preventDefault();
 
     try {
-      const response = await dispatch(EditAdmin(active));
+      const response = await dispatch(EditAdmin(active)).unwrap();
       console.log(response);
 
       console.log(response);
+      setIsOpen(false);
+
+      HandleSuccess(response);
+      dispatch(Users());
     } catch (err) {
       HandleError(err);
       console.log(err);

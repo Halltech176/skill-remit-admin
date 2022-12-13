@@ -68,7 +68,7 @@ const TransactionsComponent = () => {
             <h1 className="md:text-6xl text-4xl font-medium py-8">5,000,000</h1>
             <div>
               <button className="text-normal rounded-md px-7 font-medium py-3 bg-white">
-                Wallet draw
+                Withdraw
               </button>
             </div>
           </div>

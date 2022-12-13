@@ -151,7 +151,7 @@ export const EditAdmin = createAsyncThunk(
         data,
         HEADER
       );
-      return THUNKAPI.fulfillWithValue(response.data.data);
+      return THUNKAPI.fulfillWithValue(response);
     } catch (err) {
       console.log(err);
       throw err;
@@ -226,11 +226,26 @@ export const FetchChat = createAsyncThunk("chats", async (data, THUNKAPI) => {
   }
 });
 
-export const Banks = createAsyncThunk("banks", async (data, THUNKAPI) => {
+export const UserChat = createAsyncThunk("chat", async (data, THUNKAPI) => {
+  try {
+    const user_id = JSON.parse(localStorage.getItem("CHAT_ID"));
+    const response = await axios.get(
+      `${BASE_URL}/chat/${user_id}/message     `,
+      HEADER
+    );
+
+    return THUNKAPI.fulfillWithValue(response.data.data);
+  } catch (err) {
+    console.log(err);
+    throw THUNKAPI.rejectWithValue(err);
+  }
+});
+
+export const Banks = createAsyncThunk("banks", async (_, THUNKAPI) => {
   try {
     const response = await axios.get(`${BASE_URL}//wallet/banks`, HEADER);
 
-    return THUNKAPI.fulfillWithValue(response.data.data);
+    return THUNKAPI.fulfillWithValue(response);
   } catch (err) {
     console.log(err);
     HandleError(err);

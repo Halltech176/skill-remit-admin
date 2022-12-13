@@ -4,17 +4,28 @@ import send from "../../../assets/send.png";
 import copy from "../../../assets/copy.png";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { FetchChat } from "../../../Redux/Actions";
+import { FetchChat, UserChat } from "../../../Redux/Actions";
 const Dispute = () => {
   const dispatch = useDispatch();
   const { chats, loading, error } = useSelector((state) => state.chats);
   useEffect(() => {
     dispatch(FetchChat());
   }, []);
+  const GetUserChat = async (id) => {
+    try {
+      window.localStorage.setItem("CHAT_ID", JSON.stringify(id));
+      const response = await dispatch(UserChat());
+      console.log(response);
+      // console.log(id);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   console.log(chats);
   const renderDisputes = chats?.docs?.map((data, index) => {
     return (
       <section
+        onClick={() => GetUserChat(data?._id)}
         key={index}
         style={{
           cursor: "pointer",
@@ -112,20 +123,6 @@ const Dispute = () => {
           >
             TODAY
           </h1>
-
-          {/* <div className="input bg-white p-2 fixed flex items-center  bottom-16    w-5/12 right-18  ">
-            <input
-              style={{ background: "#F7F7FD" }}
-              className="w-full text-xl p-5"
-              type="text"
-            />
-            <span>
-              <img src={copy} className="w-8 mx-2" alt="copy" />
-            </span>
-            <span>
-              <img src={send} className="w-8 mx-3" alt="send" />
-            </span>
-          </div> */}
 
           <section className="flex  flex-col">
             <div

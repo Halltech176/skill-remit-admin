@@ -30,11 +30,15 @@ const UserDetail = () => {
     dispatch(ClickedUser());
     dispatch(GetReview());
   }, []);
-  console.log(selector);
+  console.log(selector?.user?.wallet?.balance);
 
   const stats = [
     {
-      value: ` ₦ ${selector?.user?.wallet?.balance}`,
+      value: ` ₦ ${
+        selector?.user?.wallet?.balance === undefined
+          ? 0
+          : selector?.user?.wallet?.balance
+      }`,
       purpose: "Wallet Balance",
       status: "balance",
     },
@@ -148,7 +152,7 @@ const UserDetail = () => {
       ) : (
         <main className="">
           <div className="md:flex block justify-between items-center">
-            <div className="image w-56 rounded-full mx-auto bg-red-500 overflow-hidden shrink-0 md:h-64 md:w-64">
+            <div className="image w-56 rounded-full mx-auto bg-red-500 overflow-hidden shrink-0 h-56">
               <img
                 className="object-cover w-full h-full  "
                 src={

@@ -53,7 +53,7 @@ const TransactionsComponent = () => {
         <Loader1 />
       ) : (
         <main className="   ">
-          <div className="bg-primary relative  rounded-3xl overflow-hidden w-full md:w-1/2 mx-auto py-5 md:py-10 px-5  md:px-22 text-center   text-white">
+          <div className="bg-primary relative  rounded-3xl  overflow-hidden w-full md:w-1/2 mx-auto py-5 md:py-10 px-5  md:px-22 text-center   text-white">
             <div className="flex flex-col absolute -top-3 -left-24 md:-left-14  -bottom-3">
               <img src={Pattern1} alt="pattern" />
               <img src={Pattern2} alt="pattern" />
@@ -91,7 +91,7 @@ const TransactionsComponent = () => {
                 Amount
               </h2>
             </section>
-            <div className=" my-5 items-center items-center md:justify-between">
+            <div className=" my-5 items-center app_container items-center md:justify-between">
               {renderTransactions}
             </div>
           </div>

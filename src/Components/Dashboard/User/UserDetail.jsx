@@ -181,7 +181,7 @@ const UserDetail = () => {
                   MESSAGE
                 </button>
               </div>
-              <div className="flex my-14">
+              <div className="flex capitalize my-14">
                 <div className="details ">
                   <p className="md:text-2xl text-md  my-3 flex items-center text-primary font-inter">
                     <span className="font-extralight">Full Name:</span>

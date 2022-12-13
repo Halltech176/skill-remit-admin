@@ -119,7 +119,7 @@ const Oveview = () => {
         <h1 className="font-black text-xl text-dark font-aeonik-light mb-2">
           Statistics
         </h1>
-        <div className="flex  flex-col h-full  justify-evenly my-2">
+        <div className="flex  flex-col   justify-evenly my-2">
           {renderStats}
         </div>
       </div>

@@ -83,18 +83,21 @@ const Login = () => {
   };
   const renderInputs = inputs.map((data, index) => {
     return (
-      <section key={data.name} className="my-5">
+      <section key={data.name} className="my-3">
         <div className="relative">
+          {/* <span className="text-normal absolute top-2 md:left-3 left-2 text-primary">
+            {data.label}
+          </span> */}
+          <label className="block my-2 text-md text-primary">
+            {data.label}
+          </label>
           <input
             onChange={handleChange}
             value={values[data.name]}
             name={data.name}
-            className="border-light bg-info-100 md:px-3 px-2 pb-2 pt-8 text-md md:text-xl w-full rounded-md"
+            className="border-light bg-info-100 md:px-3 px-3 py-3  text-md md:text-xl w-full rounded-md"
             type={data.type}
           />
-          <span className="text-normal absolute top-2 md:left-3 left-2 text-primary">
-            {data.label}
-          </span>
         </div>
       </section>
     );
@@ -106,37 +109,39 @@ const Login = () => {
   };
   return (
     <>
-      <main className=" md:w-96 w-full py-10 mx-auto  h-screen">
+      <main className="max-w-md w-full  py-10 mx-auto  h-screen">
         <ToastContainer transition={Zoom} autoClose={600} />
-        <div className="flex items-center justify-center">
-          <LightLogo />
-        </div>
-        <form className="    ">
-          <h1 className="text-primary font-bold py-3 text-4xl">Login</h1>
-          <div className="flex flex-col mt-6">{renderInputs}</div>
-          <p onClick={ResetPasswords} className="text-dark pointer text-end ">
-            Forgotten Password?
-          </p>
-          <div className="flex justify-center my-3">
-            {loading ? (
-              <LoadingButton
-                loading
-                loadingPosition="start"
-                startIcon={<SaveIcon />}
-                variant="contained"
-              >
-                Logging in
-              </LoadingButton>
-            ) : (
-              <button
-                onClick={handleLogin}
-                className="bg-normal p-3 rounded-md text-white w-32 "
-              >
-                Sign In
-              </button>
-            )}
+        <div className="border-2 p-4 px-10 shadow-md py-5 rounded-md">
+          <div className="flex items-center justify-center">
+            <LightLogo />
           </div>
-        </form>
+          <form className="    ">
+            <h1 className="text-primary font-bold py-3 text-4xl">Login</h1>
+            <div className="flex flex-col mt-6">{renderInputs}</div>
+            <p onClick={ResetPasswords} className="text-dark pointer text-end ">
+              Forgotten Password?
+            </p>
+            <div className="flex justify-center my-3">
+              {loading ? (
+                <LoadingButton
+                  loading
+                  loadingPosition="start"
+                  startIcon={<SaveIcon />}
+                  variant="contained"
+                >
+                  Logging in
+                </LoadingButton>
+              ) : (
+                <button
+                  onClick={handleLogin}
+                  className="bg-normal p-3 rounded-md text-white w-32 "
+                >
+                  Sign In
+                </button>
+              )}
+            </div>
+          </form>
+        </div>
       </main>
     </>
   );

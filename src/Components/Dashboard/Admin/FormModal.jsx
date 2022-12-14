@@ -38,7 +38,7 @@ const inputs = [
   },
 ];
 
-export const CreateAccount = ({ open, ToggleModal, setIsOpen }) => {
+export const CreateAccount = ({ open, ToggleModal, setIsOpen, setIsOpen2 }) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(Users());
@@ -59,9 +59,11 @@ export const CreateAccount = ({ open, ToggleModal, setIsOpen }) => {
     setValues({ ...values, [e.target.name]: e.target.value });
     // console.log(values)
   };
+  // setIsOpen2(true);
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsOpen(false);
+
     console.log(values);
     try {
       const response = await dispatch(CreateAdmin(values)).unwrap();
@@ -186,18 +188,65 @@ export const VerifyAccount = ({ open, setOpen, ToggleModal }) => {
   return (
     <main>
       <ToastContainer transition={Zoom} autoClose={800} />
-
-      <AnimatePresence exitBeforeEnter>
+      <AnimatePresence>
         {open && (
-          <motion.div variants={backdrop} intial="hidden" animate="animate">
+          <motion.div
+            variants={backdrop}
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            className="backdrop"
+          >
+            <div className=" absolute md:h-4/12  shadow-md app_container  overflow-y-scroll bg-white border-2  rounded-xl md:p-14 p-10 md:w-1/3 w-96  top-2/4    left-0  left-2/4  -translate-y-2/4 -translate-x-2/4">
+              <motion.div
+              // variants={variants}
+              // initial="hidden"
+              // animate="animate"
+              // exit="exit"
+              >
+                <form className=" my-6 ">
+                  <span onClick={ToggleModal}>
+                    <img
+                      className="md:w-10 w-8 absolute top-5 right-5"
+                      src={cancel}
+                      alt="cancel"
+                    />
+                  </span>
+                  <h1 className="text-primary md:text-2xl text-xl">
+                    Enter The Verification Token
+                  </h1>
+                  <input
+                    value={token}
+                    onChange={(e) => setToken(e.target.value)}
+                    className="border-light bg-info-100 p-3 my-2 md:px-3 text-md md:text-xl w-full rounded-md"
+                    type="number"
+                    name=""
+                    id=""
+                  />
+
+                  <div className="flex justify-center my-3">
+                    <button onClick={handleVerify} className="btn w-32 ">
+                      Verify
+                    </button>
+                  </div>
+                </form>
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* <AnimatePresence exitBeforeEnter>
+        {open && (
+          <motion.div variants={backdrop} initial="hidden" animate="animate">
             <motion.div
-              variants={variants}
-              intial="hidden"
-              animate="animate"
-              exit="exit"
-              className=" absolute md:h-4/12 relative shadow-md app_container  overflow-y-scroll bg-white border-2  rounded-xl p-14 md:w-2/4 w-full md:top-2/4   top-12 left-0 right-0 md:left-2/4 md:-translate-y-2/4 md:-translate-x-2/4"
+            variants={variants}
+            initial="hidden"
+            animate="animate"
+            exit="exit"
+            className=" absolute md:h-4/12 relative shadow-md app_container  overflow-y-scroll bg-white border-2  rounded-xl p-14 md:w-2/4 w-full md:top-2/4   top-12 left-0 right-0 md:left-2/4 md:-translate-y-2/4 md:-translate-x-2/4"
             >
-              <form className="    ">
+              <form className="  ">
                 <span onClick={ToggleModal}>
                   <img
                     className="w-10 absolute top-5 right-5"
@@ -226,7 +275,7 @@ export const VerifyAccount = ({ open, setOpen, ToggleModal }) => {
             </motion.div>
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence> */}
     </main>
   );
 };

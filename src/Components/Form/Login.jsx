@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router";
 import { useState } from "react";
 import { BASE_URL } from "../../../Api";
-import { Login as SignIn } from "../../Redux/Actions";
+import { Login as SignIn, User } from "../../Redux/Actions";
 import { useSelector, useDispatch } from "react-redux";
 import { Loader2 } from "../../Components/Common/Loader";
 import { LightLogo } from "../Common/Logo";
@@ -62,11 +62,14 @@ const Login = () => {
         // console.log(response.data.data.user.type);
 
         SuccessNotification(response?.message);
+        // const check = await dispatch(User());
+        // console.log(check);
 
         setTimeout(() => {
           console.log("LOG....");
-          navigate("/");
-          window.location.reload();
+          window.location.href = "/";
+          // navigate("/");
+          // window.location.reload();
         }, 500);
       } else if (
         response?.data?.user?.type !== "super" &&

@@ -9,7 +9,7 @@ export const Login = createAsyncThunk("login", async (data, THUNKAPI) => {
     console.log(THUNKAPI.fulfillWithValue(response.data.data));
     return THUNKAPI.fulfillWithValue(response.data);
   } catch (err) {
-    // console.log(err);
+    console.log(err);
     throw THUNKAPI.rejectWithValue(err);
   }
 });

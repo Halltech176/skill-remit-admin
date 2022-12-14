@@ -1,7 +1,8 @@
 export const sendTo = [
   {
     label: "All Member",
-    value: "admin" || "user" || "vendor",
+    // value: "admin" || "user" || "vendor",
+    value: "all",
   },
   {
     label: "All User",

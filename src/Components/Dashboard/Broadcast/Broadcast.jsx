@@ -2,7 +2,7 @@ import { sendTo, sendAs } from "./SentMessage";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { BASE_URL, HEADER } from "../../../../Api";
-import { Users } from "../../../Redux/Actions";
+import { Users, GetUserStats } from "../../../Redux/Actions";
 import { useDispatch, useSelector } from "react-redux";
 import { HandleError } from "../../../Components/Common/HandleError";
 import { Loader1 } from "../../../Components/Common/Loader";
@@ -20,25 +20,33 @@ const Commission = () => {
   const [message, setMessage] = useState("");
   const [userIds, setUserIds] = useState([]);
   const dispatch = useDispatch();
+  const { user_stats } = useSelector((state) => state?.userstats);
   const selector = useSelector((state) => state.users?.user?.docs);
   const selector2 = useSelector((state) => state.users?.user);
 
   useEffect(() => {
     dispatch(Users({ limit: selector2?.totalPages * selector2?.totalDocs }));
+    dispatch(GetUserStats());
   }, []);
+  console.log(user_stats);
 
-  const GetID = (id) => {
-    console.log(id);
-    const response = selector
-      ?.filter((data, index) => {
-        return data?.type === id;
-      })
-      .map((data, index) => {
-        return data?._id;
+  const handleSendTo = (e, id) => {
+    setUser(e.target.value);
+    if (id === "all") {
+      const response = user_stats?.docs?.map((data, index) => {
+        return data;
       });
-    setUserIds(response);
-    console.log(response);
-    return response;
+      return setUserIds(response);
+    } else {
+      const response = user_stats?.docs
+        ?.filter((data, index) => {
+          return data?.type === id;
+        })
+        .map((data) => {
+          return data;
+        });
+      return setUserIds(response);
+    }
   };
 
   console.log(userIds);
@@ -46,10 +54,6 @@ const Commission = () => {
   // console.log(selector);
   const handleMode = (e) => {
     setMode(e.target.value);
-  };
-  const handleUser = (e) => {
-    setUser(e.target.value);
-    GetID(e.target.value);
   };
 
   console.log(selector2);
@@ -59,7 +63,7 @@ const Commission = () => {
       <section className="flex text-center">
         <input
           value={data.value}
-          onChange={handleUser}
+          onChange={(e) => handleSendTo(e, data.value)}
           checked={user === data.value}
           className=""
           name="sendTo"
@@ -94,6 +98,12 @@ const Commission = () => {
     const data = { title, message, userIds, as: mode };
     console.log(data);
     try {
+      if (data?.title === "") {
+        throw "Title should not be empty";
+      }
+      if (data?.message === "") {
+        throw "Message should not be empty";
+      }
       const response = await axios.post(
         `${BASE_URL}//notification/send`,
         data,
@@ -105,7 +115,7 @@ const Commission = () => {
       console.log(response);
     } catch (err) {
       HandleError(err);
-      console.log(err.response.data.message);
+      console.log(err?.response?.data?.message);
     }
   };
   return (

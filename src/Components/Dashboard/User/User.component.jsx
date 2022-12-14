@@ -46,11 +46,6 @@ const UserComponent = ({ user_credentials }) => {
               src={data?.avatar?.url ? data?.avatar?.url : person1}
               className="w-8 rounded-full h-8"
             />
-            {/* <img
-              src={data?.avatar?.url ? data?.avatar?.url : person1}
-              className="w-8 rounded-full h-8"
-              alt="user"
-            /> */}
           </span>
           <span className="mx-3">
             {data.firstName} {data.lastName}

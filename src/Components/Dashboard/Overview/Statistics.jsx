@@ -32,21 +32,3 @@ export const summary = [
     icon: icon_4,
   },
 ];
-
-export const stats = [
-  {
-    title: "work completed",
-    percent: 25,
-    status: "completed",
-  },
-  {
-    title: "Active User",
-    percent: 50,
-    status: "active",
-  },
-  {
-    title: "pending job",
-    percent: 75,
-    status: "pending",
-  },
-];

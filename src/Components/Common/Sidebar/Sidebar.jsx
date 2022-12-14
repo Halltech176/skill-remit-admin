@@ -59,9 +59,8 @@ const Sidebar = ({ route }) => {
   const path = location.pathname;
 
   const handleLogout = () => {
-    setOpen(false);
-
-    localStorage.clear();
+    console.log("logging...");
+    window.localStorage.clear();
     navigate("/login");
   };
 

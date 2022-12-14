@@ -54,7 +54,9 @@ export const DoughnutChart = ({ percent }) => {
   return <Doughnut data={data} />;
 };
 
-export const LineChart = () => {
+export const LineChart = ({ datas, label, users_counts }) => {
+  console.log(label);
+  console.log(datas);
   // const options = {
   //   responsive: true,
   //   interaction: {
@@ -84,13 +86,20 @@ export const LineChart = () => {
   //     },
   //   },
   // };
-  const labels = ["Jan", "Feb", "March", "April", "May", "June", "July"];
+  const labels = label;
   const data = {
     labels: labels,
     datasets: [
       {
-        label: "My First Dataset",
-        data: [65, 59, 80, 81, 56, 55, 40],
+        label: "users",
+        data: datas,
+        fill: false,
+        borderColor: "rgb(75, 192, 192)",
+        tension: 0.1,
+      },
+      {
+        label: "vendor",
+        data: users_counts,
         fill: false,
         borderColor: "rgb(75, 192, 192)",
         tension: 0.1,
@@ -100,24 +109,16 @@ export const LineChart = () => {
   return <Line data={data} />;
 };
 
-export const AreaChart = () => {
-  const labels = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-  ];
+export const AreaChart = ({ job_months, job_counts }) => {
+  const labels = job_months;
 
   const data = {
     labels,
     datasets: [
       {
         fill: true,
-        label: "Dataset 2",
-        data: [65, 59, 80, 81, 56, 55, 40],
+        label: "Jobs",
+        data: job_counts,
         borderColor: "rgb(53, 162, 235)",
         backgroundColor: "rgba(53, 162, 235, 0.5)",
       },

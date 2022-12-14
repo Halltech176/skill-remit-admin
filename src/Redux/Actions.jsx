@@ -7,7 +7,7 @@ export const Login = createAsyncThunk("login", async (data, THUNKAPI) => {
   try {
     const response = await axios.post(`${BASE_URL}/auth/login`, data);
     console.log(THUNKAPI.fulfillWithValue(response.data.data));
-    return THUNKAPI.fulfillWithValue(response);
+    return THUNKAPI.fulfillWithValue(response.data);
   } catch (err) {
     // console.log(err);
     throw THUNKAPI.rejectWithValue(err);
@@ -110,10 +110,7 @@ export const AllTransactions = createAsyncThunk(
 
 export const Jobs = createAsyncThunk("jobs", async (data, THUNKAPI) => {
   try {
-    const response = await axios.get(
-      `${BASE_URL}//job?populate=createdBy.avatar&populate=images`,
-      HEADER
-    );
+    const response = await axios.get(`${BASE_URL}/job?limit=0`, HEADER);
 
     return THUNKAPI.fulfillWithValue(response.data.data);
   } catch (err) {
@@ -268,3 +265,21 @@ export const GetReview = createAsyncThunk("reviews", async (_, THUNKAPI) => {
     throw THUNKAPI.rejectWithValue(err);
   }
 });
+
+export const GetUserStats = createAsyncThunk(
+  "user_stats",
+  async (_, THUNKAPI) => {
+    try {
+      const response = await axios.get(
+        `${BASE_URL}//admin/users?limit=0`,
+        HEADER
+      );
+
+      return THUNKAPI.fulfillWithValue(response.data.data);
+    } catch (err) {
+      console.log(err);
+      HandleError(err);
+      throw THUNKAPI.rejectWithValue(err);
+    }
+  }
+);

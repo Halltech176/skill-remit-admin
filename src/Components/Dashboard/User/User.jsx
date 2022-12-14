@@ -6,7 +6,12 @@ import arrowDown from "../../../assets/arrow-down.png";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { Users, ClickedUser, Feedbacks } from "../../../Redux/Actions";
+import {
+  Users,
+  ClickedUser,
+  Feedbacks,
+  GetUserStats,
+} from "../../../Redux/Actions";
 import { Loader1 } from "../../Common/Loader";
 import { AllAccounts } from "./AccountsStatus";
 import PaginateComponent from "../../Common/Paginate.component";
@@ -21,6 +26,7 @@ const User = () => {
 
   useEffect(() => {
     dispatch(Users({ status: "" }));
+    dispatch(GetUserStats());
   }, []);
 
   const [value, setValue] = useState(0);

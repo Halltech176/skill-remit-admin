@@ -20,6 +20,7 @@ import { FeedbacksReducer } from "./Slices/FeedbackSlice";
 import { JobsReducer } from "./Slices/JobSlice";
 import { GetReviewReducer } from "./Slices/ReviewSlice";
 import { UserChatReducer } from "./Slices/UsersChatSlice";
+import { UserStatsReducer } from "./Slices/UserStats";
 
 const reducers = combineReducers({
   user: UserReducer,
@@ -38,6 +39,7 @@ const reducers = combineReducers({
   jobs: JobsReducer,
   review: GetReviewReducer,
   chat: UserChatReducer,
+  userstats: UserStatsReducer,
 });
 
 const Store = configureStore({

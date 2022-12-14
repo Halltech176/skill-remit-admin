@@ -7,6 +7,7 @@ import { Loader2 } from "../../Components/Common/Loader";
 import { LightLogo } from "../Common/Logo";
 import { ErrorNotification, SuccessNotification } from "../Common/Toastify";
 import { HandleError } from "../Common/HandleError";
+import { HandleSuccess } from "../Common/HandleSuccess";
 import { ToastContainer, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
@@ -50,25 +51,28 @@ const Login = () => {
       console.log(response);
 
       if (
-        (response?.status === 200 &&
-          response?.data?.data?.user?.type === "super") ||
-        response?.data?.data?.user?.type === "admin"
+        (response && response?.data?.user?.type === "super") ||
+        response?.data?.user?.type === "admin"
       ) {
         window.localStorage.setItem(
           "token",
-          JSON.stringify(response?.data?.data.token)
+          JSON.stringify(response?.data?.token)
         );
 
-        console.log(response.data.data.user.type);
-        SuccessNotification(response.data.message);
+        // console.log(response.data.data.user.type);
+
+        SuccessNotification(response?.message);
+
         setTimeout(() => {
+          console.log("LOG....");
           navigate("/");
-        }, 1000);
+          window.location.reload();
+        }, 500);
       } else if (
-        response?.data?.data?.user?.type !== "super" &&
-        response?.data?.data?.user?.type !== "admin"
+        response?.data?.user?.type !== "super" &&
+        response?.data?.user?.type !== "admin"
       ) {
-        console.log(response.data.data.user.type);
+        console.log(response.data);
         throw "not super";
       }
     } catch (err) {

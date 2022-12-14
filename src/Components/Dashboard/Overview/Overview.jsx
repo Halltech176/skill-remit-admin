@@ -1,4 +1,4 @@
-import { summary, stats } from "./Statistics";
+import { summary } from "./Statistics";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import {
@@ -7,24 +7,11 @@ import {
   ActiveUsers,
   Feedbacks,
   Jobs,
+  GetUserStats,
 } from "../../../Redux/Actions";
 import { DoughnutChart, LineChart, AreaChart } from "./Visuals";
 const Oveview = () => {
   const dispatch = useDispatch();
-
-  const { user, loading, error } = useSelector((state) => state.users);
-  const actives = useSelector((state) => state.actives);
-  const suspended = useSelector((state) => state.suspended);
-  const { feedbacks } = useSelector((state) => state.feedback);
-  const selector = useSelector((state) => state);
-  const values = [
-    actives?.user?.totalDocs,
-    user?.totalDocs,
-    feedbacks?.totalDocs,
-    feedbacks?.totalDocs,
-  ];
-
-  console.log(selector);
 
   useEffect(() => {
     dispatch(Users({ status: "" }));
@@ -32,7 +19,100 @@ const Oveview = () => {
     dispatch(ActiveUsers());
     dispatch(Feedbacks());
     dispatch(Jobs());
+    dispatch(GetUserStats());
   }, []);
+
+  const { user, loading, error } = useSelector((state) => state.users);
+  const actives = useSelector((state) => state.actives);
+  const suspended = useSelector((state) => state.suspended);
+  const { feedbacks } = useSelector((state) => state.feedback);
+  const { user_stats } = useSelector((state) => state.userstats);
+  const { jobs } = useSelector((state) => state.jobs);
+  const selector = useSelector((state) => state);
+
+  const values = [
+    actives?.user?.totalDocs,
+    user?.totalDocs,
+    feedbacks?.totalDocs,
+    feedbacks?.totalDocs,
+  ];
+
+  const active_users_percent = Math.ceil(
+    (actives?.user?.totalDocs / user?.totalDocs) * 100
+  );
+
+  const alljobs = jobs?.docs
+    ?.map((data, index) => {
+      return new Date(data?.createdAt).toLocaleDateString("default", {
+        month: "long",
+      });
+    })
+    ?.reduce((acc, cur) => ((acc[cur] = (acc[cur] || 0) + 1), acc), {});
+
+  const job_counts = alljobs && Object.values(alljobs)?.reverse();
+  const job_months = alljobs && Object.values(alljobs)?.reverse();
+  console.log(job_counts, job_months);
+
+  const stats = [
+    {
+      title: "work completed",
+      percent: 25,
+      status: "completed",
+    },
+    {
+      title: "Active User",
+      percent: active_users_percent,
+      status: "active",
+    },
+    {
+      title: "pending job",
+      percent: 75,
+      status: "pending",
+    },
+  ];
+
+  const date_created = user_stats?.docs?.map((data, index) => {
+    return new Date(data?.createdAt).toLocaleDateString("default", {
+      month: "long",
+    });
+  });
+
+  const labels = Array.from(new Set(date_created))?.reverse();
+  console.log(labels);
+
+  // const vendor = user_stats?.docs
+  //   ?.filter((data, index) => {
+  //     return data?.type === "vendor";
+  //   })
+  //   ?.map((data, index) => {
+  //     return new Date(data?.createdAt).toLocaleDateString("default", {
+  //       month: "long",
+  //     });
+  //   });
+
+  const users_data = user_stats?.docs
+    ?.filter((data, index) => {
+      return data?.type === "user";
+    })
+    ?.map((data, index) => {
+      return new Date(data?.createdAt).toLocaleDateString("default", {
+        month: "long",
+      });
+    })
+    ?.reduce((acc, cur) => ((acc[cur] = (acc[cur] || 0) + 1), acc), {});
+
+  const users_counts = users_data && Object.values(users_data)?.reverse();
+
+  // console.log(vendor);
+  console.log(users_counts);
+
+  const data_obj = date_created?.reduce(
+    (acc, cur) => ((acc[cur] = (acc[cur] || 0) + 1), acc),
+    {}
+  );
+
+  const occurences = data_obj && Object.values(data_obj)?.reverse();
+
   const renderSummary = summary.map((data, index) => {
     return (
       <section
@@ -105,13 +185,16 @@ const Oveview = () => {
             >
               Job Create
             </h1>
-            <div className="bg-white md:p-5 p-3 rounded-xl md:rounded-3xl">
-              <LineChart />
+            <div className="my-4 bg-white  md:p-5 p-3 rounded-xl md:rounded-3xl">
+              <AreaChart job_counts={job_counts} job_months={job_months} />
             </div>
-          </div>
-
-          <div className="my-4 bg-white  md:p-5 p-3 rounded-xl md:rounded-3xl">
-            <AreaChart />
+            <div className="bg-white md:p-5 p-3 rounded-xl md:rounded-3xl">
+              <LineChart
+                datas={occurences}
+                label={labels}
+                users_counts={users_counts}
+              />
+            </div>
           </div>
         </div>
       </div>

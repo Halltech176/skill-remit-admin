@@ -6,20 +6,17 @@ import { User, AllTransactions } from "../Redux/Actions";
 import { Loader1 } from "../Components/Common/Loader";
 
 export const RequireAuth = ({ children }) => {
-  const val = JSON.parse(localStorage.getItem("val"));
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(User());
-    dispatch(AllTransactions());
   }, [dispatch]);
 
   const trans = useSelector((state) => state);
   const { loading, user, error } = useSelector((state) => state.user);
   // console.log(loading, error, user);
-  // console.log(trans);
+  console.log(user);
 
   if (TOKEN === null) {
     navigate("/login");

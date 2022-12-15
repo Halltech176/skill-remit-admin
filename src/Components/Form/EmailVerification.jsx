@@ -8,11 +8,12 @@ import "react-toastify/dist/ReactToastify.css";
 import { HandleError } from "../Common/HandleError";
 const EmailVerification = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("dev");
-  console.log(email);
+  const [email, setEmail] = useState("");
+
   const RequestToken = async () => {
+    console.log(email);
     try {
-      const response = await axios.get(
+      const response = await axios.post(
         `${BASE_URL}//auth/request-reset-password?email=${email}`
       );
       console.log(response);
@@ -22,10 +23,10 @@ const EmailVerification = () => {
       }
     } catch (err) {
       console.log(err);
-      if (err.response.status === 404) {
-        ErrorNotification("An account with this email doesn't exist");
-        return;
-      }
+      // if (err.response.status === 404) {
+      //   ErrorNotification("An account with this email doesn't exist");
+      //   return;
+      // }
       HandleError(err);
     }
   };

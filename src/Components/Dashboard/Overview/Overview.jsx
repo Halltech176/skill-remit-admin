@@ -186,8 +186,8 @@ const Oveview = () => {
           {renderSummary}
         </div>
 
-        <div className="flex flex-col  h-96 app_container my-4">
-          <div className="my-4">
+        <div className="flex flex-col  md:h-96 overflow-y-scroll app_container my-4">
+          <div className="my-4 app_container">
             <h1
               className="font-aeonik-light mb-4 text-xl tracking-widest font-bold"
               style={{ color: "#141414" }}

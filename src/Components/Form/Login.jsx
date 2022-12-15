@@ -141,7 +141,7 @@ const Login = () => {
               ) : (
                 <button
                   onClick={handleLogin}
-                  className="bg-normal p-3 rounded-md text-white w-32 "
+                  className="bg-normal p-3 rounded-md my-3 text-white md:w-32 w-full"
                 >
                   Sign In
                 </button>

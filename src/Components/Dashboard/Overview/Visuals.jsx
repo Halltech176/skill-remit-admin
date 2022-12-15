@@ -54,76 +54,103 @@ export const DoughnutChart = ({ percent }) => {
   return <Doughnut data={data} />;
 };
 
-export const LineChart = ({ datas, label, users_counts }) => {
+export const LineChart = ({ label, users_data, vendors_data }) => {
   console.log(label);
-  console.log(datas);
-  // const options = {
-  //   responsive: true,
-  //   interaction: {
-  //     mode: "index",
-  //     intersect: false,
-  //   },
-  //   stacked: false,
-  //   plugins: {
-  //     title: {
-  //       display: true,
-  //       text: "Chart.js Line Chart - Multi Axis",
-  //     },
-  //   },
-  //   scales: {
-  //     y: {
-  //       type: "linear",
-  //       display: true,
-  //       position: "left",
-  //     },
-  //     y1: {
-  //       type: "linear",
-  //       display: true,
-  //       position: "right",
-  //       grid: {
-  //         drawOnChartArea: false,
-  //       },
-  //     },
-  //   },
-  // };
-  const labels = label;
+  console.log(users_data);
+  console.log(vendors_data);
+
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+    scales: {
+      x: {
+        grid: {
+          display: false,
+        },
+      },
+      y: {
+        grid: {
+          display: false,
+        },
+      },
+    },
+  };
+
   const data = {
-    labels: labels,
+    labels: label,
+
     datasets: [
       {
-        label: "users",
-        data: datas,
+        label: false,
+        data: users_data,
         fill: false,
-        borderColor: "rgb(75, 192, 192)",
-        tension: 0.1,
+        borderColor: "#5041BC",
+        lineTension: 0.8,
+        color: "#5041BC",
       },
       {
         label: "vendor",
-        data: users_counts,
+        data: vendors_data,
         fill: false,
-        borderColor: "rgb(75, 192, 192)",
-        tension: 0.1,
+        borderColor: "#43BE83",
+        lineTension: 0.5,
+        color: "#5041BC",
       },
     ],
   };
-  return <Line data={data} />;
+  return <Line data={data} options={options} />;
 };
 
 export const AreaChart = ({ job_months, job_counts }) => {
-  const labels = job_months;
-
+  console.log(job_counts, job_months);
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+    scales: {
+      x: {
+        grid: {
+          display: false,
+        },
+      },
+      y: {
+        grid: {
+          display: false,
+        },
+      },
+    },
+  };
   const data = {
-    labels,
+    labels: job_months,
+    // type: "line",
     datasets: [
       {
-        fill: true,
+        // fillColor: "pink",
         label: "Jobs",
         data: job_counts,
-        borderColor: "rgb(53, 162, 235)",
-        backgroundColor: "rgba(53, 162, 235, 0.5)",
+        lineTension: 0.4,
+        // data: job_counts,
+        // borderColor: "rgb(53, 162, 235)",
+        borderColor: "#3D29D0",
+        // backgroundColor: "red",
+        color: "#5041BC",
       },
     ],
   };
 
-  return <Line data={data} />;
+  return (
+    <div>
+      {" "}
+      <Line data={data} options={options} />
+    </div>
+  );
 };

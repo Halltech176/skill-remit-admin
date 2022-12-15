@@ -50,7 +50,7 @@ const Oveview = () => {
     ?.reduce((acc, cur) => ((acc[cur] = (acc[cur] || 0) + 1), acc), {});
 
   const job_counts = alljobs && Object.values(alljobs)?.reverse();
-  const job_months = alljobs && Object.values(alljobs)?.reverse();
+  const job_months = alljobs && Object.keys(alljobs)?.reverse();
   console.log(job_counts, job_months);
 
   const stats = [
@@ -58,16 +58,19 @@ const Oveview = () => {
       title: "work completed",
       percent: 25,
       status: "completed",
+      label: "Archieved",
     },
     {
       title: "Active User",
       percent: active_users_percent,
       status: "active",
+      label: " Active",
     },
     {
       title: "pending job",
       percent: 75,
       status: "pending",
+      label: " Pending Job",
     },
   ];
 
@@ -78,17 +81,6 @@ const Oveview = () => {
   });
 
   const labels = Array.from(new Set(date_created))?.reverse();
-  console.log(labels);
-
-  // const vendor = user_stats?.docs
-  //   ?.filter((data, index) => {
-  //     return data?.type === "vendor";
-  //   })
-  //   ?.map((data, index) => {
-  //     return new Date(data?.createdAt).toLocaleDateString("default", {
-  //       month: "long",
-  //     });
-  //   });
 
   const users_data = user_stats?.docs
     ?.filter((data, index) => {
@@ -101,17 +93,30 @@ const Oveview = () => {
     })
     ?.reduce((acc, cur) => ((acc[cur] = (acc[cur] || 0) + 1), acc), {});
 
-  const users_counts = users_data && Object.values(users_data)?.reverse();
+  const vendors_data = user_stats?.docs
+    ?.filter((data, index) => {
+      return data?.type === "vendor";
+    })
+    ?.map((data, index) => {
+      return new Date(data?.createdAt).toLocaleDateString("default", {
+        month: "long",
+      });
+    })
+    ?.reduce((acc, cur) => ((acc[cur] = (acc[cur] || 0) + 1), acc), {});
 
-  // console.log(vendor);
-  console.log(users_counts);
+  const users_arr =
+    users_data &&
+    Object.entries(users_data).map((data, index) => {
+      return { x: data[0], y: data[1] };
+    });
 
-  const data_obj = date_created?.reduce(
-    (acc, cur) => ((acc[cur] = (acc[cur] || 0) + 1), acc),
-    {}
-  );
+  const vendors_arr =
+    users_data &&
+    Object.entries(vendors_data).map((data, index) => {
+      return { x: data[0], y: data[1] };
+    });
 
-  const occurences = data_obj && Object.values(data_obj)?.reverse();
+  console.log(users_arr);
 
   const renderSummary = summary.map((data, index) => {
     return (
@@ -143,7 +148,6 @@ const Oveview = () => {
   });
 
   const renderStats = stats.map((data, index) => {
-    console.log(data.percent);
     return (
       <section
         className={`${
@@ -152,15 +156,20 @@ const Oveview = () => {
             : data.status === "active"
             ? "bg-secondary-dark"
             : "bg-primary-dark"
-        } my-4 p-5 h-36  w-full flex items-center justify-between text-white`}
+        } my-4 p-5 h-36  w-full  rounded-xl flex items-center justify-between text-white`}
       >
         <div className="">
-          <h1 className="text-2xl font-aeonik-light capitalize tracking-widest font-medium ">
+          <h1 className="text-mds font-aeonik-light capitalize tracking-widest font-medium ">
             {data.title}
           </h1>
-          <p>{data.percent}%</p>
+          <p className="my-3">
+            {data.percent}% {data?.label}
+          </p>
         </div>
-        <span></span>
+        <span
+          style={{ background: "#F6F6FC" }}
+          className="block  w-0.5 mx-2 h-full"
+        ></span>
         <div className="w-24 relative">
           <DoughnutChart percent={data.percent} />
           <span className="absolute top-14 left-12 text-2xl -translate-x-2/4 -translate-y-2/4 ">
@@ -171,13 +180,13 @@ const Oveview = () => {
     );
   });
   return (
-    <main className="md:flex flex-wrap lg:flex-nowrap  w-full">
-      <div className=" mr-4 md:h-1/5 md:overflow-x-scroll lg:w-4/6 ">
+    <main className="md:flex flex-wrap   lg:flex-nowrap  w-full">
+      <div className=" mr-4 md:h-1/5 md:overflow-x-scroll grow ">
         <div className="flex app_container pb-5 overflow-x-scroll justify-between">
           {renderSummary}
         </div>
 
-        <div className="flex flex-col  my-4">
+        <div className="flex flex-col  h-96 app_container my-4">
           <div className="my-4">
             <h1
               className="font-aeonik-light mb-4 text-xl tracking-widest font-bold"
@@ -185,24 +194,28 @@ const Oveview = () => {
             >
               Job Create
             </h1>
-            <div className="my-4 bg-white  md:p-5 p-3 rounded-xl md:rounded-3xl">
-              <AreaChart job_counts={job_counts} job_months={job_months} />
+            <div className="my-4 bg-white s md:p-5 p-3 h-64 rounded-xl md:rounded-3xl">
+              <h1 className="text-primary">Job </h1>
+              <div className="">
+                <AreaChart job_counts={job_counts} job_months={job_months} />
+              </div>
             </div>
-            <div className="bg-white md:p-5 p-3 rounded-xl md:rounded-3xl">
+            <div className="bg-white md:p-5 p-3 h-64 rounded-xl md:rounded-3xl">
+              <h1 className="text-primary">Users </h1>
               <LineChart
-                datas={occurences}
                 label={labels}
-                users_counts={users_counts}
+                users_data={users_arr}
+                vendors_data={vendors_arr}
               />
             </div>
           </div>
         </div>
       </div>
-      <div className="lg:w-4/12 w-full ">
+      <div className=" ">
         <h1 className="font-black text-xl text-dark font-aeonik-light mb-2">
           Statistics
         </h1>
-        <div className="flex  flex-col   justify-evenly my-2">
+        <div className="flex  flex-col md:w-96 w-full justify-evenly my-2">
           {renderStats}
         </div>
       </div>

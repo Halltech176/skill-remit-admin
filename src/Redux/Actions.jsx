@@ -23,6 +23,7 @@ export const User = createAsyncThunk("user", async () => {
 
     return response.data.data;
   } catch (err) {
+    HandleError(err);
     throw err;
     // console.log(err);
   }
@@ -70,12 +71,13 @@ export const Users = createAsyncThunk("users", async (value) => {
           : `status=${value?.status}`
       }&populate=avatar&populate=wallet.histories&page=${
         value?.page || 1
-      }&limit=${value?.limit || 10}`,
+      }&limit=${value?.limit || 10}&keyword=olajide`,
       HEADER
     );
 
     return response.data.data;
   } catch (err) {
+    HandleError(err);
     throw err;
     // console.log(err);
   }
@@ -168,6 +170,7 @@ export const Feedbacks = createAsyncThunk(
       return THUNKAPI.fulfillWithValue(response.data.data);
     } catch (err) {
       console.log(err);
+      HandleError(err);
       throw THUNKAPI.rejectWithValue(err);
     }
   }
@@ -192,6 +195,7 @@ export const SuspendedUsers = createAsyncThunk(
 
       return response.data.data;
     } catch (err) {
+      HandleError(err);
       console.log(err);
 
       throw THUNKAPI.rejectWithValue(err);
@@ -204,6 +208,7 @@ export const SiteData = createAsyncThunk("sitedata", async () => {
     const response = await axios.get(`${BASE_URL}//settings`, HEADER);
     return response.data.data;
   } catch (err) {
+    HandleError(err);
     console.log(err);
     throw err;
   }
@@ -219,6 +224,7 @@ export const FetchChat = createAsyncThunk("chats", async (data, THUNKAPI) => {
     return THUNKAPI.fulfillWithValue(response.data.data);
   } catch (err) {
     console.log(err);
+    HandleError(err);
     throw THUNKAPI.rejectWithValue(err);
   }
 });
@@ -234,6 +240,7 @@ export const UserChat = createAsyncThunk("chat", async (data, THUNKAPI) => {
     return THUNKAPI.fulfillWithValue(response.data.data);
   } catch (err) {
     console.log(err);
+    HandleError(err);
     throw THUNKAPI.rejectWithValue(err);
   }
 });

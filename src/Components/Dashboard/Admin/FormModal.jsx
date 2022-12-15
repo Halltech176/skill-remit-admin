@@ -236,46 +236,7 @@ export const VerifyAccount = ({ open, setOpen, ToggleModal }) => {
         )}
       </AnimatePresence>
 
-      {/* <AnimatePresence exitBeforeEnter>
-        {open && (
-          <motion.div variants={backdrop} initial="hidden" animate="animate">
-            <motion.div
-            variants={variants}
-            initial="hidden"
-            animate="animate"
-            exit="exit"
-            className=" absolute md:h-4/12 relative shadow-md app_container  overflow-y-scroll bg-white border-2  rounded-xl p-14 md:w-2/4 w-full md:top-2/4   top-12 left-0 right-0 md:left-2/4 md:-translate-y-2/4 md:-translate-x-2/4"
-            >
-              <form className="  ">
-                <span onClick={ToggleModal}>
-                  <img
-                    className="w-10 absolute top-5 right-5"
-                    src={cancel}
-                    alt="cancel"
-                  />
-                </span>
-                <h1 className="text-primary text-2xl">
-                  Enter The Verification Token
-                </h1>
-                <input
-                  value={token}
-                  onChange={(e) => setToken(e.target.value)}
-                  className="border-light bg-info-100 p-3 my-2 md:px-3 text-md md:text-xl w-full rounded-md"
-                  type="number"
-                  name=""
-                  id=""
-                />
-
-                <div className="flex justify-center my-3">
-                  <button onClick={handleVerify} className="btn w-32 ">
-                    Verify
-                  </button>
-                </div>
-              </form>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence> */}
+  
     </main>
   );
 };

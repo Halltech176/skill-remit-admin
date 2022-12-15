@@ -1,5 +1,6 @@
 import user_image from "../../../assets/no_avatar.png";
 import search_sm from "../../../assets/search_sm.png";
+import Search from "./Search.component";
 import bell from "../../../assets/bell.png";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
@@ -23,17 +24,7 @@ const Header = ({ title }) => {
             {title}
           </h1>
         </div>
-        <div className="flex md:my-0 my-3 relative">
-          <input
-            //   style={{ background: "rgba(19, 1, 96, 0.2)" }}
-            placeholder="Search"
-            type="text"
-            className="border text-dark bg-primary-100 w-96 rounded-md pr-9 pl-3 py-2"
-          />
-          <span className="absolute top-1/3 right-2">
-            <img src={search_sm} alt="search" />
-          </span>
-        </div>
+        <Search />
 
         <div className="md:flex  hidden items-center justify-between ">
           <span>

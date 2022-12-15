@@ -5,12 +5,21 @@ import copy from "../../../assets/copy.png";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { FetchChat, UserChat } from "../../../Redux/Actions";
+import { io } from "socket.io-client";
 const Dispute = () => {
   const dispatch = useDispatch();
   const { chats, loading, error } = useSelector((state) => state.chats);
+  const { user } = useSelector((state) => state.user);
+  console.log(user);
   useEffect(() => {
     dispatch(FetchChat());
   }, []);
+  // const socket = io(
+  //   `https://skill-remit.herokuapp.com/api?USERID=${user?._id}`
+  // );
+  // socket.on("connect", () => {
+  //   console.log("you are conneted");
+  // });
   const GetUserChat = async (id) => {
     try {
       window.localStorage.setItem("CHAT_ID", JSON.stringify(id));

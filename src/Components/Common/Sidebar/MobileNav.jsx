@@ -34,7 +34,7 @@ import ListItemText from "@mui/material/ListItemText";
 import RouteLinks from "./RouteLinks.json";
 
 const drawerWidth = 250;
-const MobileNav = ({ actives, inactives }) => {
+const MobileNav = ({ actives, inactives, toggleLogout, setToggleLogout }) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(User());
@@ -49,10 +49,10 @@ const MobileNav = ({ actives, inactives }) => {
   const path = location.pathname;
 
   const handleLogout = () => {
+    document.body.style.overflow = "hidden";
     setOpen(false);
 
-    localStorage.clear();
-    navigate("/login");
+    setToggleLogout(true);
   };
 
   const handleDrawerOpen = () => {

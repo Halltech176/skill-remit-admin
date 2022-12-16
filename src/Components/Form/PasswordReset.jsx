@@ -6,10 +6,25 @@ import { ErrorNotification, SuccessNotification } from "../Common/Toastify";
 import { ToastContainer, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { HandleError } from "../Common/HandleError";
+import { BiHide, BiShow } from "react-icons/bi";
 const PasswordReset = () => {
   const navigate = useNavigate();
   const [password, setPassword] = useState("dev");
   const [token, setToken] = useState("12345");
+  const [toggleStates, setToggleStates] = useState({
+    show: false,
+    type: "password",
+  });
+
+  const TogglePassword = () => {
+    if (toggleStates.show) {
+      setToggleStates({ show: false, type: "text" });
+      // setToggleStates({ show: !toggleStates.show });
+    } else {
+      setToggleStates({ show: true, type: "password" });
+      // setToggleStates({ show: !toggleStates.show });
+    }
+  };
 
   const ChangePassword = async () => {
     try {
@@ -50,21 +65,31 @@ const PasswordReset = () => {
             value={token}
             onChange={(e) => setToken(e.target.value)}
             className="border-light bg-info-100 p-3 my-2 md:px-3 text-md md:text-xl w-full rounded-md"
-            type="password"
+            type="number"
             name=""
             id=""
           />
           <label htmlFor="" className="font-medium md:text-xl  text-md">
             Enter your new password
           </label>
-          <input
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="border-light bg-info-100 p-3 my-2 md:px-3 text-md md:text-xl w-full rounded-md"
-            type="email"
-            name=""
-            id=""
-          />
+          <div className="relative">
+            <input
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="border-light bg-info-100 p-3  my-2 md:px-3 pr-10 md:pr-10 text-md md:text-xl w-full rounded-md"
+              type={toggleStates.type}
+              name=""
+              id=""
+            />
+
+            <span
+              onClick={TogglePassword}
+              className="absolute  top-7 right-2 bottom-1/2 "
+            >
+              {toggleStates.show ? <BiHide /> : <BiShow />}
+            </span>
+          </div>
+
           <div className="buttons my-5 flex">
             <button
               onClick={() => navigate(-1)}

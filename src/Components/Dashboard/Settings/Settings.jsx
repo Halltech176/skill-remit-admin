@@ -1,4 +1,5 @@
-import user_img from "../../../assets/user1.png";
+import user_img from "../../../assets/no_avatar.png";
+import Button from "./Button.component";
 import { DetailsInput, Passwords } from "./Inputs";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
@@ -6,7 +7,7 @@ import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import Tabs from "@mui/material/Tabs";
 import { useState, useEffect } from "react";
-import { User } from "../../../Redux/Actions";
+import { User, SiteData } from "../../../Redux/Actions";
 import OtherSettings from "./OtherSettings";
 import { useSelector, useDispatch } from "react-redux";
 import { BASE_URL, HEADER } from "../../../../Api";
@@ -21,7 +22,13 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 const Settings = () => {
   const { user, loading, error } = useSelector((state) => state.user);
+  const { sitedata } = useSelector((state) => state.sitedata);
   const dispatch = useDispatch();
+  // console.log(selector);
+
+  useEffect(() => {
+    dispatch(SiteData());
+  }, []);
 
   const initialState = {
     email: user?.email,
@@ -88,9 +95,10 @@ const Settings = () => {
       console.log(response);
       if (response.status === 200) {
         SuccessNotification(response?.data?.message);
-        dispatch(User());
+        setTimeout(() => {
+          dispatch(User());
+        }, 1500);
       }
-      console.log("updated");
     } catch (err) {
       HandleError(err);
       console.log(err);
@@ -173,47 +181,39 @@ const Settings = () => {
                   {" "}
                   <input
                     onChange={(e) => GetImage(e)}
-                    className="p-6 my-5 w-full"
+                    className="p-3 my-5 w-full"
                     type="file"
                     name=""
                     id=""
-                  />{" "}
-                  <button
-                    onClick={updateProfileImage}
-                    style={{ background: "#001B87" }}
-                    className="bg-normal font-inter font-semibold text-xl text-white py-4 rounded-md w-56 md:w-72"
-                  >
-                    Update Image
-                  </button>{" "}
+                  />
+                  {/* clickFunction, buttonName  */}
+                  <Button
+                    clickFunction={updateProfileImage}
+                    buttonName="Update Image"
+                  />
                 </div>
               </div>
               <div className="md:w-2/4 h-full overflow-scroll app_container md:mx-14">
                 <form className="flex  flex-col  items-center ">
                   {renderInputs}
-                  <button
-                    onClick={updateProfile}
-                    style={{ background: "#001B87" }}
-                    className="bg-normal font-inter font-semibold text-xl text-white py-4 rounded-md w-56 md:w-72"
-                  >
-                    Update Profile
-                  </button>
+                  <Button
+                    clickFunction={updateProfile}
+                    buttonName="Update Profile"
+                  />
                 </form>
 
                 <form className="flex flex-col  items-center ">
                   {renderPasswords}
-                  <button
-                    onClick={updatePassword}
-                    style={{ background: "#001B87" }}
-                    className="bg-normal font-inter font-semibold text-xl text-white my-5 py-4 rounded-md w-56 md:w-72"
-                  >
-                    Change Password
-                  </button>
+                  <Button
+                    clickFunction={updatePassword}
+                    buttonName="Change Password"
+                  />
                 </form>
               </div>
             </main>
           </TabPanel>
           <TabPanel value="2">
-            <OtherSettings />
+            <OtherSettings sitedata={sitedata} />
           </TabPanel>
         </TabContext>
       </main>
@@ -221,26 +221,3 @@ const Settings = () => {
   );
 };
 export default Settings;
-
-// const Settings = () => {
-
-//   const { user, loading, error } = useSelector((state) => state.user);
-//   const dispatch = useDispatch();
-
-//   const initialState = {
-//     email: user?.email,
-//     firstName: user?.firstName,
-//     lastName: user?.lastName,
-//   };
-//   const initialPassword = {
-//     oldPassword: "Admin@1234",
-//     newPassword: "12345678",
-//   };
-//   const [values, setValues] = useState(initialState);
-//   const [passwords, setPasswords] = useState(initialPassword);
-//   const [value, setValue] = useState("1");
-//   const [profileImage, setProfileImage] = useState("");
-
-//   return <h1>settings</h1>;
-// };
-// export default Settings;

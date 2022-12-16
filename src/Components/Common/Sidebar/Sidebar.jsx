@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { useState } from "react";
+import ConfirmLogout from "./ConfirmLogout";
 
 import MobileNav from "./MobileNav";
 
@@ -56,24 +57,25 @@ const Sidebar = ({ route }) => {
 
   const navigate = useNavigate();
   const location = useLocation();
+  const [toggleLogout, setToggleLogout] = useState(false);
   const path = location.pathname;
 
   const handleLogout = () => {
+    setToggleLogout(!toggleLogout);
     console.log("logging...");
-    window.localStorage.clear();
-    navigate("/login");
   };
 
   const routes = RouteLinks.map((data, index) => {
     return (
-      <Link
-        to={data.route}
+      <div
         key={data.name}
         className={` font-aeonik-light font-medium  text-xl`}
         // style={{ color: "white" }}
       >
         <li
-          onClick={data.name === "Logout" ? handleLogout : ""}
+          onClick={
+            data.name === "Logout" ? handleLogout : () => navigate(data.route)
+          }
           className={`${
             data.route.split("/")[2] === undefined
               ? "text-white"
@@ -95,17 +97,23 @@ const Sidebar = ({ route }) => {
           </span>{" "}
           <span>{data.name}</span>
         </li>
-      </Link>
+      </div>
     );
   });
 
   return (
     <>
+      <ConfirmLogout
+        toggleLogout={toggleLogout}
+        setToggleLogout={setToggleLogout}
+      />
+
       <main className="flex md:hidden">
         <MobileNav
           actives={actives}
           inactives={inactives}
-          handleLogout={handleLogout}
+          toggleLogout={toggleLogout}
+          setToggleLogout={setToggleLogout}
         />
       </main>
 
@@ -116,10 +124,6 @@ const Sidebar = ({ route }) => {
           </span>
         </div>
 
-        {/* <span
-          style={{ background: "grey" }}
-          className="block w-36 h-0.5"
-        ></span> */}
         <ul
           className="font-aeonik flex flex-col my-8 font-semibold text-3xl"
           style={{ color: "white" }}

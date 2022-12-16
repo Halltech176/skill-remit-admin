@@ -160,6 +160,7 @@ input[type="radio"] {
 }
 input[type="file"] {
   position: relative;
+
   color: transparent;
 }
 input::-webkit-file-upload-button {
@@ -169,20 +170,22 @@ input::-webkit-file-upload-button {
 input[type="file"]::before {
   content: "Choose File +";
   position: absolute;
-  top: 0.3rem;
+  top: 0;
   left: 0;
   bottom: 0;
   right: 0;
-  text-align: center;
+  /* text-align: center; */
   display: inline-block;
   background-color: transparent;
   border: 2px dashed #001b87;
+
   color: #001b87;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 1.5rem;
   border-radius: 0.5rem;
-  padding-top: 1rem;
-  /* padding: 0.5rem; */
-
+  /* padding-top: 1rem; */
   user-select: none;
   cursor: pointer;
   outline: none;
@@ -210,7 +213,7 @@ input[type="file"]::before {
 }
 .app_container::-webkit-scrollbar {
   display: none;
-}s
+}
 .scroll_container {
   height: 95vh;
   /* margin-top: 3.5rem;

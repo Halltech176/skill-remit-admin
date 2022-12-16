@@ -14,8 +14,9 @@ const Commission = () => {
 
   const UpdateCommission = async (e) => {
     e.preventDefault();
+    console.log("yeah");
     try {
-      const response = await axios.put(`${BASE_URL}//settings`, {}, HEADER);
+      const response = await axios.post(`${BASE_URL}//settings`, {}, HEADER);
       console.log(response);
     } catch (err) {
       console.log(err);

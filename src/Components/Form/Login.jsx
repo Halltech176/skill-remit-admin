@@ -14,6 +14,8 @@ import axios from "axios";
 import LoadingButton from "@mui/lab/LoadingButton";
 import SaveIcon from "@mui/icons-material/Save";
 import Stack from "@mui/material/Stack";
+import { BiHide, BiShow } from "react-icons/bi";
+import InputComponent from "./Input.component";
 
 const Login = () => {
   console.log(BASE_URL);
@@ -26,23 +28,27 @@ const Login = () => {
   };
   const [values, setValues] = useState(initial_values);
 
-  const navigate = useNavigate();
-  const inputs = [
-    {
-      label: "E-mail",
-      type: "email",
-      name: "username",
-    },
+  const [toggleStates, setToggleStates] = useState({
+    show: false,
+    type: "password",
+  });
 
-    {
-      label: "Password",
-      type: "password",
-      name: "password",
-    },
-  ];
+  const TogglePassword = () => {
+    if (toggleStates.show) {
+      setToggleStates({ show: false, type: "text" });
+      // setToggleStates({ show: !toggleStates.show });
+    } else {
+      setToggleStates({ show: true, type: "password" });
+      // setToggleStates({ show: !toggleStates.show });
+    }
+  };
+  console.log(toggleStates);
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
+  console.log(values);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -88,27 +94,6 @@ const Login = () => {
       console.log(err);
     }
   };
-  const renderInputs = inputs.map((data, index) => {
-    return (
-      <section key={data.name} className="my-3">
-        <div className="relative">
-          {/* <span className="text-normal absolute top-2 md:left-3 left-2 text-primary">
-            {data.label}
-          </span> */}
-          <label className="block my-2 text-md text-primary">
-            {data.label}
-          </label>
-          <input
-            onChange={handleChange}
-            value={values[data.name]}
-            name={data.name}
-            className="border-light bg-info-100 md:px-3 px-3 py-3  text-md md:text-xl w-full rounded-md"
-            type={data.type}
-          />
-        </div>
-      </section>
-    );
-  });
 
   const ResetPasswords = () => {
     console.log("forgotten password");
@@ -124,7 +109,31 @@ const Login = () => {
           </div>
           <form className="    ">
             <h1 className="text-primary font-bold py-3 text-4xl">Login</h1>
-            <div className="flex flex-col mt-6">{renderInputs}</div>
+            <div className="flex flex-col mt-6">
+              <InputComponent
+                handleChange={handleChange}
+                label="Email"
+                type="email"
+                name="username"
+                value={values.username}
+              />
+              <div className="relative">
+                <span
+                  onClick={TogglePassword}
+                  className="absolute  top-16 z-10 right-2 bottom-1/2 "
+                >
+                  {toggleStates.show ? <BiHide /> : <BiShow />}
+                </span>
+
+                <InputComponent
+                  label="Password"
+                  type={toggleStates.type}
+                  name="password"
+                  handleChange={handleChange}
+                  value={values.password}
+                />
+              </div>
+            </div>
             <p onClick={ResetPasswords} className="text-dark pointer text-end ">
               Forgotten Password?
             </p>

@@ -245,15 +245,21 @@ export const UserChat = createAsyncThunk("chat", async (data, THUNKAPI) => {
   }
 });
 
-export const Banks = createAsyncThunk("banks", async (_, THUNKAPI) => {
+export const Banks = createAsyncThunk("bank", async () => {
   try {
-    const response = await axios.get(`${BASE_URL}//wallet/banks`, HEADER);
-
-    return THUNKAPI.fulfillWithValue(response);
+    const token = window.JSON.parse(localStorage.getItem("token"));
+    const response = await axios.get(
+      "https://skill-remit.herokuapp.com/api//wallet/banks",
+      {
+        headers: {
+          Authorization: `Bearer ${token} `,
+        },
+      }
+    );
+    return response.data.data;
   } catch (err) {
+    // throw err;
     console.log(err);
-    HandleError(err);
-    throw THUNKAPI.rejectWithValue(err);
   }
 });
 

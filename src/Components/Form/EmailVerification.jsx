@@ -14,12 +14,17 @@ const EmailVerification = () => {
     console.log(email);
     try {
       const response = await axios.post(
-        `${BASE_URL}//auth/request-reset-password?email=${email}`
+        `${BASE_URL}//auth/request-reset-password`,
+        {
+          email,
+        }
       );
       console.log(response);
-      SuccessNotification(response.data.message);
+      SuccessNotification(response?.data?.message);
       if (response.status === 200) {
-        navigate("/password-reset");
+        setTimeout(() => {
+          navigate("/password-reset");
+        }, 1000);
       }
     } catch (err) {
       console.log(err);

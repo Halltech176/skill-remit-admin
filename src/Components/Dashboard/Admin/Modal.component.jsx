@@ -22,7 +22,7 @@ const ModalComponent = ({
             name={data.name}
             onChange={handleChange}
             value={values[data?.name]}
-            className="border-light bg-info-100 px-3 pb-2 md:pt-12 pt-8 text-md md:text-xl w-full rounded-md"
+            className="border-light bg-info-100 px-3 pb-2 md:pt-10 pt-8 text-md md:text-xl w-full rounded-md"
             type={data.type}
           />
           <span className="text-normal absolute top-2 left-3 text-primary">
@@ -48,7 +48,7 @@ const ModalComponent = ({
           animate="visible"
           exit="exit"
           style={{ zIndex: "50" }}
-          className=" backdrop absolute overflow-scroll bg-white rounded-xl shadow-md md:left-0 md:right-0 md:top-0 top-20 md:h-full h-3/4 md:w-auto    p-5   md:p-14 md:max-w-3xl md:mx-auto   "
+          className=" backdrop absolute app_container overflow-scroll bg-white rounded-xl shadow-md md:left-0 md:right-0 md:top-0 top-20 md:h-full h-3/4 md:w-auto    p-5   md:p-14 md:max-w-2xl md:mx-auto   "
         >
           <form className="    ">
             <span onClick={() => setIsOpen(false)}>

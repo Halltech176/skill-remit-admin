@@ -1,25 +1,42 @@
 import arrowRight from "../../../assets/arrow-right.png";
 import user_vendor from "../../../assets/user_vendor.png";
-import send from "../../../assets/send.png";
-import copy from "../../../assets/copy.png";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { FetchChat, UserChat } from "../../../Redux/Actions";
 import { io } from "socket.io-client";
+import ChatBody from "./ChatBody";
+import ChatBar from "./ChatBar";
+
 const Dispute = () => {
   const dispatch = useDispatch();
   const { chats, loading, error } = useSelector((state) => state.chats);
   const { user } = useSelector((state) => state.user);
-  console.log(user);
+  const { chat } = useSelector((state) => state.chat);
+  console.log(chat);
+
   useEffect(() => {
     dispatch(FetchChat());
   }, []);
-  // const socket = io(
-  //   `https://skill-remit.herokuapp.com/api?USERID=${user?._id}`
-  // );
-  // socket.on("connect", () => {
-  //   console.log("you are conneted");
+
+  const socket = io(`ws://skill-remit.herokuapp.com?userId=${user?._id}`, {
+    transports: ["websocket"],
+  });
+  // const socket = io(`ws://skill-remit.herokuapp.com?userId=${user?._id}`, {
+  //   transports: ["websocket"],
   // });
+
+  socket.on("connect", () => {
+    console.log(`you are connected already to id ${socket.id}`);
+  });
+  socket.on("disconnect", () => {
+    console.log(socket.id);
+  });
+  // useEffect(() => {
+  //   dispatch(UserChat());
+  // }, [socket]);
+
+  // console.log(socket);
+
   const GetUserChat = async (id) => {
     try {
       window.localStorage.setItem("CHAT_ID", JSON.stringify(id));
@@ -72,7 +89,7 @@ const Dispute = () => {
     );
   });
   return (
-    <main className="md:flex  h-full justify-between pt-5 md:pt-14">
+    <main className="md:flex  h-96 justify-between pt-5 md:pt-14">
       <div className=" hidden  md:block  w-2/4 mr-8">
         <div className="flex  items-center bg-primary text-white p-4 rounded-md justify-between">
           <p>Dispute </p>
@@ -96,96 +113,9 @@ const Dispute = () => {
         </div>
       </div>
       <div className=" md:w-5/6">
-        <div className="flex w-full overflow-x-scroll app_container items-center bg-primary text-white p-3 md:p-5 rounded-md justify-between">
-          <div className="flex shrink-0 items-center">
-            <span>
-              <img className="md:w-16 w-10" src={user_vendor} alt="arrow" />
-            </span>
-            <div className="mx-3">
-              <h4 className="md:text-sm  text-xs  shrink-0">Annete Black </h4>
-              <p className="md:text-normal text-xs">Vendor </p>
-            </div>
-          </div>
-
-          <div className="flex shrink-0 items-center">
-            <span>
-              <img className="md:w-16 w-10" src={user_vendor} alt="arrow" />
-            </span>
-            <div className="mx-3">
-              <h4 className="md:text-sm  text-xs shrink-0">Annete Black </h4>
-              <p className="md:text-normal text-xs">user </p>
-            </div>
-          </div>
-
-          <button className="border-white shrink-0 text-xs border-2 p-2 md:p-3 rounded-md">
-            {" "}
-            Resolve Disputes{" "}
-          </button>
-        </div>
-        <div
-          className="p-3 pb-5  relative rounded-md overflow-y-scroll"
-          style={{ background: "rgba(0,134, 64,0.1)" }}
-        >
-          <h1
-            style={{ color: "#747A94" }}
-            className="text-center  py-3 uppercase"
-          >
-            TODAY
-          </h1>
-
-          <section className="flex  flex-col">
-            <div
-              style={{ background: "#F7F7FD" }}
-              className="  my-5 text-primary-100 rounded-md md:text-base w-52 md:w-full text-sm p-2 md:max-w-sm md:p-3"
-            >
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem
-                feugiat tempor
-              </p>
-            </div>
-            <div
-              style={{ background: "#F7F7FD" }}
-              className="  my-5 text-primary-100 rounded-md  md:text-base w-52 md:w-full text-sm p-2 md:max-w-sm md:p-3"
-            >
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem
-                feugiat tempor faucibus gravida.
-              </p>
-            </div>
-
-            <div
-              style={{ background: "#F7F7FD" }}
-              className="  my-5 text-primary-100 rounded-md  md:text-base w-52 md:w-full text-sm p-2 md:max-w-sm md:p-3"
-            >
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem
-                feugiat tempor faucibus gravida.
-              </p>
-            </div>
-
-            <div
-              style={{ background: "#F7F7FD" }}
-              className=" my-5  max-w-sm self-end   text-primary-100 rounded-md  md:text-base w-52 md:w-full text-sm p-2 md:max-w-sm md:p-3"
-            >
-              <p className="">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem
-                feugiat tempor faucibus gravida.
-              </p>
-            </div>
-          </section>
-          <div className="input bg-white p-1 md:p-2 flex items-center ">
-            <input
-              style={{ background: "#F7F7FD" }}
-              className="w-full text-xl p-2 md:p-5"
-              type="text"
-            />
-            <span>
-              <img src={copy} className="md:w-8 w-4 mx-2" alt="copy" />
-            </span>
-            <span>
-              <img src={send} className="md:w-8 w-4 mx-3" alt="send" />
-            </span>
-          </div>
+        <ChatBar />
+        <div className="">
+          <ChatBody socket={socket} chat={chat} />
         </div>
       </div>
     </main>

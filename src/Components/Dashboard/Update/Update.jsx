@@ -49,7 +49,7 @@ const Update = () => {
 
   return (
     <main className="">
-      <div className="flex items-center flex-wrap overflow-x-scroll my-5 justify-center">
+      <div className="flex items-center flex-wrap overflow-x-scroll app_container my-5 justify-center">
         <Tabs
           value={value}
           variant="scrollable"

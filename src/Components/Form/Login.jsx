@@ -120,7 +120,7 @@ const Login = () => {
               <div className="relative">
                 <span
                   onClick={TogglePassword}
-                  className="absolute  top-16 z-10 right-2 bottom-1/2 "
+                  className="absolute cursor-pointer  top-16 z-10 right-2 bottom-1/2 "
                 >
                   {toggleStates.show ? <BiHide /> : <BiShow />}
                 </span>
@@ -134,7 +134,10 @@ const Login = () => {
                 />
               </div>
             </div>
-            <p onClick={ResetPasswords} className="text-dark pointer text-end ">
+            <p
+              onClick={ResetPasswords}
+              className="text-dark cursor-pointer text-end "
+            >
               Forgotten Password?
             </p>
             <div className="flex justify-center my-3">
@@ -144,6 +147,7 @@ const Login = () => {
                   loadingPosition="start"
                   startIcon={<SaveIcon />}
                   variant="contained"
+                  className="cursor-not-allowed"
                 >
                   Logging in
                 </LoadingButton>

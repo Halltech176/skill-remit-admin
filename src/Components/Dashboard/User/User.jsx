@@ -50,7 +50,7 @@ const User = () => {
           `${value}` === `${index}`
             ? "bg-normal text-white"
             : "bg-white text-normal"
-        }  font-nunito  text-center md:text-xl shrink-0 text-md font-medium  rounded-md py-4  px-4  md:w-64 md:py-5 my-5  mx-2`}
+        }  font-nunito  text-center cursor-pointer md:text-xl shrink-0 text-md font-medium  rounded-md py-4  px-4  md:w-64 md:py-5 my-5  mx-2`}
       >
         {data.name}
       </div>

@@ -52,8 +52,8 @@ const TransactionsComponent = () => {
       {loading ? (
         <Loader1 />
       ) : (
-        <main className="   ">
-          <div className="bg-primary relative  rounded-3xl  overflow-hidden w-full md:w-1/2 mx-auto py-5 md:py-10 px-5  md:px-22 text-center   text-white">
+        <main className="   app_container   ">
+          <div className="bg-primary relative rounded-3xl  overflow-hidden w-full md:w-1/2 mx-auto py-5 md:py-10 px-5  md:px-22 text-center   text-white">
             <div className="flex flex-col absolute -top-3 -left-24 md:-left-14  -bottom-3">
               <img src={Pattern1} alt="pattern" />
               <img src={Pattern2} alt="pattern" />
@@ -75,7 +75,7 @@ const TransactionsComponent = () => {
           <h1 className="text-center text-dark font-medium text-2xl md:text-4xl my-8">
             Transaction history
           </h1>
-          <div className="overflow-x-scroll ">
+          <div className="overflow-x-scroll  app_container   ">
             <section
               style={{ color: " #828282" }}
               className="flex font-nirmala shrink-0 md:justify-between items-center text-md md:text-2xl font-light"

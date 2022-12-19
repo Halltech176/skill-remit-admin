@@ -69,7 +69,7 @@ const Sidebar = ({ route }) => {
     return (
       <div
         key={data.name}
-        className={` font-aeonik-light font-medium  text-xl`}
+        className={` font-aeonik-light font-medium my-1 text-sm`}
         // style={{ color: "white" }}
       >
         <li
@@ -82,7 +82,7 @@ const Sidebar = ({ route }) => {
               : data.route.split("/")[2] === route[2]
               ? "text-primary-100 font-black bg-white "
               : "text-white"
-          } my-1 w-full z-10 flex p-3 items-center`}
+          } my-1 w-full z-10 flex cursor-pointer p-3 items-center`}
         >
           <span>
             <img
@@ -118,14 +118,14 @@ const Sidebar = ({ route }) => {
       </main>
 
       <aside className=" hidden md:block  overflow-y-scroll py-2 app_container h-full text-white z-20 p-5 top-0 left-0      absolute">
-        <div className="h-20 flex items-center justify-center mt-10 ">
+        <div className=" flex items-center mt-3 justify-center  ">
           <span onClick={() => navigate("/")}>
             <LightLogo />
           </span>
         </div>
 
         <ul
-          className="font-aeonik flex flex-col my-8 font-semibold text-3xl"
+          className="font-aeonik flex flex-col my-2 font-semibold text-xl"
           style={{ color: "white" }}
         >
           {routes}

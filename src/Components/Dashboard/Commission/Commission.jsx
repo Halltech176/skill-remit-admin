@@ -7,22 +7,24 @@ import { BASE_URL, TOKEN, HEADER } from "../../../../Api";
 const Commission = () => {
   const dispatch = useDispatch();
   const { sitedata, loading, error } = useSelector((state) => state);
-  const [value, setValue] = useState(sitedata?.sitedata?.commissionPercent);
+  const [commissionPercent, setCommissionPercent] = useState("");
   useEffect(() => {
     dispatch(SiteData());
   }, []);
 
   const UpdateCommission = async (e) => {
     e.preventDefault();
-    console.log("yeah");
+    console.log("updating...");
     try {
-      const response = await axios.post(`${BASE_URL}//settings`, {}, HEADER);
+      const response = await axios.post(
+        `${BASE_URL}//settings`,
+        { commissionPercent },
+        HEADER
+      );
       console.log(response);
     } catch (err) {
       console.log(err);
     }
-    e.preventDefault();
-    // console.log("commission updated");
   };
 
   console.log(sitedata?.sitedata);
@@ -32,18 +34,22 @@ const Commission = () => {
         <Loader1 />
       ) : (
         <form className="h-screen overflow-hidden">
-          <p
+          <h2
             // style={{ color: "#001B87" }}
             className="font-aeonik-light my-5 text-normal text-2xl font-extralight md:text-4xl"
           >
             Percentage Commission on service delivery
+          </h2>
+          <p className="text-md font-bold">
+            Percentage Commission : {sitedata?.sitedata?.commissionPercent}%
           </p>
           <section className="my-10">
             <input
-              value={value}
-              onChange={(e) => setValue(e.target.value)}
+              value={commissionPercent}
+              onChange={(e) => setCommissionPercent(e.target.value)}
               className="border-primary text-md md:text-2xl font-medium py-2 px-2 bg-transparent md:py-4 md:px-3 rounded-md w-full md:w-2/3"
               type="number"
+              placeholder={`${sitedata?.sitedata?.commissionPercent}%`}
             />
           </section>
           <section className="md:my-32  my-16">

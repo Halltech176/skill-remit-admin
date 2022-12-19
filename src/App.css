@@ -3,6 +3,12 @@ body {
   overflow: hidden;
   background-color: #130160 !important;
 }
+* {
+  font-size: 1rem;
+}
+*::webkit-scrollbar-track {
+  background: red;
+}
 @font-face {
   font-family: "aeonik-bold";
   src: url("./fonts//AeonikProTRIAL-Bold.otf");

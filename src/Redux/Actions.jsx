@@ -229,11 +229,11 @@ export const FetchChat = createAsyncThunk("chats", async (data, THUNKAPI) => {
   }
 });
 
-export const UserChat = createAsyncThunk("chat", async (data, THUNKAPI) => {
+export const UserChat = createAsyncThunk("chat", async (_, THUNKAPI) => {
   try {
     const user_id = JSON.parse(localStorage.getItem("CHAT_ID"));
     const response = await axios.get(
-      `${BASE_URL}/chat/${user_id}/message     `,
+      `${BASE_URL}/chat/${user_id}/message?populate=chat&populate=chat.users&populate=sender    `,
       HEADER
     );
 

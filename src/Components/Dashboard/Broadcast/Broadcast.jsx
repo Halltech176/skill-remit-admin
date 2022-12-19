@@ -125,7 +125,7 @@ const Commission = () => {
         style={{ color: "#001B87" }}
         className="text-primary text-3xl md:text-5xl"
       >
-        send Broadcast
+        Send Broadcast
       </h1>
       <form className="md:my-10 my-3">
         <h1 className="text-dark text-xl   md:text-3xl">send To</h1>

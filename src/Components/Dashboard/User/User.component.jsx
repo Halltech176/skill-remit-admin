@@ -35,7 +35,7 @@ const UserComponent = ({ user_credentials }) => {
         key={index}
         onClick={() => GetUserDetails(data?._id)}
         style={{ color: "#808080" }}
-        className="flex  capitalize border-b-2 py-5 text-md font-bold font-manrope my-2 md:my-5 items-center justify-between"
+        className="flex  capitalize cursor-pointer border-b-2 py-5 text-md font-bold font-manrope my-2 md:my-5 items-center justify-between"
       >
         <p className="flex mr-5 md:mr-0 shrink-0  items-center w-60">
           <span>

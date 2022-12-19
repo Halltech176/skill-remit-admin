@@ -10,6 +10,7 @@ import {
   GetUserStats,
 } from "../../../Redux/Actions";
 import { DoughnutChart, LineChart, AreaChart } from "./Visuals";
+import CountUp from "react-countup";
 const Oveview = () => {
   const dispatch = useDispatch();
 
@@ -122,14 +123,14 @@ const Oveview = () => {
     return (
       <section
         style={{ background: "#4F46BA" }}
-        className="flex shrink-0 items-center relative text-white mr-5 w-56 rounded-md"
+        className="flex shrink-0 items-center relative text-white mr-5 md:w-56 w-40 rounded-md"
       >
-        <div className="flex p-5 shrink-0 flex-col">
-          <p className="font-aeonik-light  tracking-widest text-md opacity-40 shrink-0 uppercase">
+        <div className="flex md:p-5 p-3 shrink-0 flex-col">
+          <p className="font-aeonik-light  tracking-widest md:text-md text-sm opacity-40 shrink-0 uppercase">
             {data.title}
           </p>
           <p className="font-aeonik-light  tracking-widest py-1">
-            {values[index]}
+            <CountUp start={0} end={values[index]} duration={2} separator=" " />
           </p>
         </div>
 
@@ -140,8 +141,8 @@ const Oveview = () => {
             alt="shape"
           />
         </span>
-        <span className="absolute right-4 top-3/2">
-          <img className="z-40" src={data.icon} alt="icon" />
+        <span className="absolute md:right-4 right-1 top-3/2">
+          <img className="z-40 w-6 md:w-auto" src={data.icon} alt="icon" />
         </span>
       </section>
     );
@@ -173,7 +174,14 @@ const Oveview = () => {
         <div className="w-24 relative">
           <DoughnutChart percent={data.percent} />
           <span className="absolute top-14 left-12 text-2xl -translate-x-2/4 -translate-y-2/4 ">
-            {data.percent}%
+            <CountUp
+              className="2xl"
+              start={0}
+              end={data.percent}
+              duration={2}
+              separator=" "
+              suffix="% "
+            />
           </span>
         </div>
       </section>
@@ -182,7 +190,7 @@ const Oveview = () => {
   return (
     <main className="md:flex flex-wrap   lg:flex-nowrap  w-full">
       <div className=" mr-4 md:h-1/5 md:overflow-x-scroll grow ">
-        <div className="flex app_container pb-5 overflow-x-scroll justify-between">
+        <div className="md:flex md:overflow-x-scroll grid grid-cols-2 gap-4 pb-5 app_container justify-between">
           {renderSummary}
         </div>
 

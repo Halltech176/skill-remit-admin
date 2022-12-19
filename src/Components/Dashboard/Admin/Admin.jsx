@@ -72,7 +72,10 @@ const Admin = () => {
               </div>
             </div>
             <div>
-              <span onClick={() => ToggleModal2(data?._id)}>
+              <span
+                className="cursor-pointer"
+                onClick={() => ToggleModal2(data?._id)}
+              >
                 <img src={more} alt="more" />
               </span>
             </div>

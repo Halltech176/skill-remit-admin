@@ -2,7 +2,7 @@ import { sendTo, sendAs } from "./SentMessage";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { BASE_URL, HEADER } from "../../../../Api";
-import { Users, GetUserStats } from "../../../Redux/Actions";
+import { Users, GetUserStats, GetNotifications } from "../../../Redux/Actions";
 import { useDispatch, useSelector } from "react-redux";
 import { HandleError } from "../../../Components/Common/HandleError";
 import { Loader1 } from "../../../Components/Common/Loader";
@@ -25,7 +25,6 @@ const Commission = () => {
   const selector2 = useSelector((state) => state.users?.user);
 
   useEffect(() => {
-    dispatch(Users({ limit: selector2?.totalPages * selector2?.totalDocs }));
     dispatch(GetUserStats());
   }, []);
   console.log(user_stats);
@@ -104,14 +103,14 @@ const Commission = () => {
       if (data?.message === "") {
         throw "Message should not be empty";
       }
-      const response = await axios.post(
-        `${BASE_URL}//notification/send`,
-        data,
-        HEADER
-      );
+      const response = await dispatch(GetNotifications(data));
       if (response.status === 200) {
         SuccessNotification(response.data.message);
       }
+      setMessage("");
+      setTitle("");
+      setMode("");
+      setUser("");
       console.log(response);
     } catch (err) {
       HandleError(err);

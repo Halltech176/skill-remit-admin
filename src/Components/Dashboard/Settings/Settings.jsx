@@ -158,11 +158,7 @@ const Settings = () => {
       <main>
         <div className="my-5">
           <ToastContainer transition={Zoom} autoClose={800} />
-          <Tabs
-            value={value}
-            onChange={handlePaginate}
-            aria-label="basic tabs example"
-          >
+          <Tabs value={value} onChange={handlePaginate} aria-label="settings">
             {renderSettings}
           </Tabs>
         </div>

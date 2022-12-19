@@ -19,12 +19,15 @@ import { HandleSuccess } from "../../Common/HandleSuccess";
 import { ToastContainer, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import NotificationComponent from "./Notification.component";
 
 const UserDetail = () => {
   const navigate = useNavigate();
   const reviewss = new Array(4).fill(0);
   const selector = useSelector((state) => state?.clickeduser);
   const { review, loading } = useSelector((state) => state?.review);
+
+  const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(ClickedUser());
@@ -146,6 +149,11 @@ const UserDetail = () => {
   };
   return (
     <>
+      <NotificationComponent
+        user={selector?.user}
+        open={open}
+        setOpen={setOpen}
+      />
       <ToastContainer transition={Zoom} autoClose={800} />
       {selector?.loading ? (
         <Loader1 />
@@ -179,10 +187,10 @@ const UserDetail = () => {
                   </span>
                 </button>
                 <button
-                  onClick={() => navigate("/admin/dispute")}
+                  onClick={() => setOpen(true)}
                   className="bg-normal text-white w-full md:w-44 text-md md:text-xl rounded-md p-2 md:p-4 mx-4 "
                 >
-                  MESSAGE
+                  NOTIFICATION
                 </button>
               </div>
               <div className="flex capitalize my-14">

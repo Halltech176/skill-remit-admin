@@ -245,6 +245,37 @@ export const UserChat = createAsyncThunk("chat", async (_, THUNKAPI) => {
   }
 });
 
+export const GetNotifications = createAsyncThunk(
+  "notifications",
+  async (data) => {
+    try {
+      const response = await axios.post(
+        `${BASE_URL}//notification/send`,
+        data,
+        HEADER
+      );
+      return response.data.data;
+    } catch (err) {
+      throw err;
+      console.log(err);
+    }
+  }
+);
+
+export const AddBank = createAsyncThunk("addbank", async (data, THUNKAPI) => {
+  console.log(data);
+  try {
+    const response = await axios.post(
+      `${BASE_URL}//wallet/bank-account`,
+      data,
+      HEADER
+    );
+    return THUNKAPI.fulfillWithValue(response.data.data);
+  } catch (err) {
+    throw THUNKAPI.rejectWithValue(err);
+  }
+});
+
 export const Banks = createAsyncThunk("bank", async () => {
   try {
     const token = window.JSON.parse(localStorage.getItem("token"));

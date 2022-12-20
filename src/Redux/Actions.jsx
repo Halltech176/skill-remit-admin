@@ -327,3 +327,58 @@ export const GetUserStats = createAsyncThunk(
     }
   }
 );
+
+export const GetAllNotifications = createAsyncThunk(
+  "all_notifications",
+  async (_, THUNKAPI) => {
+    try {
+      const response = await axios.get(
+        `${BASE_URL}//notification?populate=payload&populate=payload.createdBy`,
+        HEADER
+      );
+
+      return THUNKAPI.fulfillWithValue(response.data.data);
+    } catch (err) {
+      console.log(err);
+      HandleError(err);
+      throw THUNKAPI.rejectWithValue(err);
+    }
+  }
+);
+
+export const GetWithdrawalRequests = createAsyncThunk(
+  "withdrawa_requests",
+  async (_, THUNKAPI) => {
+    try {
+      const response = await axios.get(
+        `${BASE_URL}//wallet/withdrawal-requests?populate=bankAccount`,
+        HEADER
+      );
+
+      return THUNKAPI.fulfillWithValue(response.data.data);
+    } catch (err) {
+      console.log(err);
+      HandleError(err);
+      throw THUNKAPI.rejectWithValue(err);
+    }
+  }
+);
+
+export const ReadNotifications = createAsyncThunk(
+  "read_notifications",
+  async (id, THUNKAPI) => {
+    try {
+      const response = await axios.put(
+        `${BASE_URL}//notification/${id}`,
+        {},
+        HEADER
+      );
+
+      return THUNKAPI.fulfillWithValue(response.data);
+    } catch (err) {
+      console.log(err);
+      HandleError(err);
+      throw THUNKAPI.rejectWithValue(err);
+    }
+  }
+);

@@ -13,7 +13,7 @@ import { ToastContainer, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
-const AddBanks = ({ open, setOpen }) => {
+const WithdrawComponent = ({ open, setOpen }) => {
   const dispatch = useDispatch();
   const { banks } = useSelector((state) => state.banks);
   const [bankCode, setBankCode] = useState("");
@@ -65,13 +65,13 @@ const AddBanks = ({ open, setOpen }) => {
     setBankCode(findCode?.code);
   };
 
-  const handleBank = async (e) => {
+  const handleWithdraw = async (e) => {
     e.preventDefault();
     const data = { accountNumber, bankCode };
     const TOKEN = JSON.parse(localStorage.getItem("token"));
     try {
       const response = await axios.post(
-        "https://skill-remit.herokuapp.com/api//wallet/bank-account",
+        "https://skill-remit.herokuapp.com/api//wallet/confirm-withdrawal",
         {},
         // { data },
         {
@@ -118,7 +118,7 @@ const AddBanks = ({ open, setOpen }) => {
                   <BsArrowLeft />
                 </span>
                 <h1 className="my-5 md:text-3xl text-md text-normal my-4 font-semibold">
-                  Add Bank Account
+                  Withdraw
                 </h1>
                 <div className="my-5">
                   <select
@@ -146,10 +146,10 @@ const AddBanks = ({ open, setOpen }) => {
                 </section>
                 <div className="flex justify-center">
                   <button
-                    onClick={handleBank}
+                    onClick={handleWithdraw}
                     className="bg-normal md:w-56 w-48 rounded-md text-xl p-3 text-white"
                   >
-                    Send
+                    next
                   </button>
                 </div>
               </motion.div>
@@ -161,4 +161,4 @@ const AddBanks = ({ open, setOpen }) => {
   );
 };
 
-export default AddBanks;
+export default WithdrawComponent;

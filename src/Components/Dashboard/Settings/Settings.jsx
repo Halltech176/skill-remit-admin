@@ -19,6 +19,7 @@ import {
 } from "../../../Components/Common/Toastify";
 import { ToastContainer, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 import axios from "axios";
 const Settings = () => {
   const { user, loading, error } = useSelector((state) => state.user);
@@ -177,7 +178,7 @@ const Settings = () => {
                   {" "}
                   <input
                     onChange={(e) => GetImage(e)}
-                    className="p-3 my-5 w-full"
+                    className="p-5 my-5 w-52"
                     type="file"
                     name=""
                     id=""

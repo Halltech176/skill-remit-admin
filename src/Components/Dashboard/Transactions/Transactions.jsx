@@ -18,6 +18,7 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import Tabs from "@mui/material/Tabs";
+import WithdrawComponent from "./Withdraw.component";
 const TransactionsComponent = () => {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -31,6 +32,7 @@ const TransactionsComponent = () => {
   const handlePaginate = (event, newValue) => {
     setValue(newValue);
   };
+  const [open, setOpen] = useState(false);
 
   const SectionValues = ["Transaction History", "Add Accounts"];
   const renderSettings = SectionValues.map((data, index) => {
@@ -45,6 +47,7 @@ const TransactionsComponent = () => {
       {/* {loading ? (
         <Loader1 />
       ) : ( */}
+      <WithdrawComponent open={open} setOpen={setOpen} />
       <main className="   app_container   ">
         <div className="bg-primary relative rounded-3xl  overflow-hidden w-full md:w-1/2 mx-auto py-5 md:py-10 px-5  md:px-22 text-center   text-white">
           <div className="flex flex-col absolute -top-3 -left-24 md:-left-14  -bottom-3">
@@ -60,7 +63,10 @@ const TransactionsComponent = () => {
           <p className="text-xl">Available balance</p>
           <h1 className="md:text-6xl text-4xl font-medium py-8">5,000,000</h1>
           <div>
-            <button className="text-normal rounded-md px-7 font-medium py-3 bg-white">
+            <button
+              onClick={() => setOpen(true)}
+              className="text-normal rounded-md px-7 font-medium py-3 bg-white"
+            >
               Withdraw
             </button>
           </div>

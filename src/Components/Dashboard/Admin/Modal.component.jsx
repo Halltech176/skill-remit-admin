@@ -42,50 +42,52 @@ const ModalComponent = ({
         exit="hidden"
         className="backdrop"
       >
-        <motion.div
-          variants={variants}
-          initial="hidden"
-          animate="visible"
-          exit="exit"
-          style={{ zIndex: "50" }}
-          className=" backdrop absolute app_container overflow-scroll bg-white rounded-xl shadow-md md:left-0 md:right-0 md:top-0 top-20 md:h-full h-3/4 md:w-auto    p-5   md:p-14 md:max-w-2xl md:mx-auto   "
-        >
-          <form className="    ">
-            <span onClick={() => setIsOpen(false)}>
-              <img
-                className="md:w-10 w-8 absolute md:top-5 md:right-5 top-2 right-2"
-                src={cancel}
-                alt="cancel"
-              />
-            </span>
-            <h1 className="text-primary capitalize md:text-2xl text-xl">
-              {type} Admin
-            </h1>
-            <div className="flex flex-col justify-between  h-full">
-              {renderInputs}
-            </div>
-
-            {type === "create" ? (
-              <div className="flex justify-center my-5">
-                <button onClick={handleSubmit} className="btn w-32 ">
-                  Add
-                </button>
+        <div className="absolute bg-white top-1/2 h-4/5 overflow-y-scroll shadow-md md:max-w-xl w-full max-w-xl left-1/2 rounded-xl -translate-x-2/4 -translate-y-2/4 md:p-10 p-5">
+          <motion.div
+            variants={variants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            style={{ zIndex: "50" }}
+            className="relative"
+          >
+            <form className="   relative ">
+              <span onClick={() => setIsOpen(false)}>
+                <img
+                  className="md:w-10 w-8 absolute -md:top-20 cursor-pointer md:right-5 top-2 right-2"
+                  src={cancel}
+                  alt="cancel"
+                />
+              </span>
+              <h1 className="text-primary capitalize md:text-2xl text-xl">
+                {type} Admin
+              </h1>
+              <div className="flex flex-col justify-between  h-full">
+                {renderInputs}
               </div>
-            ) : (
-              <div className="flex capitalize justify-center md:my-10 my-2">
-                <button
-                  onClick={handleSubmit}
-                  className="bg-white text-primary shadow-md rounded-md py-3 mx-3 w-48 "
-                >
-                  Save
-                </button>
-                {/* <button onClick={handleSubmit} className="btn mx-3 w-48 ">
+
+              {type === "create" ? (
+                <div className="flex justify-center my-5">
+                  <button onClick={handleSubmit} className="btn w-32 ">
+                    Add
+                  </button>
+                </div>
+              ) : (
+                <div className="flex capitalize justify-center md:my-10 my-2">
+                  <button
+                    onClick={handleSubmit}
+                    className="bg-white text-primary shadow-md rounded-md py-3 mx-3 w-48 "
+                  >
+                    Save
+                  </button>
+                  {/* <button onClick={handleSubmit} className="btn mx-3 w-48 ">
                   Delete
                 </button> */}
-              </div>
-            )}
-          </form>
-        </motion.div>
+                </div>
+              )}
+            </form>
+          </motion.div>
+        </div>
       </motion.div>
     </>
   );

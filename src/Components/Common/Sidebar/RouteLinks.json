@@ -16,6 +16,10 @@
     "route": "/admin/commission"
   },
   {
+    "name": "Notifications",
+    "route": "/admin/notifications"
+  },
+  {
     "name": "Update",
     "route": "/admin/update"
   },

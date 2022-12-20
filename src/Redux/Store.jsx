@@ -23,6 +23,9 @@ import { UserChatReducer } from "./Slices/UsersChatSlice";
 import { UserStatsReducer } from "./Slices/UserStats";
 import { GetNotificationsReducer } from "./Slices/NotificationSlice";
 import { AddBankReducer } from "./Slices/AddBankSlice";
+import { WithdrawalReducer } from "./Slices/WithdrawalSlice";
+import { AllNotificationsReducer } from "./Slices/NotificationsSlice";
+import { ReadNotificationReducer } from "./Slices/ReadNotificationSlice";
 
 const reducers = combineReducers({
   user: UserReducer,
@@ -44,6 +47,9 @@ const reducers = combineReducers({
   userstats: UserStatsReducer,
   notifications: GetNotificationsReducer,
   addbank: AddBankReducer,
+  withdrawal: WithdrawalReducer,
+  allnotifications: AllNotificationsReducer,
+  readnotifications: ReadNotificationReducer,
 });
 
 const Store = configureStore({

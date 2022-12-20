@@ -289,6 +289,12 @@ input::-webkit-inner-spin-button {
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
 }
+.notification-grid-content {
+  grid-template-columns: 3rem 1fr 1fr 1fr;
+}
+.notification-grid-heading {
+  grid-template-columns: 5rem 1fr 1fr 1fr;
+}
 @media (max-width: 600px) {
   body {
     overflow: scroll;
@@ -296,8 +302,8 @@ input::-webkit-inner-spin-button {
   }
   .scroll_container {
     height: auto;
-    /* margin-top: 2rem;
-    margin-bottom: 2rem; */
-    /* overflow-y: scroll; */
+  }
+  .notification-grid-heading {
+    grid-template-columns: 5rem 1fr 1fr;
   }
 }

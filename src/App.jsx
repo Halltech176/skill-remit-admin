@@ -14,6 +14,7 @@ import Transactions from "./Components/Dashboard/Transactions/Transactions";
 import Dispute from "./Components/Dashboard/Dispute/Dispute";
 import Update from "./Components/Dashboard/Update/Update";
 import Overview from "./Components/Dashboard/Overview/Overview";
+import Notifications from "./Components/Dashboard/Notifications/Notifications";
 import NoMatch from "./Components/Common/NoMatch";
 import Login from "./Components/Form/Login";
 import EmailVerification from "./Components/Form/EmailVerification";
@@ -122,6 +123,14 @@ function App() {
             element={
               <RequireAuth>
                 <Transactions />{" "}
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/admin/notifications"
+            element={
+              <RequireAuth>
+                <Notifications />{" "}
               </RequireAuth>
             }
           />

@@ -48,7 +48,7 @@ const User = () => {
           `${value}` === `${index}`
             ? "bg-normal text-white"
             : "bg-white text-normal"
-        }  font-nunito  text-center cursor-pointer md:text-xl shrink-0 text-md font-medium  rounded-md py-4  px-4  md:w-64 md:py-5 my-5  mx-2`}
+        }  font-nunito  text-center cursor-pointer  md:text-xl  text-xs font-medium  rounded-md py-4  px-3  md:w-64 md:py-5 md:my-5 my-2 mx-2`}
       >
         {data.name}
       </div>
@@ -60,27 +60,10 @@ const User = () => {
         <Loader1 />
       ) : (
         <main className="  ">
-          <section className="flex  overflow-x-scroll app_container md:flex-wrap items-center md:justify-center">
+          <section className="md:flex grid grid-cols-2 flex-wrap md:justify-center">
             {renderTabs}
           </section>
-          <div className="app_container overflow-x-scroll">
-            <section
-              style={{ color: " #4C4C4C" }}
-              className="flex font-manrope  my-1  md:my-5 justify-between items-center text-md
-             font-bold"
-            >
-              <h2 className="w-60 md:mr-0 mr-5 shrink-0  md:p-0 p-4">User</h2>
-
-              <h2 className="w-80 md:mr-0 mr-5 shrink-0 md:p-0 p-4  ">
-                Ratings
-              </h2>
-              <h2 className="w-32 md:mr-0 ml-14  text-center shrink-0 md:p-0 p-4">
-                Project
-              </h2>
-              <h2 className="w-36 md:mr-0 mr-5   shrink-0 md:p-0 p-4  ">
-                Wallet balance
-              </h2>
-            </section>
+          <div className="md:app_container md:overflow-x-scroll">
             <AllAccounts />
             <PaginateComponent
               action="users"

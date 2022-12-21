@@ -1,7 +1,7 @@
 import arrowRight from "../../../assets/arrow-right.png";
 import user_vendor from "../../../assets/user_vendor.png";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FetchChat, UserChat } from "../../../Redux/Actions";
 import { io } from "socket.io-client";
 import ChatBody from "./ChatBody";
@@ -12,42 +12,36 @@ const Dispute = () => {
   const { chats, loading, error } = useSelector((state) => state.chats);
   const { user } = useSelector((state) => state.user);
   const { chat } = useSelector((state) => state.chat);
-  console.log(chat);
+  const [barName, setBarName] = useState({});
+  const [content, setContent] = useState([]);
 
+  const GetBarUser = (id) => {
+    const response = chats?.docs.find((data, index) => {
+      return data?._id === id;
+    });
+    setBarName(response);
+  };
+  const id = JSON.parse(window.localStorage.getItem("CHAT_ID"));
   useEffect(() => {
     dispatch(FetchChat());
+    GetBarUser(id);
+    dispatch(UserChat());
+    setContent(chat?.docs && [...chat?.docs]);
   }, []);
-
-  const socket = io(`ws://skill-remit.herokuapp.com?userId=${user?._id}`, {
-    transports: ["websocket"],
-  });
-  // const socket = io(`ws://skill-remit.herokuapp.com?userId=${user?._id}`, {
-  //   transports: ["websocket"],
-  // });
-
-  socket.on("connect", () => {
-    console.log(`you are connected already to id ${socket.id}`);
-  });
-  socket.on("disconnect", () => {
-    console.log(socket.id);
-  });
-  // useEffect(() => {
-  //   dispatch(UserChat());
-  // }, [socket]);
-
-  // console.log(socket);
 
   const GetUserChat = async (id) => {
     try {
       window.localStorage.setItem("CHAT_ID", JSON.stringify(id));
+      GetBarUser(id);
       const response = await dispatch(UserChat());
+      setContent(chat?.docs && [...chat?.docs]);
       console.log(response);
       // console.log(id);
     } catch (err) {
       console.log(err);
     }
   };
-  console.log(chats);
+
   const renderDisputes = chats?.docs?.map((data, index) => {
     return (
       <section
@@ -89,7 +83,7 @@ const Dispute = () => {
     );
   });
   return (
-    <main className="md:flex  h-96 justify-between pt-5 md:pt-14">
+    <main className="md:flex  chat-container justify-between pt-5 md:pt-14">
       <div className=" hidden  md:block  w-2/4 mr-8">
         <div className="flex  items-center bg-primary text-white p-4 rounded-md justify-between">
           <p>Dispute </p>
@@ -113,9 +107,9 @@ const Dispute = () => {
         </div>
       </div>
       <div className=" md:w-5/6">
-        <ChatBar />
+        <ChatBar barName={barName} setBarName={setBarName} />
         <div className="">
-          <ChatBody socket={socket} chat={chat} />
+          <ChatBody setContent={setContent} content={content} chat={chat} />
         </div>
       </div>
     </main>

@@ -13,10 +13,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 const Notifications = () => {
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(GetWithdrawalRequests());
-    dispatch(GetAllNotifications());
-  }, []);
+
   const { allnotifications } = useSelector((state) => state.allnotifications);
   const { withdrawal } = useSelector((state) => state.withdrawal);
 

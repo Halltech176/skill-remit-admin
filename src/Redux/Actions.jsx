@@ -23,7 +23,6 @@ export const User = createAsyncThunk("user", async () => {
 
     return response.data.data;
   } catch (err) {
-    HandleError(err);
     throw err;
     // console.log(err);
   }
@@ -77,7 +76,6 @@ export const Users = createAsyncThunk("users", async (value) => {
 
     return response.data.data;
   } catch (err) {
-    HandleError(err);
     throw err;
     // console.log(err);
   }
@@ -170,7 +168,7 @@ export const Feedbacks = createAsyncThunk(
       return THUNKAPI.fulfillWithValue(response.data.data);
     } catch (err) {
       console.log(err);
-      HandleError(err);
+
       throw THUNKAPI.rejectWithValue(err);
     }
   }
@@ -195,7 +193,6 @@ export const SuspendedUsers = createAsyncThunk(
 
       return response.data.data;
     } catch (err) {
-      HandleError(err);
       console.log(err);
 
       throw THUNKAPI.rejectWithValue(err);
@@ -208,7 +205,6 @@ export const SiteData = createAsyncThunk("sitedata", async () => {
     const response = await axios.get(`${BASE_URL}//settings`, HEADER);
     return response.data.data;
   } catch (err) {
-    HandleError(err);
     console.log(err);
     throw err;
   }
@@ -224,7 +220,7 @@ export const FetchChat = createAsyncThunk("chats", async (data, THUNKAPI) => {
     return THUNKAPI.fulfillWithValue(response.data.data);
   } catch (err) {
     console.log(err);
-    HandleError(err);
+
     throw THUNKAPI.rejectWithValue(err);
   }
 });
@@ -240,7 +236,7 @@ export const UserChat = createAsyncThunk("chat", async (_, THUNKAPI) => {
     return THUNKAPI.fulfillWithValue(response.data.data);
   } catch (err) {
     console.log(err);
-    HandleError(err);
+
     throw THUNKAPI.rejectWithValue(err);
   }
 });
@@ -305,7 +301,7 @@ export const GetReview = createAsyncThunk("reviews", async (_, THUNKAPI) => {
     return THUNKAPI.fulfillWithValue(response.data.data);
   } catch (err) {
     console.log(err);
-    HandleError(err);
+
     throw THUNKAPI.rejectWithValue(err);
   }
 });
@@ -322,7 +318,7 @@ export const GetUserStats = createAsyncThunk(
       return THUNKAPI.fulfillWithValue(response.data.data);
     } catch (err) {
       console.log(err);
-      HandleError(err);
+
       throw THUNKAPI.rejectWithValue(err);
     }
   }
@@ -340,7 +336,7 @@ export const GetAllNotifications = createAsyncThunk(
       return THUNKAPI.fulfillWithValue(response.data.data);
     } catch (err) {
       console.log(err);
-      HandleError(err);
+
       throw THUNKAPI.rejectWithValue(err);
     }
   }
@@ -358,7 +354,7 @@ export const GetWithdrawalRequests = createAsyncThunk(
       return THUNKAPI.fulfillWithValue(response.data.data);
     } catch (err) {
       console.log(err);
-      HandleError(err);
+
       throw THUNKAPI.rejectWithValue(err);
     }
   }

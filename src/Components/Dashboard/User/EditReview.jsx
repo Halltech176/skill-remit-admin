@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import cancel from "../../../assets/cancel.png";
 import { HandleError } from "../../Common/HandleError";
-import { GetNotifications } from "../../../Redux/Actions";
 import { BASE_URL, HEADER } from "../../../../Api";
 import { useDispatch } from "react-redux";
 import axios from "axios";

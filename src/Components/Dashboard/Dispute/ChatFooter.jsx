@@ -6,23 +6,7 @@ import { BASE_URL, HEADER } from "../../../../Api";
 import { useSelector, useDispatch } from "react-redux";
 import { FetchChat, UserChat } from "../../../Redux/Actions";
 // import { io } from "socket.io-client";
-const ChatFooter = ({ socket, content, setContent, message, setMessage }) => {
-  useEffect(() => {
-    socket.on("message", (chat) => {
-      console.log(chat);
-
-      console.log(content);
-    });
-    socket.on("chat", (chat) => {
-      setContent([...content, { content: chat?.message?.content }]);
-      console.log(chat.message);
-    });
-    // console.log(chat);
-
-    socket.on("user-status", (chat) => {
-      console.log(chat);
-    });
-  }, [socket, content]);
+const ChatFooter = ({ content, setContent, message, setMessage }) => {
   console.log(content);
   const dispatch = useDispatch();
   const SendMessage = async () => {
@@ -46,14 +30,14 @@ const ChatFooter = ({ socket, content, setContent, message, setMessage }) => {
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         style={{ background: "#F7F7FD" }}
-        className="w-full text-xl p-2 md:p-5"
+        className="w-full text-sm p-2 md:px-5 py-3"
         type="text"
       />
       <span>
-        <img src={copy} className="md:w-8 w-4 mx-2" alt="copy" />
+        <img src={copy} className="md:w-5 w-4 mx-2" alt="copy" />
       </span>
       <span className="cursor-pointer " onClick={SendMessage}>
-        <img src={send} className="md:w-8 w-4 mx-3" alt="send" />
+        <img src={send} className="md:w-5 w-4 mx-3" alt="send" />
       </span>
     </div>
   );

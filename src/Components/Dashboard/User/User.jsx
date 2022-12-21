@@ -27,12 +27,6 @@ const User = () => {
   console.log(selector);
   console.log(selector1);
 
-  useEffect(() => {
-    dispatch(Users({ status: "" }));
-    dispatch(GetUserStats());
-    dispatch(GetReview());
-  }, []);
-
   const [value, setValue] = useState(0);
 
   const handleChange = (newValue) => {};

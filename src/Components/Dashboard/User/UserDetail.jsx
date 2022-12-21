@@ -76,7 +76,7 @@ const UserDetail = () => {
 
   const renderStats = stats.map((data, index) => {
     return (
-      <section className="flex flex-col my-2 shadow-xl bg-white py-8 w-64 rounded-md items-center">
+      <section className="flex flex-col my-2 md:shadow-xl shadow-md bg-white md:py-8 p-3 md:w-64 w-40 rounded-md items-center">
         <h1
           className={`${
             data.status === "balance"
@@ -84,11 +84,14 @@ const UserDetail = () => {
               : data.status === "completed"
               ? "text-info"
               : "text-primary"
-          } text-4xl md:text-6xl`}
+          } text-2xl md:text-6xl`}
         >
           {data.value}
         </h1>
-        <p style={{ color: "#111114" }} className="md:text-2xl text-xl my-2">
+        <p
+          style={{ color: "#111114" }}
+          className="md:text-2xl text-center text-base my-2"
+        >
           {data.purpose}
         </p>
       </section>
@@ -266,7 +269,7 @@ const UserDetail = () => {
               </div>
             </div>
           </div>
-          <div className="flex md:justify-between justify-center flex-wrap md:flex-nowrap md:m-10">
+          <div className="flex justify-between  flex-wrap md:flex-nowrap md:m-10">
             {renderStats}
           </div>
           <div className="flex flex-wrap  md:mb-10">

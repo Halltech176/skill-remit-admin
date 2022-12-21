@@ -15,9 +15,9 @@ import PaginateComponent from "../../Common/Paginate.component";
 
 const Admin = () => {
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(SuspendedUsers());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(SuspendedUsers());
+  // }, []);
   const { user, loading, error } = useSelector((state) => state?.suspended);
   console.log(user, loading, error);
   // const loading = false;

@@ -11,6 +11,7 @@ import {
   ClickedUser,
   Feedbacks,
   GetUserStats,
+  GetReview,
 } from "../../../Redux/Actions";
 import { Loader1 } from "../../Common/Loader";
 import { AllAccounts } from "./AccountsStatus";
@@ -21,12 +22,15 @@ const User = () => {
   const dispatch = useDispatch();
   const user_credentials = useSelector((state) => state.users?.user);
   const { loading, user } = useSelector((state) => state.users);
-  const feed = useSelector((state) => state);
-  console.log(feed);
+  const selector = useSelector((state) => state.review);
+  const selector1 = useSelector((state) => state.users?.user);
+  console.log(selector);
+  console.log(selector1);
 
   useEffect(() => {
     dispatch(Users({ status: "" }));
     dispatch(GetUserStats());
+    dispatch(GetReview());
   }, []);
 
   const [value, setValue] = useState(0);

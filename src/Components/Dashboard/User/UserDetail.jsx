@@ -20,14 +20,21 @@ import { ToastContainer, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import NotificationComponent from "./Notification.component";
+import { BiEdit } from "react-icons/bi";
+import { MdOutlineDelete } from "react-icons/md";
+import EditReview from "./EditReview";
+import DeleteReview from "./DeleteReview";
 
 const UserDetail = () => {
   const navigate = useNavigate();
   const reviewss = new Array(4).fill(0);
   const selector = useSelector((state) => state?.clickeduser);
   const { review, loading } = useSelector((state) => state?.review);
-
   const [open, setOpen] = useState(false);
+  const [reviewObj, setReviewObj] = useState({});
+
+  const [open1, setOpen1] = useState(false);
+  const [open2, setOpen2] = useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(ClickedUser());
@@ -105,11 +112,20 @@ const UserDetail = () => {
     );
   });
 
+  const SpecificReview = (id) => {
+    const response = review?.docs?.find((data) => {
+      return data?._id === id;
+    });
+    setReviewObj(response);
+  };
+  console.log(reviewObj);
+
   const renderReviews = review?.docs?.map((data, index) => {
     return (
       <section
         style={{ background: "#F3F1FF" }}
         className="max-w-md my-5 mx-2  p-5 rounded-2xl "
+        onClick={() => SpecificReview(data?._id)}
       >
         <div className="flex my-1 items-center justify-between">
           <span>
@@ -126,6 +142,23 @@ const UserDetail = () => {
           </div>
         </div>
         <p>{data?.description}</p>
+        <span className="block border-b-2 my-3"> </span>
+        <div className="flex flex-row-reverse text-right">
+          <span className="mx-2 cursor-pointer">
+            <MdOutlineDelete
+              onClick={() => setOpen2(true)}
+              color="#f9896b"
+              size="1.2rem"
+            />
+          </span>
+          <span className=" cursor-pointer">
+            <BiEdit
+              onClick={() => setOpen1(true)}
+              color="#130160"
+              size="1.2rem"
+            />
+          </span>
+        </div>
       </section>
     );
   });
@@ -149,6 +182,8 @@ const UserDetail = () => {
   };
   return (
     <>
+      <EditReview open={open1} setOpen={setOpen1} review={reviewObj} />
+      <DeleteReview open={open2} setOpen={setOpen2} review={reviewObj} />
       <NotificationComponent
         user={selector?.user}
         open={open}

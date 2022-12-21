@@ -39,7 +39,7 @@ const ChatBody = ({ socket, chat }) => {
         TODAY
       </h1>
 
-      <section className="flex  flex-col">
+      <section className="flex h-96 overflow-y-scroll flex-col">
         {renderChats}
 
         <div

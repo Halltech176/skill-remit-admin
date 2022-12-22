@@ -38,7 +38,6 @@ const UserDetail = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(ClickedUser());
-    dispatch(GetReview());
   }, []);
   console.log(selector?.user?.wallet?.balance);
 
@@ -198,7 +197,7 @@ const UserDetail = () => {
       ) : (
         <main className="">
           <div className="md:flex block justify-between items-center">
-            <div className="image w-56 rounded-full mx-auto bg-red-500 overflow-hidden shrink-0 h-56">
+            <div className="image w-56 rounded-full mx-auto white overflow-hidden shrink-0 h-56">
               <img
                 className="object-cover w-full h-full  "
                 src={

@@ -73,7 +73,10 @@ const AddBanks = ({ open, setOpen }) => {
       const response = await axios.post(
         "https://skill-remit.herokuapp.com/api//wallet/bank-account",
         {},
+        // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZjYyZDJmMWRlMWYzNTRjZTAxZGNjMyIsImlhdCI6MTY2MDMwNjExNSwiZXhwIjoxNjYwNzM4MTE1fQ.ykrU7mCPpht96EnIGxghBZIyM3ijcLZu3nwNREtHqT0
         // { data },
+
+        // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzM2FjMjJjYzkzZDBkM2VjZjBlYTM4OCIsImlhdCI6MTY3MTYyMjA4OCwiZXhwIjozLjYwMDAwMDAwMDAwMDAwMTRlKzI0fQ.2quF8xtaa8r45kpoNoHywRPTVZT2MMmmoiu1P7WiiYg
         {
           headers: {
             Authorization: `Bearer ${TOKEN} `,

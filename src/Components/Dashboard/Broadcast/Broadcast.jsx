@@ -68,7 +68,7 @@ const Commission = () => {
           name="sendTo"
           type="radio"
         />
-        <label className="mx-3 shrink-0 text-dark font-medium text-sm md:text-xl">
+        <label className="mx-3 shrink-0 text-dark font-medium text-sm md:text-base">
           {data.label}
         </label>
       </section>
@@ -86,7 +86,7 @@ const Commission = () => {
           name="sentAs"
           type="radio"
         />
-        <label className="mx-3 text-dark font-medium text-sm md:text-xl">
+        <label className="mx-3 text-dark font-medium text-sm md:text-base">
           {data.label}
         </label>
       </section>
@@ -122,16 +122,16 @@ const Commission = () => {
       <ToastContainer transition={Zoom} autoClose={800} />
       <h1
         style={{ color: "#001B87" }}
-        className="text-primary text-3xl md:text-5xl"
+        className="text-primary text-2xl md:text-3xl"
       >
         Send Broadcast
       </h1>
       <form className="md:my-10 my-3">
-        <h1 className="text-dark text-xl   md:text-3xl">send To</h1>
+        <h1 className="text-dark text-sm  font-semibold md:text-xl">Send To</h1>
         <div className="my-8 flex">{renderSentTO}</div>
       </form>
       <form className="my-10">
-        <h1 className="text-dark text-xl   md:text-3xl">send As</h1>
+        <h1 className="text-dark text-sm font-semibold  md:text-xl">Send As</h1>
         <div className="my-8 flex">{renderSentAs}</div>
       </form>
 
@@ -141,7 +141,7 @@ const Commission = () => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Title"
-            className="md:w-2/3 w-full text-normal text-sm md:text-xl font-medium p-2 md:p-5 bg-primary-200 rounded-xl"
+            className="md:w-2/3 w-full text-normal text-sm md:text-base font-medium p-2 md:p-3 bg-primary-200 rounded-xl"
             rows="2"
           />
         </div>
@@ -150,8 +150,8 @@ const Commission = () => {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             placeholder="Message"
-            className="md:w-2/3 w-full text-normal text-sm md:text-xl font-medium p-2 md:p-5 bg-primary-200 rounded-xl"
-            rows="8"
+            className="md:w-2/3 w-full text-normal text-sm md:text-base font-medium p-2 md:p-3 bg-primary-200 rounded-xl"
+            rows="6"
           />
         </div>
         <button

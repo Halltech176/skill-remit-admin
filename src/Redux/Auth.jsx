@@ -12,6 +12,8 @@ import {
   GetUserStats,
   GetReview,
   FetchChat,
+  SiteData,
+  Banks,
 } from "../Redux/Actions";
 import { Loader1 } from "../Components/Common/Loader";
 import { io } from "socket.io-client";
@@ -29,6 +31,8 @@ export const RequireAuth = ({ children }) => {
     dispatch(GetUserStats());
     dispatch(GetReview());
     dispatch(FetchChat());
+    dispatch(Banks());
+    dispatch(SiteData());
   }, [dispatch]);
 
   const trans = useSelector((state) => state);

@@ -48,7 +48,7 @@ const User = () => {
           `${value}` === `${index}`
             ? "bg-normal text-white"
             : "bg-white text-normal"
-        }  font-nunito  text-center cursor-pointer  md:text-xl  text-xs font-medium  rounded-md py-4  px-3  md:w-64 md:py-5 md:my-5 my-2 mx-2`}
+        }  font-nunito  text-center cursor-pointer  md:text-base  text-xs font-medium  rounded-md py-4  px-3  md:w-52 md:py-5 md:my-5 my-2 mx-2`}
       >
         {data.name}
       </div>
@@ -60,7 +60,7 @@ const User = () => {
         <Loader1 />
       ) : (
         <main className="  ">
-          <section className="md:flex grid grid-cols-2 flex-wrap md:justify-center">
+          <section className="md:grid md:grid-cols-3 grid grid-cols-2 flex-wrap md:justify-center">
             {renderTabs}
           </section>
           <div className="md:app_container md:overflow-x-scroll">

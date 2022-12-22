@@ -36,7 +36,7 @@ const Commission = () => {
         <form className="h-screen overflow-hidden">
           <h2
             // style={{ color: "#001B87" }}
-            className="font-aeonik-light my-5 text-normal text-2xl font-extralight md:text-4xl"
+            className="font-aeonik-light my-5 text-normal text-base font-extralight md:text-2xl"
           >
             Percentage Commission on service delivery
           </h2>
@@ -47,7 +47,7 @@ const Commission = () => {
             <input
               value={commissionPercent}
               onChange={(e) => setCommissionPercent(e.target.value)}
-              className="border-primary text-md md:text-2xl font-medium py-2 px-2 bg-transparent md:py-4 md:px-3 rounded-md w-full md:w-2/3"
+              className="border-primary text-md md:text-2xl font-medium py-2 px-2 bg-transparent md:py-3 md:px-2 rounded-md w-full md:w-2/5"
               type="number"
               placeholder={`${sitedata?.sitedata?.commissionPercent}%`}
             />

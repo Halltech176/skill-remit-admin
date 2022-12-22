@@ -13,9 +13,7 @@ const Header = ({ title }) => {
   const navigate = useNavigate();
   console.log(user?.firstName);
   console.log(selector);
-  useEffect(() => {
-    dispatch(User());
-  }, []);
+
   return (
     <>
       <header className="md:flex md:py-10 md:pt-5 pt-24 justify-between items-center">
@@ -26,8 +24,8 @@ const Header = ({ title }) => {
         </div>
         <Search />
 
-        <div className="md:flex  hidden items-center justify-between ">
-          <span>
+        <div className="md:flex cursor-pointer hidden items-center justify-between ">
+          <span onClick={() => navigate("/admin/notifications")}>
             <img src={bell} alt="bell" />
           </span>
           {/* <input type="search" /> */}

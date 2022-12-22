@@ -49,19 +49,19 @@ const TransactionsComponent = () => {
       ) : ( */}
       <WithdrawComponent open={open} setOpen={setOpen} />
       <main className="   app_container   ">
-        <div className="bg-primary relative rounded-3xl  overflow-hidden w-full md:w-1/2 mx-auto py-5 md:py-10 px-5  md:px-22 text-center   text-white">
-          <div className="flex flex-col absolute -top-3 -left-24 md:-left-14  -bottom-3">
+        <div className="bg-primary relative rounded-3xl  overflow-hidden w-full md:w-2/6 mx-auto py-5 md:py-8 px-5  md:px-22 text-center   text-white">
+          <div className="flex flex-col absolute -top-3 -left-24 md:-left-20  -bottom-3">
             <img src={Pattern1} alt="pattern" />
             <img src={Pattern2} alt="pattern" />
             <img src={Pattern3} alt="pattern" />
           </div>
-          <div className="flex flex-col absolute top-2 -right-24 md:-right-14  -bottom-3">
+          <div className="flex flex-col absolute top-2 -right-24 md:-right-20  -bottom-3">
             <img src={Pattern4} alt="pattern" />
             <img src={Pattern5} alt="pattern" />
             <img src={Pattern6} alt="pattern" />
           </div>
           <p className="text-xl">Available balance</p>
-          <h1 className="md:text-6xl text-4xl font-medium py-8">5,000,000</h1>
+          <h1 className="md:text-4 text-4xl font-medium py-8">5,000,000</h1>
           <div>
             <button
               onClick={() => setOpen(true)}

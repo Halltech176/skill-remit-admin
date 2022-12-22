@@ -19,6 +19,7 @@ import {
 } from "../../../Components/Common/Toastify";
 import { ToastContainer, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import InputComponent from "./Input1.component";
 
 import axios from "axios";
 const Settings = () => {
@@ -26,10 +27,6 @@ const Settings = () => {
   const { sitedata } = useSelector((state) => state.sitedata);
   const dispatch = useDispatch();
   // console.log(selector);
-
-  useEffect(() => {
-    dispatch(SiteData());
-  }, []);
 
   const initialState = {
     email: user?.email,
@@ -58,14 +55,7 @@ const Settings = () => {
 
   const renderInputs = DetailsInput.map((data, index) => {
     return (
-      <input
-        value={values[data.name]}
-        onChange={handleChange}
-        name={data.name}
-        placeholder={data.placeholder}
-        className="bg-primary-200  text-sm md:text-2xl font-medium w-full rounded-md md:rounded-xl my-5 md:my-10  p-2 md:p-5"
-        type={data.type}
-      />
+      <InputComponent handleChange={handleChange} data={data} values={values} />
     );
   });
   const settingsType = ["Profile Settings", "Account Settings"];
@@ -74,13 +64,10 @@ const Settings = () => {
   });
   const renderPasswords = Passwords.map((data, index) => {
     return (
-      <input
-        value={passwords[data.name]}
-        onChange={handlePassword}
-        name={data.name}
-        placeholder={data.placeholder}
-        className="bg-primary-200 text-sm md:text-2xl font-medium w-full rounded-md md:rounded-xl my-5 md:my-10  p-2 md:p-5"
-        type={data.type}
+      <InputComponent
+        handleChange={handlePassword}
+        data={data}
+        values={passwords}
       />
     );
   });
@@ -167,13 +154,15 @@ const Settings = () => {
           <TabPanel value="1">
             <main className="block  md:flex justify-between">
               <div className="flex flex-col">
-                <span>
+                <div className="md:w-52 md:h-52 w-48 my-3 h-48 mx-auto relative  my-3 overflow-hidden rounded-full bg-white">
+                  {/* <h1>logo</h1> */}
                   <img
-                    className="md:w-80 md:h-80 w-48 my-3 h-48 mx-auto"
+                    className=" object-cover h-full  w-full"
                     src={user?.avatar ? user?.avatar?.url : user_img}
-                    alt="user"
+                    alt="logo"
                   />
-                </span>
+                </div>
+
                 <div className="flex items-center flex-col">
                   {" "}
                   <input

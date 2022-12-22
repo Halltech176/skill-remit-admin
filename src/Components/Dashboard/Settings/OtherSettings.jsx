@@ -6,9 +6,7 @@ import Select from "react-select";
 import InputComponent from "./Input.component";
 const OtherSettings = ({ sitedata }) => {
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(Banks());
-  }, []);
+
   const { banks } = useSelector((state) => state.banks);
   const [selectedOption, setSelectedOption] = useState(sitedata?.bankName);
   console.log(sitedata);

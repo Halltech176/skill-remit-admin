@@ -23,7 +23,6 @@ const Dispute = () => {
   };
   const id = JSON.parse(window.localStorage.getItem("CHAT_ID"));
   useEffect(() => {
-    dispatch(FetchChat());
     GetBarUser(id);
     dispatch(UserChat());
     setContent(chat?.docs && [...chat?.docs]);

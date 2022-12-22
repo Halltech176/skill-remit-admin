@@ -25,7 +25,7 @@ const ChatFooter = ({ content, setContent, message, setMessage }) => {
     }
   };
   return (
-    <div className="input bg-white p-1 md:p-2 flex items-center ">
+    <div className="input  bg-white p-1 md:p-2 flex items-center ">
       <input
         value={message}
         onChange={(e) => setMessage(e.target.value)}

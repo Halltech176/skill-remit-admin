@@ -30,7 +30,19 @@ const User = () => {
   const user_credentials = useSelector((state) => state.users?.user);
   const { loading, user } = useSelector((state) => state.users);
   const { user_stats } = useSelector((state) => state?.userstats);
-  const selector1 = useSelector((state) => state.users?.user);
+  const { jobs } = useSelector((state) => state?.jobs);
+
+  const job_ids = jobs?.docs?.map((data, index) => {
+    return data?.createdBy?._id;
+  });
+  const mergedArray = user_stats?.docs?.reduce((acc, item) => {
+    const matchingItem = jobs?.docs?.find(
+      (data) => data?.createdBy?._id === item?._id
+    );
+    return acc.concat({ ...item, ...matchingItem });
+  }, []);
+
+  console.log(mergedArray);
 
   const GetSumType = (type) => {
     const response = user_stats?.docs?.filter(

@@ -42,9 +42,6 @@ const AddBanks = ({ open, setOpen }) => {
       },
     },
   };
-  useEffect(() => {
-    dispatch(Banks());
-  }, []);
 
   const backdrop = {
     hidden: {
@@ -68,6 +65,7 @@ const AddBanks = ({ open, setOpen }) => {
   const handleBank = async (e) => {
     e.preventDefault();
     const data = { accountNumber, bankCode };
+    console.log(data);
     const TOKEN = JSON.parse(localStorage.getItem("token"));
     try {
       const response = await axios.post(
@@ -79,6 +77,7 @@ const AddBanks = ({ open, setOpen }) => {
           },
         }
       );
+
       // const response = await dispatch(AddBank(data)).unwrap();
       console.log(response);
       console.log(data);
@@ -87,7 +86,7 @@ const AddBanks = ({ open, setOpen }) => {
     }
   };
 
-  console.log(banks);
+  console.log(bankCode);
 
   const renderOptions = banks?.map((data, index) => {
     return <option value={data?.name}>{data?.name}</option>;
@@ -113,7 +112,10 @@ const AddBanks = ({ open, setOpen }) => {
                 exit="exit"
                 style={{ zIndex: "50" }}
               >
-                <span onClick={() => setOpen(false)} className="w-24">
+                <span
+                  onClick={() => setOpen(false)}
+                  className="w-24 cursor-pointer"
+                >
                   <BsArrowLeft />
                 </span>
                 <h1 className="my-5 md:text-3xl text-md text-normal my-4 font-semibold">

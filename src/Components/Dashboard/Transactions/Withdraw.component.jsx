@@ -42,9 +42,7 @@ const WithdrawComponent = ({ open, setOpen }) => {
       },
     },
   };
-  useEffect(() => {
-    dispatch(Banks());
-  }, []);
+
 
   const backdrop = {
     hidden: {
@@ -114,7 +112,7 @@ const WithdrawComponent = ({ open, setOpen }) => {
                 exit="exit"
                 style={{ zIndex: "50" }}
               >
-                <span onClick={() => setOpen(false)} className="w-24">
+                <span onClick={() => setOpen(false)} className="w-24 cursor-pointer">
                   <BsArrowLeft />
                 </span>
                 <h1 className="my-5 md:text-3xl text-md text-normal my-4 font-semibold">

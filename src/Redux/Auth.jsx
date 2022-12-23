@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { TOKEN } from "../../Api";
+import { TOKEN, BASE_URL } from "../../Api";
 import {
   User,
   AllTransactions,
@@ -14,9 +14,9 @@ import {
   FetchChat,
   SiteData,
   Banks,
+  Jobs,
 } from "../Redux/Actions";
 import { Loader1 } from "../Components/Common/Loader";
-import { io } from "socket.io-client";
 
 export const RequireAuth = ({ children }) => {
   const navigate = useNavigate();
@@ -33,6 +33,7 @@ export const RequireAuth = ({ children }) => {
     dispatch(FetchChat());
     dispatch(Banks());
     dispatch(SiteData());
+    dispatch(Jobs());
   }, [dispatch]);
 
   const trans = useSelector((state) => state);
@@ -45,17 +46,6 @@ export const RequireAuth = ({ children }) => {
   } else if (TOKEN !== null && loading) {
     return <Loader1 />;
   } else {
-    const socket = io(`https://skill-remit.herokuapp.com?userId=${user?._id}`, {
-      transports: ["websocket"],
-    });
-    socket.on("connect", () => {
-      console.log(`you are connected  to id ${socket.id}`);
-    });
-    socket.on("disconnect", () => {
-      console.log(socket.id);
-    });
-
-    console.log(socket);
     return children;
   }
 };

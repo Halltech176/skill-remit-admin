@@ -5,7 +5,7 @@ const TransactionComponent = ({ users_transactions }) => {
     return (
       <section
         style={{ color: " #2E303D" }}
-        className="md:flex  grid grid-cols-4 border-b-2 pb-2 shrink-0 my-5 text-xs md:text-base items-center md:justify-between"
+        className="flex   border-b-2 pb-2 shrink-0 my-5 text-xs md:text-base items-center md:justify-between"
       >
         <p className="flex shrink-0 md:w-64  items-center">
           <span className="md:block hidden">

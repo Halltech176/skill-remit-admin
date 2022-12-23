@@ -9,6 +9,7 @@ import { HandleError } from "../../Common/HandleError";
 import { HandleSuccess } from "../../Common/HandleSuccess";
 import { ToastContainer, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 import axios from "axios";
 import { BASE_URL } from "../../../../Api";
 import ModalComponent from "./Modal.component";
@@ -235,8 +236,6 @@ export const VerifyAccount = ({ open, setOpen, ToggleModal }) => {
           </motion.div>
         )}
       </AnimatePresence>
-
-  
     </main>
   );
 };

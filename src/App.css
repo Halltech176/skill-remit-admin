@@ -196,6 +196,14 @@ input[type="file"]::before {
   cursor: pointer;
   outline: none;
 }
+input.file_attachment::before {
+  content: url("./assets/copy.png");
+  border: none;
+  top: auto;
+  left: auto;
+  bottom: auto;
+  right: auto;
+}
 .verified {
   color: #427a5b;
   background: #deede5;
@@ -296,7 +304,7 @@ input::-webkit-inner-spin-button {
   grid-template-columns: 5rem 1fr 1fr 1fr;
 }
 .chat-container {
-  height: 30rem;
+  height: 25rem;
 }
 @media (max-width: 600px) {
   body {
@@ -310,6 +318,6 @@ input::-webkit-inner-spin-button {
     grid-template-columns: 5rem 1fr 1fr;
   }
   .chat-container {
-    height: 100%;
+    height: 30rem;
   }
 }

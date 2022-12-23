@@ -110,7 +110,10 @@ export const AllTransactions = createAsyncThunk(
 
 export const Jobs = createAsyncThunk("jobs", async (data, THUNKAPI) => {
   try {
-    const response = await axios.get(`${BASE_URL}/job?limit=0`, HEADER);
+    const response = await axios.get(
+      `${BASE_URL}/job?limit=0&populate=createdBy`,
+      HEADER
+    );
 
     return THUNKAPI.fulfillWithValue(response.data.data);
   } catch (err) {
@@ -213,7 +216,7 @@ export const SiteData = createAsyncThunk("sitedata", async () => {
 export const FetchChat = createAsyncThunk("chats", async (data, THUNKAPI) => {
   try {
     const response = await axios.get(
-      `${BASE_URL}/chat?populate=users.avatar`,
+      `${BASE_URL}/chat?//chat/report?populate=files&status=resolved&populate=users.avatar`,
       HEADER
     );
 
@@ -225,15 +228,16 @@ export const FetchChat = createAsyncThunk("chats", async (data, THUNKAPI) => {
   }
 });
 
-export const UserChat = createAsyncThunk("chat", async (_, THUNKAPI) => {
+export const UserChat = createAsyncThunk("chat", async (data, THUNKAPI) => {
   try {
+    console.log(data);
     const user_id = JSON.parse(localStorage.getItem("CHAT_ID"));
     const response = await axios.get(
-      `${BASE_URL}/chat/${user_id}/message?populate=chat&populate=chat.users&populate=sender    `,
+      `${BASE_URL}/chat/${data}/message?populate=chat&populate=chat.users&populate=sender&limit=0    `,
       HEADER
     );
 
-    return THUNKAPI.fulfillWithValue(response.data.data);
+    return THUNKAPI.fulfillWithValue(response.data);
   } catch (err) {
     console.log(err);
 

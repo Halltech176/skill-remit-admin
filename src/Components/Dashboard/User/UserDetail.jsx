@@ -173,6 +173,7 @@ const UserDetail = () => {
         HEADER
       );
       dispatch(ClickedUser());
+      dispatch(Users());
       HandleSuccess(response);
       console.log(response);
     } catch (err) {

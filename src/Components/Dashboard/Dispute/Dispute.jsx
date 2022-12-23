@@ -5,15 +5,39 @@ import { useEffect, useState } from "react";
 import { FetchChat, UserChat } from "../../../Redux/Actions";
 import { io } from "socket.io-client";
 import ChatBody from "./ChatBody";
-import ChatBar from "./ChatBar";
+import ChatHeader from "./ChatHeader";
+import { HandleError } from "../../Common/HandleError";
+import { HandleSuccess } from "../../Common/HandleSuccess";
+import { ToastContainer, Zoom } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Dispute = () => {
   const dispatch = useDispatch();
   const { chats, loading, error } = useSelector((state) => state.chats);
   const { user } = useSelector((state) => state.user);
   const { chat } = useSelector((state) => state.chat);
-  const [barName, setBarName] = useState({});
+  const [barName, setBarName] = useState(null);
   const [content, setContent] = useState([]);
+  const [receivedMessage, setReceivedMessage] = useState(null);
+  console.log(chat);
+
+  useEffect(() => {
+    const socket = io(`https://skill-remit.herokuapp.com?userId=${user?._id}`, {
+      transports: ["websocket"],
+    });
+    socket.on("connect", () => {
+      console.log(`you are connected  to id ${socket.id}`);
+    });
+
+    socket.on("disconnect", () => {
+      console.log(socket.id);
+    });
+
+    socket.on("chat", (data) => {
+      setContent(data);
+      console.log(data);
+    });
+  }, []);
 
   const GetBarUser = (id) => {
     const response = chats?.docs.find((data, index) => {
@@ -22,24 +46,19 @@ const Dispute = () => {
     setBarName(response);
   };
   const id = JSON.parse(window.localStorage.getItem("CHAT_ID"));
-  useEffect(() => {
-    GetBarUser(id);
-    dispatch(UserChat());
-    setContent(chat?.docs && [...chat?.docs]);
-  }, []);
 
   const GetUserChat = async (id) => {
     try {
       window.localStorage.setItem("CHAT_ID", JSON.stringify(id));
       GetBarUser(id);
-      const response = await dispatch(UserChat());
-      setContent(chat?.docs && [...chat?.docs]);
-      console.log(response);
-      // console.log(id);
+      const { payload } = await dispatch(UserChat(id));
+      setContent(payload?.data?.docs);
+      console.log(payload?.data?.docs);
     } catch (err) {
       console.log(err);
     }
   };
+  console.log(content);
 
   const renderDisputes = chats?.docs?.map((data, index) => {
     return (
@@ -82,7 +101,8 @@ const Dispute = () => {
     );
   });
   return (
-    <main className="md:flex  chat-container justify-between pt-5 md:pt-14">
+    <main className="md:flex h-full chat-container justify-between pt-5 ">
+      <ToastContainer transition={Zoom} autoClose={800} />
       <div className=" hidden  md:block  w-2/4 mr-8">
         <div className="flex  items-center bg-primary text-white p-4 rounded-md justify-between">
           <p>Dispute </p>
@@ -90,25 +110,35 @@ const Dispute = () => {
             <img className="w-4" src={arrowRight} alt="arrow" />
           </span>
         </div>
-        <div className="my-4">
-          <input
-            className="p-3 text-dark rounded-md w-5/6"
-            style={{
-              border: " 1px  solid #E8EBF2",
-              // color: "rgba(26, 35, 78, 0.8)",
-            }}
-            type="text"
-            placeholder="search for patient"
-          />
-        </div>
+        {chat === null ? (
+          ""
+        ) : (
+          <div className="my-4">
+            <input
+              className="p-3 text-dark rounded-md w-5/6"
+              style={{
+                border: " 1px  solid #E8EBF2",
+                // color: "rgba(26, 35, 78, 0.8)",
+              }}
+              type="text"
+              placeholder="search for dispute"
+            />
+          </div>
+        )}
+
         <div className="h-full my-10 pb-5 app_container overflow-y-scroll">
           {renderDisputes}
         </div>
       </div>
-      <div className=" md:w-5/6">
-        <ChatBar barName={barName} setBarName={setBarName} />
+      <div style={{ background: "#F7F7FD" }} className=" md:w-5/6">
+        <ChatHeader barName={barName} setBarName={setBarName} />
         <div className="">
-          <ChatBody setContent={setContent} content={content} chat={chat} />
+          <ChatBody
+            currentUser={barName}
+            setContent={setContent}
+            content={content}
+            chat={chat}
+          />
         </div>
       </div>
     </main>

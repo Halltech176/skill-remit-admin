@@ -54,12 +54,6 @@ const OtherSettings = ({ sitedata }) => {
             value={sitedata?.accountNumber}
             type="text"
           />
-          <InputComponent
-            status="bankCode"
-            label="Bank Code"
-            value={sitedata?.bankCode}
-            type="text"
-          />
         </div>
         {/* <div className="flex flex-col">{renderInputs}</div> */}
       </div>

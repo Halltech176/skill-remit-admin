@@ -4,13 +4,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { Loader1 } from "../../Common/Loader";
 import axios from "axios";
 import { BASE_URL, TOKEN, HEADER } from "../../../../Api";
+import { ErrorNotification, SuccessNotification } from "../../Common/Toastify";
+import { HandleError } from "../../Common/HandleError";
+import { HandleSuccess } from "../../Common/HandleSuccess";
+import { ToastContainer, Zoom } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const Commission = () => {
   const dispatch = useDispatch();
-  const { sitedata, loading, error } = useSelector((state) => state);
-  const [commissionPercent, setCommissionPercent] = useState("");
-  useEffect(() => {
-    dispatch(SiteData());
-  }, []);
+  const { sitedata, loading, error } = useSelector((state) => state.sitedata);
+  const [commissionPercent, setCommissionPercent] = useState(
+    sitedata?.commissionPercent
+  );
 
   const UpdateCommission = async (e) => {
     e.preventDefault();
@@ -21,15 +26,19 @@ const Commission = () => {
         { commissionPercent },
         HEADER
       );
+      SuccessNotification(response?.data?.message);
+      dispatch(SiteData());
       console.log(response);
     } catch (err) {
       console.log(err);
+      HandleError(err);
     }
   };
 
-  console.log(sitedata?.sitedata);
+  console.log(sitedata);
   return (
     <>
+      <ToastContainer transition={Zoom} autoClose={800} />
       {loading ? (
         <Loader1 />
       ) : (
@@ -41,7 +50,7 @@ const Commission = () => {
             Percentage Commission on service delivery
           </h2>
           <p className="text-md font-bold">
-            Percentage Commission : {sitedata?.sitedata?.commissionPercent}%
+            Percentage Commission : {sitedata?.commissionPercent}%
           </p>
           <section className="my-10">
             <input
@@ -49,7 +58,7 @@ const Commission = () => {
               onChange={(e) => setCommissionPercent(e.target.value)}
               className="border-primary text-md md:text-2xl font-medium py-2 px-2 bg-transparent md:py-3 md:px-2 rounded-md w-full md:w-2/5"
               type="number"
-              placeholder={`${sitedata?.sitedata?.commissionPercent}%`}
+              // placeholder={`${sitedata?.sitedata?.commissionPercent}%`}
             />
           </section>
           <section className="md:my-32  my-16">

@@ -9,6 +9,7 @@ import { HandleError } from "../../Common/HandleError";
 import { HandleSuccess } from "../../Common/HandleSuccess";
 import { ToastContainer, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+{/* <ToastContainer transition={Zoom} autoClose={800} /> */}
 
 import axios from "axios";
 import { BASE_URL } from "../../../../Api";

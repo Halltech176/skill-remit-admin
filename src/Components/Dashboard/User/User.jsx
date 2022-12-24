@@ -83,7 +83,7 @@ const User = () => {
   };
   useEffect(() => {
     GetData(0, "");
-  }, []);
+  }, [user]);
   const paginatedData = datas?.slice(1, currentPage * datas_per_page + 1);
 
   const handlePaginage = () => {

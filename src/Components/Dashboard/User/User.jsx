@@ -26,23 +26,66 @@ const User = () => {
   const [datas, setDatas] = useState([]);
   const [value, setValue] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const datas_per_page = 10;
+  const datas_per_page = 9;
   const user_credentials = useSelector((state) => state.users?.user);
   const { loading, user } = useSelector((state) => state.users);
   const { user_stats } = useSelector((state) => state?.userstats);
   const { jobs } = useSelector((state) => state?.jobs);
+  const { review } = useSelector((state) => state?.review);
+  console.log(review?.docs);
 
   const job_ids = jobs?.docs?.map((data, index) => {
     return data?.createdBy?._id;
   });
-  const mergedArray = user_stats?.docs?.reduce((acc, item) => {
-    const matchingItem = jobs?.docs?.find(
-      (data) => data?.createdBy?._id === item?._id
+
+  const createdJobs = jobs?.docs
+    ?.map((data, index) => {
+      return data?.createdBy?._id;
+    })
+    ?.reduce((acc, cur) => ((acc[cur] = (acc[cur] || 0) + 1), acc), {});
+
+  const createdReviews = review?.docs
+    ?.map((data, index) => {
+      return data?.receiver?._id;
+    })
+    ?.reduce((acc, cur) => ((acc[cur] = (acc[cur] || 0) + 1), acc), {});
+
+  const reviewSum = review?.docs?.map((data, index) => {
+    return data?.rating 
+  });
+  // ?.reduce((acc, cur) => ((acc[cur] = (acc[cur] || 0) + 1), acc), {});
+  console.log(reviewSum);
+  // ?.map((data, index) => {
+  //   return data?.receiver?._id;
+  // })
+  // ?.reduce((acc, cur) => ((acc[cur] = (acc[cur] || 0) + 1), acc), {});
+
+  const unique_reviews =
+    createdReviews &&
+    Object.entries(createdReviews).map((data, index) => {
+      return { _id: data[0], review: data[1] };
+    });
+
+  const unique_jobs =
+    createdJobs &&
+    Object.entries(createdJobs).map((data, index) => {
+      return { _id: data[0], project: data[1] };
+    });
+
+  const mergedData = user_stats?.docs?.reduce((acc, item) => {
+    const matchingJob = unique_jobs?.find((data) => data?._id === item?._id);
+    const matchingReview = unique_reviews?.find(
+      (data) => data?._id === item?._id
     );
-    return acc.concat({ ...item, ...matchingItem });
+    return acc.concat({ ...item, ...matchingJob, ...matchingReview });
   }, []);
 
-  console.log(mergedArray);
+  console.log(createdJobs);
+  console.log(mergedData);
+  console.log(unique_jobs);
+
+  console.log(createdReviews);
+  console.log(unique_reviews);
 
   const GetSumType = (type) => {
     const response = user_stats?.docs?.filter(
@@ -64,27 +107,24 @@ const User = () => {
     setValue(value);
 
     if (type === "") {
-      const response = user_stats?.docs;
+      const response = mergedData;
 
       setDatas(response);
       return response;
     } else if (type === "user" || type === "vendor") {
-      const response = user_stats?.docs?.filter(
-        (data, index) => data.type === type
-      );
+      const response = mergedData?.filter((data, index) => data.type === type);
       setDatas(response);
       return response;
     }
-    const response = user_stats?.docs?.filter(
-      (data, index) => data.status === type
-    );
+    const response = mergedData?.filter((data, index) => data.status === type);
+    console.log(response);
     setDatas(response);
     return response;
   };
   useEffect(() => {
     GetData(0, "");
   }, [user]);
-  const paginatedData = datas?.slice(1, currentPage * datas_per_page + 1);
+  const paginatedData = datas?.slice(0, currentPage * datas_per_page + 1);
 
   const handlePaginage = () => {
     setCurrentPage(currentPage + 1);
@@ -96,7 +136,7 @@ const User = () => {
   const active_status = GetSumStatus("active");
   const pending_status = GetSumStatus("pending");
   const suspended_status = GetSumStatus("suspended");
-
+  console.log(suspended_status);
   const numofusers = [
     alluserssum,
     pending_status,

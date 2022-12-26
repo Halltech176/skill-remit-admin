@@ -34,6 +34,7 @@ export const RequireAuth = ({ children }) => {
     dispatch(Banks());
     dispatch(SiteData());
     dispatch(Jobs());
+    dispatch(AllTransactions());
   }, [dispatch]);
 
   const trans = useSelector((state) => state);

@@ -16,8 +16,10 @@ import axios from "axios";
 const WithdrawComponent = ({ open, setOpen }) => {
   const dispatch = useDispatch();
   const { banks } = useSelector((state) => state.banks);
-  const [bankCode, setBankCode] = useState("");
-  const [accountNumber, setAccountNumber] = useState("");
+  const [bankId, setBankId] = useState("");
+  const [amount, setAmount] = useState("");
+  const { user } = useSelector((state) => state?.user);
+  console.log(user);
 
   const [bankName, setBankName] = useState("");
   const variants = {
@@ -43,7 +45,6 @@ const WithdrawComponent = ({ open, setOpen }) => {
     },
   };
 
-
   const backdrop = {
     hidden: {
       opacity: 0,
@@ -55,22 +56,24 @@ const WithdrawComponent = ({ open, setOpen }) => {
 
   const HandleSelectedOptions = (e) => {
     console.log(e.target.value);
-    setBankName(e.target.value);
+    setBankId(e.target.value);
+    // setBankName(e.target.value);
 
-    const findCode = banks?.find((data, index) => {
-      return data.name === e.target.value;
-    });
-    setBankCode(findCode?.code);
+    // const findCode = user?.bankAccounts?.find((data, index) => {
+    //   return data.name === e.target.value;
+    // });
+    // setAccountNumber(findCode?.accountNumber);
   };
 
   const handleWithdraw = async (e) => {
     e.preventDefault();
-    const data = { accountNumber, bankCode };
+    const data = { amount: Number(amount), bankId };
+    console.log(data);
     const TOKEN = JSON.parse(localStorage.getItem("token"));
     try {
       const response = await axios.post(
-        "https://skill-remit.herokuapp.com/api//wallet/confirm-withdrawal",
-        {},
+        "https://skill-remit.herokuapp.com/api//wallet/withdrawal",
+        data,
         // { data },
         {
           headers: {
@@ -86,10 +89,12 @@ const WithdrawComponent = ({ open, setOpen }) => {
     }
   };
 
-  console.log(banks);
-
-  const renderOptions = banks?.map((data, index) => {
-    return <option value={data?.name}>{data?.name}</option>;
+  const renderOptions = user?.bankAccounts?.map((data, index) => {
+    return (
+      <option onChange={(e) => HandleSelectedOptions(e)} value={data?._id}>
+        {data?.accountNumber}
+      </option>
+    );
   });
 
   return (
@@ -112,7 +117,10 @@ const WithdrawComponent = ({ open, setOpen }) => {
                 exit="exit"
                 style={{ zIndex: "50" }}
               >
-                <span onClick={() => setOpen(false)} className="w-24 cursor-pointer">
+                <span
+                  onClick={() => setOpen(false)}
+                  className="w-24 cursor-pointer"
+                >
                   <BsArrowLeft />
                 </span>
                 <h1 className="my-5 md:text-3xl text-md text-normal my-4 font-semibold">
@@ -122,8 +130,10 @@ const WithdrawComponent = ({ open, setOpen }) => {
                   <select
                     onChange={(e) => HandleSelectedOptions(e)}
                     className="border-light bg-info-100 px-3 py-3 text-md md:text-xl  outline-none border-2 w-full rounded-md"
-                    value={bankName}
                   >
+                    <option value="" disabled selected hidden>
+                      select an account
+                    </option>
                     {renderOptions}
                   </select>
                 </div>
@@ -131,14 +141,14 @@ const WithdrawComponent = ({ open, setOpen }) => {
                   <div className="relative">
                     <input
                       required
-                      name="account Number"
-                      value={accountNumber}
-                      onChange={(e) => setAccountNumber(e.target.value)}
+                      name="amount"
+                      value={amount}
+                      onChange={(e) => setAmount(e.target.value)}
                       className="border-light bg-info-100 px-3 pb-2 pt-8 text-md md:text-xl  w-full rounded-md"
                       type="number"
                     />
                     <span className="text-normal absolute top-2 left-3 text-primary">
-                      Account Number
+                      Amount
                     </span>
                   </div>
                 </section>

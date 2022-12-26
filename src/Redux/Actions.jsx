@@ -17,7 +17,8 @@ export const Login = createAsyncThunk("login", async (data, THUNKAPI) => {
 export const User = createAsyncThunk("user", async () => {
   try {
     const response = await axios.get(
-      `${BASE_URL}//users/profile?populate=wallet&populate=bankAccounts&populate=avatar&populate=wallet&populate=wallet.histories`,
+      `${BASE_URL}//users/profile?populate=wallet&populate[]=bankAccounts&select=bankAccounts&populate=avatar`,
+
       HEADER
     );
 
@@ -247,14 +248,14 @@ export const UserChat = createAsyncThunk("chat", async (data, THUNKAPI) => {
 
 export const GetNotifications = createAsyncThunk(
   "notifications",
-  async (data) => {
+  async (data, THUNKAPI) => {
     try {
       const response = await axios.post(
         `${BASE_URL}//notification/send`,
         data,
         HEADER
       );
-      return response.data.data;
+      return THUNKAPI.fulfillWithValue(response.data);
     } catch (err) {
       throw err;
       console.log(err);
@@ -297,8 +298,12 @@ export const Banks = createAsyncThunk("bank", async () => {
 export const GetReview = createAsyncThunk("reviews", async (_, THUNKAPI) => {
   try {
     const user_id = JSON.parse(localStorage.getItem("ACTIVE_USER_ID"));
+    // const response = await axios.get(
+    //   `${BASE_URL}//feedback/${user_id}?populate=createdBy&populate=receiver&populate=receiver.wallet`,
+    //   HEADER
+    // );
     const response = await axios.get(
-      `${BASE_URL}//feedback/${user_id}?populate=createdBy&populate=receiver&populate=receiver.wallet`,
+      `${BASE_URL}//feedback?populate=createdBy&populate=receiver&populate=receiver.wallet`,
       HEADER
     );
 
@@ -315,7 +320,7 @@ export const GetUserStats = createAsyncThunk(
   async (_, THUNKAPI) => {
     try {
       const response = await axios.get(
-        `${BASE_URL}//admin/users?limit=0`,
+        `${BASE_URL}//admin/users?limit=0&populate=wallet`,
         HEADER
       );
 

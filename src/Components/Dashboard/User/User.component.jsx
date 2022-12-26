@@ -13,6 +13,7 @@ const UserComponent = ({ user_credentials }) => {
   const dispatch = useDispatch();
   const selector = useSelector((state) => state);
   console.log(selector?.clickeduser);
+  console.log(user_credentials);
 
   const GetUserDetails = (id) => {
     console.log("Getting user details");
@@ -28,6 +29,7 @@ const UserComponent = ({ user_credentials }) => {
   };
 
   const renderAccounts = user_credentials?.map((data, index) => {
+    console.log(data?.project);
     return (
       <section
         key={index}
@@ -81,7 +83,9 @@ const UserComponent = ({ user_credentials }) => {
             <span> 30%</span>
           </p>
         </div>
-        <p className="md:w-32 md:ml-14 text-center  md:mr-0 shrink-0 "> 200</p>
+        <p className="md:w-32 md:ml-14 text-center  md:mr-0 shrink-0 ">
+          {data?.project === undefined ? 0 : data?.project}{" "}
+        </p>
         <p className="md:w-36 mr-5 md:mr-0  text-center shrink-0 ">
           {" "}
           ${data?.wallet?.balance}

@@ -1,19 +1,67 @@
 import { useEffect, useState } from "react";
 import { AdditionalInputs } from "./Inputs";
-import { Banks } from "../../../Redux/Actions";
+import { Banks, SiteData } from "../../../Redux/Actions";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
 import InputComponent from "./Input.component";
+import axios from "axios";
+import { BASE_URL, TOKEN, HEADER } from "../../../../Api";
+import { ErrorNotification, SuccessNotification } from "../../Common/Toastify";
+import { HandleError } from "../../Common/HandleError";
+import { HandleSuccess } from "../../Common/HandleSuccess";
+import { ToastContainer, Zoom } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const OtherSettings = ({ sitedata }) => {
   const dispatch = useDispatch();
 
+  const initialValues = {
+    deliveryFee: sitedata?.deliveryFee,
+    chargePercent: sitedata?.chargePercent,
+    minimumBonusPayout: sitedata?.minimumBonusPayout,
+    minimumIOSVersion: sitedata?.minimumIOSVersion,
+
+    minimumAndroidVersion: sitedata?.minimumAndroidVersion,
+  };
+  const [values, setValues] = useState(initialValues);
+
+  const handleChange = (e) => {
+    setValues({ [e.target.name]: e.target.value });
+  };
+
   const { banks } = useSelector((state) => state.banks);
   const [selectedOption, setSelectedOption] = useState(sitedata?.bankName);
-  console.log(sitedata);
 
   const HandleSelectedOptions = (e) => {
     console.log(e.target.value);
     setSelectedOption(e.target.value);
+  };
+
+  const RenderValues = ({ name, value }) => {
+    return (
+      <p className="mb-3">
+        {" "}
+        <span>
+          {" "}
+          {name} : {value}{" "}
+        </span>
+      </p>
+    );
+  };
+
+  const Update = async (e, key, value) => {
+    e.preventDefault();
+    console.log(value);
+    console.log("updating...");
+    try {
+      const response = await axios.post(`${BASE_URL}//settings`, value, HEADER);
+      SuccessNotification(response?.data?.message);
+      dispatch(SiteData());
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+      HandleError(err);
+    }
   };
 
   console.log(banks);
@@ -23,64 +71,67 @@ const OtherSettings = ({ sitedata }) => {
   });
 
   return (
-    <main className="md:flex">
+    <main className="">
+      <ToastContainer transition={Zoom} autoClose={800} />
       <div>
-        <h1 className="text-dark2 text-mono text-2xl font-medium">
-          Bank Account
-        </h1>
-        <div className="flex flex-col">
-          <select
-            onChange={(e) => HandleSelectedOptions(e)}
-            className="border-light bg-info-100 px-3 py-3 text-md md:text-xl md:w-80 outline-none border-none w-full rounded-md"
-            value={selectedOption}
-          >
-            {renderOptions}
-          </select>
-          <InputComponent
-            status="bankName"
-            label="Bank Name"
-            value={sitedata?.bankName}
-            type="text"
-          />
-          <InputComponent
-            status="accountName"
-            label="Account Name"
-            value={sitedata?.accountName}
-            type="text"
-          />
-          <InputComponent
-            status="accountNumber"
-            label="Account Number"
-            value={sitedata?.accountNumber}
-            type="text"
-          />
-        </div>
-        {/* <div className="flex flex-col">{renderInputs}</div> */}
+        <RenderValues name="Delivery Fee" value={sitedata?.deliveryFee} />
+        <RenderValues
+          name="Minimum Bonus Payout"
+          value={sitedata?.minimumBonusPayout}
+        />
+        <RenderValues name="Charge Percent" value={sitedata?.chargePercent} />
+        <RenderValues
+          name="Miniumium IOS version"
+          value={sitedata?.minimumIOSVersion}
+        />
+        <RenderValues
+          name="Miniumium Android version"
+          value={sitedata?.minimumAndroidVersion}
+        />
       </div>
-      <div className="md:ml-4">
-        <h1 className="text-dark2 text-mono text-2xl font-medium">
-          Additional Settings
-        </h1>
-        <div className="flex flex-col">
-          <InputComponent
-            status="Referral Bonus percent"
-            label="Referral Bonus percent"
-            value={sitedata?.chargePercent}
-            type="number"
-          />
-          <InputComponent
-            status="Minimum Bonus Payout"
-            label="Minimum Bonus Payout"
-            value={sitedata?.minimumBonusPayout}
-            type="number"
-          />
-          <InputComponent
-            status="deliveryFee"
-            label="Delivery Fee"
-            value={sitedata?.deliveryFee}
-            type="number"
-          />
-        </div>
+
+      <div className="flex justify-evenly items-center flex-wrap">
+        <InputComponent
+          status="deliveryFee"
+          label="Delivery Fee"
+          value={values}
+          type="number"
+          handleChange={handleChange}
+          Update={Update}
+        />
+        <InputComponent
+          status="minimumBonusPayout"
+          label="Minimum Bonus Payout"
+          type="number"
+          value={values}
+          handleChange={handleChange}
+          Update={Update}
+        />
+        <InputComponent
+          status="chargePercent"
+          label="Charge Percent"
+          value={values}
+          type="number"
+          handleChange={handleChange}
+          Update={Update}
+        />
+
+        <InputComponent
+          status="minimumIOSVersion"
+          label="Minimum IOS Version"
+          value={values}
+          type="number"
+          handleChange={handleChange}
+          Update={Update}
+        />
+        <InputComponent
+          status="minimumAndroidVersion"
+          label="Minimum Android Version"
+          value={values}
+          type="number"
+          handleChange={handleChange}
+          Update={Update}
+        />
       </div>
     </main>
   );

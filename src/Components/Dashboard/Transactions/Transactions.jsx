@@ -21,13 +21,12 @@ import Tabs from "@mui/material/Tabs";
 import WithdrawComponent from "./Withdraw.component";
 const TransactionsComponent = () => {
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(AllTransactions());
-  }, []);
 
   const { transactions, loading, error } = useSelector(
     (state) => state?.transactions
   );
+  const { user } = useSelector((state) => state.user);
+  console.log(user);
   const [value, setValue] = useState("1");
   const handlePaginate = (event, newValue) => {
     setValue(newValue);

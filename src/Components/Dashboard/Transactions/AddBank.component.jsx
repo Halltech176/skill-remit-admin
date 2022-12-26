@@ -70,14 +70,15 @@ const AddBanks = ({ open, setOpen }) => {
     try {
       const response = await axios.post(
         "https://skill-remit.herokuapp.com/api//wallet/bank-account",
-        { data },
+        data,
         {
           headers: {
             Authorization: `Bearer ${TOKEN} `,
           },
         }
       );
-
+      SuccessNotification(response?.data?.message);
+      setOpen(false);
       // const response = await dispatch(AddBank(data)).unwrap();
       console.log(response);
       console.log(data);
@@ -94,7 +95,7 @@ const AddBanks = ({ open, setOpen }) => {
 
   return (
     <>
-      <ToastContainer transition={Zoom} autoClose={800} />{" "}
+      <ToastContainer transition={Zoom} autoClose={800} />
       <AnimatePresence>
         {open && (
           <motion.div
@@ -127,6 +128,9 @@ const AddBanks = ({ open, setOpen }) => {
                     className="border-light bg-info-100 px-3 py-3 text-md md:text-xl  outline-none border-2 w-full rounded-md"
                     value={bankName}
                   >
+                    <option value="" disabled selected hidden>
+                      select a bank account...
+                    </option>
                     {renderOptions}
                   </select>
                 </div>

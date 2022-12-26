@@ -14,11 +14,9 @@ const Search = () => {
   const filter = paths.find((path) => {
     return path === location;
   });
-  console.log(location);
-  console.log(filter);
+
   const dispatch = useDispatch();
   const handleSearch = (e) => {
-    console.log(e.target.value);
     setSearchValue(e.target.value);
   };
   return (

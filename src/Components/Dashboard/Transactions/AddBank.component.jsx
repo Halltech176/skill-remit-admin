@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import cancel from "../../../assets/cancel.png";
 import { HandleError } from "../../Common/HandleError";
-import { GetNotifications, Banks, AddBank } from "../../../Redux/Actions";
+import ButtonComponent from "../../Common/ButtonComponent";
+import { Banks, AddBank, UserAccount } from "../../../Redux/Actions";
 import { useDispatch, useSelector } from "react-redux";
 import { BsArrowLeft } from "react-icons/bs";
 import {
@@ -11,6 +12,7 @@ import {
 } from "../../../Components/Common/Toastify";
 import { ToastContainer, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { TailSpin } from "react-loader-spinner";
 import axios from "axios";
 
 const AddBanks = ({ open, setOpen }) => {
@@ -18,6 +20,9 @@ const AddBanks = ({ open, setOpen }) => {
   const { banks } = useSelector((state) => state.banks);
   const [bankCode, setBankCode] = useState("");
   const [accountNumber, setAccountNumber] = useState("");
+  const { user_account } = useSelector((state) => state?.user_account);
+  const [loading, setLoading] = useState(false);
+  console.log(user_account);
 
   const [bankName, setBankName] = useState("");
   const variants = {
@@ -66,23 +71,18 @@ const AddBanks = ({ open, setOpen }) => {
     e.preventDefault();
     const data = { accountNumber, bankCode };
     console.log(data);
+    setLoading(true);
     const TOKEN = JSON.parse(localStorage.getItem("token"));
     try {
-      const response = await axios.post(
-        "https://skill-remit.herokuapp.com/api//wallet/bank-account",
-        data,
-        {
-          headers: {
-            Authorization: `Bearer ${TOKEN} `,
-          },
-        }
-      );
-      SuccessNotification(response?.data?.message);
+      const response = await dispatch(AddBank(data)).unwrap();
+      SuccessNotification(response?.message);
+      dispatch(UserAccount());
       setOpen(false);
-      // const response = await dispatch(AddBank(data)).unwrap();
-      console.log(response);
+
+      setLoading(false);
       console.log(data);
     } catch (err) {
+      setLoading(false);
       HandleError(err);
     }
   };
@@ -150,12 +150,11 @@ const AddBanks = ({ open, setOpen }) => {
                   </div>
                 </section>
                 <div className="flex justify-center">
-                  <button
-                    onClick={handleBank}
-                    className="bg-normal md:w-56 w-48 rounded-md text-xl p-3 text-white"
-                  >
-                    Send
-                  </button>
+                  <ButtonComponent
+                    title="Send"
+                    clickFunction={handleBank}
+                    loading={loading}
+                  />
                 </div>
               </motion.div>
             </div>

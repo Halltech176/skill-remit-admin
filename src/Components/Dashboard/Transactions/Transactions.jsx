@@ -19,14 +19,30 @@ import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 import Tabs from "@mui/material/Tabs";
 import WithdrawComponent from "./Withdraw.component";
+import {
+  ErrorNotification,
+  SuccessNotification,
+} from "../../../Components/Common/Toastify";
+import { ToastContainer, Zoom } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { HandleError } from "../../Common/HandleError";
+import { NairaFormatter } from "../../utils/NumberFormat";
+import {
+  GetNotifications,
+  Banks,
+  AddBank,
+  UserAccount,
+} from "../../../Redux/Actions";
 const TransactionsComponent = () => {
   const dispatch = useDispatch();
 
   const { transactions, loading, error } = useSelector(
     (state) => state?.transactions
   );
-  const { user } = useSelector((state) => state.user);
-  console.log(user);
+
+  const { user_account } = useSelector((state) => state?.user_account);
+  console.log(user_account);
+
   const [value, setValue] = useState("1");
   const handlePaginate = (event, newValue) => {
     setValue(newValue);
@@ -38,14 +54,20 @@ const TransactionsComponent = () => {
     return <Tab label={data} value={`${index + 1}`} />;
   });
 
-  const trans = useSelector((state) => state);
-  console.log(trans);
+  const checkBank = () => {
+    if (user_account?.bankAccounts.length === 0)
+      ErrorNotification("A minimum of a bank account is required.");
+    else {
+      setOpen(true);
+    }
+  };
 
   return (
     <>
       {/* {loading ? (
         <Loader1 />
       ) : ( */}
+      <ToastContainer transition={Zoom} autoClose={800} />
       <WithdrawComponent open={open} setOpen={setOpen} />
       <main className="   app_container   ">
         <div className="bg-primary relative rounded-3xl  overflow-hidden w-full md:w-2/6 mx-auto py-5 md:py-8 px-5  md:px-22 text-center   text-white">
@@ -60,10 +82,12 @@ const TransactionsComponent = () => {
             <img src={Pattern6} alt="pattern" />
           </div>
           <p className="text-xl">Available balance</p>
-          <h1 className="md:text-4 text-4xl font-medium py-8">5,000,000</h1>
+          <h1 className="md:text-4 text-4xl font-medium py-8">
+            ₦{NairaFormatter.format(5000000)}
+          </h1>
           <div>
             <button
-              onClick={() => setOpen(true)}
+              onClick={checkBank}
               className="text-normal rounded-md px-7 font-medium py-3 bg-white"
             >
               Withdraw

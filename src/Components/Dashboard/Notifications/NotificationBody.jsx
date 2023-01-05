@@ -1,5 +1,12 @@
 import { useState } from "react";
 import NotificationModal from "./NotificationModal";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+
 const NotificationBody = ({ notifications }) => {
   const [open, setOpen] = useState(false);
   const [contents, setContents] = useState({});
@@ -13,26 +20,28 @@ const NotificationBody = ({ notifications }) => {
   console.log(new Date("2022-12-21T16:35:47.121Z").toLocaleDateString());
   const renderNotifications = notifications?.docs?.map((data, index) => {
     return (
-      <section
+      <TableRow
+        key={index}
+        sx={{
+          cursor: "pointer",
+        }}
         onClick={() => GetNotification(data?._id)}
-        style={{ color: " #2E303D" }}
-        className="md:grid flex cursor-pointer w-full notification-grid-content border-b-2 md:py-3 py-2 gap-5 md:text-base my-4 text-xs pb-3"
-        // className="flex shrink-0 mb-8 items-center items-center md:justify-between"
       >
-        <p className="w-6">{(index + 1) * notifications?.page}</p>
-        <p className="text-center shrink-0">
+        <TableCell style={{ color: " #2E303D" }}>
+          {(index + 1) * notifications?.page}
+        </TableCell>
+        {/* <TableCell align="left"> {data.name}</TableCell> */}
+        <TableCell align="left">
+          {" "}
           {new Date(data?.createdAt).toDateString()}
-        </p>
-
-        <p className=" shrink-0  md:text-center">
+        </TableCell>
+        <TableCell align="left">
+          {" "}
           {data?.payload?.createdBy?.firstName}{" "}
           {data?.payload?.createdBy?.lastName}
-        </p>
-        <p className="  md:block hidden shrink-0 md:text-center">
-          {data?.message}
-        </p>
-        {/* <p className="md:w-48 w-24 shrink-0 "></p> */}
-      </section>
+        </TableCell>
+        <TableCell align="left">{data?.message}</TableCell>
+      </TableRow>
     );
   });
   return (
@@ -40,21 +49,19 @@ const NotificationBody = ({ notifications }) => {
       <main>
         <NotificationModal contents={contents} open={open} setOpen={setOpen} />
 
-        <section
-          style={{ color: " #828282" }}
-          // className="flex  shrink-0 md:justify-between items-center "
-          className="grid font-nirmala notification-grid-heading text-sm gap-3 font-semibold md:text-xl "
-        >
-          <h2 className="shrink-0  ">S/N</h2>
-          <h2 className="shrink-0 md:text-center">Date & Time</h2>
-          <h2 className="shrink-0 md:py-0   md:text-center">Sender</h2>
-          <h2 className=" md:block hidden shrink-0 md:py-0 py-3 md:text-center ">
-            Message
-          </h2>
-        </section>
-        <div className=" my-5 md:overflow-x-hidden overflow-x-scroll items-center app_container items-center md:justify-between">
-          {renderNotifications}
-        </div>
+        <TableContainer component="main">
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>S/N</TableCell>
+                <TableCell align="left">Date& TIme</TableCell>
+                <TableCell align="left">Sender</TableCell>
+                <TableCell align="left">Message</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>{renderNotifications}</TableBody>
+          </Table>
+        </TableContainer>
       </main>
     </>
   );

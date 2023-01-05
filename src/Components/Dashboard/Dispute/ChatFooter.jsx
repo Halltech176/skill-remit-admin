@@ -53,29 +53,28 @@ const ChatFooter = ({ content, setContent, barName, message, setMessage }) => {
         file={file}
         setOpen={setOpen}
       />
-      {barName === null ? (
+      {/* {barName === null ? (
         ""
-      ) : (
-        <div className="input shrink-0  bg-white p-1 md:p-2 flex items-center ">
+      ) : ( */}
+      <div className="input shrink-0  bg-white p-1 md:p-2 flex items-center ">
+        <input
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          style={{ background: "#F7F7FD" }}
+          className="w-full text-sm p-2 md:px-5 py-3"
+          type="text"
+        />
+        <span>
           <input
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            style={{ background: "#F7F7FD" }}
-            className="w-full text-sm p-2 md:px-5 py-3"
-            type="text"
+            onChange={(e) => handleFile(e)}
+            className="file_attachment ml-3 py-2 w-10"
+            type="file"
           />
-          <span>
-            <input
-              onChange={(e) => handleFile(e)}
-              className="file_attachment ml-3 py-2 w-10"
-              type="file"
-            />
-          </span>
-          <span className="cursor-pointer " onClick={SendMessage}>
-            <img src={send} className="md:w-5 w-4 mx-3" alt="send" />
-          </span>
-        </div>
-      )}
+        </span>
+        <span className="cursor-pointer " onClick={SendMessage}>
+          <img src={send} className="md:w-5 w-4 mx-3" alt="send" />
+        </span>
+      </div>
     </>
   );
 };

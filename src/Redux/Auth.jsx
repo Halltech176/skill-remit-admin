@@ -15,6 +15,7 @@ import {
   SiteData,
   Banks,
   Jobs,
+  UserAccount,
 } from "../Redux/Actions";
 import { Loader1 } from "../Components/Common/Loader";
 
@@ -35,6 +36,7 @@ export const RequireAuth = ({ children }) => {
     dispatch(SiteData());
     dispatch(Jobs());
     dispatch(AllTransactions());
+    dispatch(UserAccount());
   }, [dispatch]);
 
   const trans = useSelector((state) => state);

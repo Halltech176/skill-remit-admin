@@ -29,6 +29,21 @@ export const User = createAsyncThunk("user", async () => {
   }
 });
 
+export const UserAccount = createAsyncThunk("user_account", async () => {
+  try {
+    const response = await axios.get(
+      `${BASE_URL}//users/profile?populate=wallet&populate[]=bankAccounts&select=bankAccounts&populate=avatar`,
+
+      HEADER
+    );
+
+    return response.data.data;
+  } catch (err) {
+    throw err;
+    // console.log(err);
+  }
+});
+
 export const ClickedUser = createAsyncThunk("clickeduser", async () => {
   try {
     const user_id = JSON.parse(localStorage.getItem("ACTIVE_USER_ID"));
@@ -216,8 +231,12 @@ export const SiteData = createAsyncThunk("sitedata", async () => {
 
 export const FetchChat = createAsyncThunk("chats", async (data, THUNKAPI) => {
   try {
+    // const response = await axios.get(
+    //   `${BASE_URL}/chat?//chat/report?populate=files&populate=users.avatar`,
+    //   HEADER
+    // );
     const response = await axios.get(
-      `${BASE_URL}/chat?//chat/report?populate=files&status=resolved&populate=users.avatar`,
+      `${BASE_URL}/chat?populate=users.avatar`,
       HEADER
     );
 
@@ -271,7 +290,7 @@ export const AddBank = createAsyncThunk("addbank", async (data, THUNKAPI) => {
       data,
       HEADER
     );
-    return THUNKAPI.fulfillWithValue(response.data.data);
+    return THUNKAPI.fulfillWithValue(response.data);
   } catch (err) {
     throw THUNKAPI.rejectWithValue(err);
   }
@@ -315,12 +334,33 @@ export const GetReview = createAsyncThunk("reviews", async (_, THUNKAPI) => {
   }
 });
 
-export const GetUserStats = createAsyncThunk(
-  "user_stats",
+export const GetUserReview = createAsyncThunk(
+  "reviews",
   async (_, THUNKAPI) => {
     try {
+      const user_id = JSON.parse(localStorage.getItem("ACTIVE_USER_ID"));
       const response = await axios.get(
-        `${BASE_URL}//admin/users?limit=0&populate=wallet`,
+        `${BASE_URL}//feedback/${user_id}?populate=createdBy&populate=receiver&populate=receiver.wallet`,
+        HEADER
+      );
+
+      return THUNKAPI.fulfillWithValue(response.data.data);
+    } catch (err) {
+      console.log(err);
+
+      throw THUNKAPI.rejectWithValue(err);
+    }
+  }
+);
+
+export const GetUserStats = createAsyncThunk(
+  "user_stats",
+  async (keyword = "", THUNKAPI) => {
+    try {
+      const response = await axios.get(
+        `${BASE_URL}//admin/users?limit=0&populate=wallet&${
+          keyword === "" ? "" : `_searchBy=firstName&_keyword=${keyword}`
+        } `,
         HEADER
       );
 

@@ -38,39 +38,41 @@ const Commission = () => {
   console.log(sitedata);
   return (
     <>
-      <ToastContainer transition={Zoom} autoClose={800} />
-      {loading ? (
-        <Loader1 />
-      ) : (
-        <form className="h-screen overflow-hidden">
-          <h2
-            // style={{ color: "#001B87" }}
-            className="font-aeonik-light my-5 text-normal text-base font-extralight md:text-2xl"
-          >
-            Percentage Commission on service delivery
-          </h2>
-          <p className="text-md font-bold">
-            Percentage Commission : {sitedata?.commissionPercent}%
-          </p>
-          <section className="my-10">
-            <input
-              value={commissionPercent}
-              onChange={(e) => setCommissionPercent(e.target.value)}
-              className="border-primary text-md md:text-2xl font-medium py-2 px-2 bg-transparent md:py-3 md:px-2 rounded-md w-full md:w-2/5"
-              type="number"
-              // placeholder={`${sitedata?.sitedata?.commissionPercent}%`}
-            />
-          </section>
-          <section className="md:my-32  my-16">
-            <button
-              onClick={UpdateCommission}
-              className="btn w-56 md:mx:0  mx-auto md:w-64"
+      <main>
+        <ToastContainer transition={Zoom} autoClose={800} />
+        {loading ? (
+          <Loader1 />
+        ) : (
+          <form className=" ">
+            <h2
+              // style={{ color: "#001B87" }}
+              className="font-aeonik-light my-5 text-normal text-base font-extralight md:text-2xl"
             >
-              Update
-            </button>
-          </section>
-        </form>
-      )}
+              Percentage Commission on service delivery
+            </h2>
+            <p className="text-md font-bold">
+              Percentage Commission : {sitedata?.commissionPercent}%
+            </p>
+            <section className="my-10">
+              <input
+                value={commissionPercent}
+                onChange={(e) => setCommissionPercent(e.target.value)}
+                className="border-primary text-md md:text-2xl font-medium py-2 px-2 bg-transparent md:py-3 md:px-2 rounded-md w-full md:w-2/5"
+                type="number"
+                // placeholder={`${sitedata?.sitedata?.commissionPercent}%`}
+              />
+            </section>
+            <section className="md:my-32  my-16">
+              <button
+                onClick={UpdateCommission}
+                className="btn w-56 md:mx:0  mx-auto md:w-64"
+              >
+                Update
+              </button>
+            </section>
+          </form>
+        )}
+      </main>
     </>
   );
 };

@@ -32,6 +32,7 @@ function App() {
   const checkPath = exemptedPaths.find((data, index) => {
     return data === path;
   });
+  console.log(path);
 
   const title_text =
     path === "/"
@@ -53,10 +54,12 @@ function App() {
           checkPath
             ? ""
             : "md:ml-60 scroll_container md:rounded-tl-3xl md:rounded-bl-3xl"
-        }   overflow-x-hidden    app_container    px-5  md:px-8 `}
+        } overflow-x-hidden overflow-y-scroll   app_container    px-5  md:px-8 `}
       >
         {checkPath ? "" : <Header title={title_text} />}
-
+        {/* ${
+          path === "/admin/dispute" ? "overflow-y-hidden" : ""
+        }    */}
         <Routes>
           <Route
             path="/admin"

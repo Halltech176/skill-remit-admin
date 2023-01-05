@@ -5,7 +5,7 @@ import { BASE_URL, HEADER } from "../../../../Api";
 import { Users, GetUserStats, GetNotifications } from "../../../Redux/Actions";
 import { useDispatch, useSelector } from "react-redux";
 import { HandleError } from "../../../Components/Common/HandleError";
-import { Loader1 } from "../../../Components/Common/Loader";
+import ButtonComponent from "../../../Components/Common/ButtonComponent";
 import {
   ErrorNotification,
   SuccessNotification,
@@ -14,11 +14,13 @@ import { ToastContainer, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Commission = () => {
+  const [loading, setLoading] = useState(false);
   const [mode, setMode] = useState("");
   const [user, setUser] = useState("");
   const [title, setTitle] = useState("");
   const [message, setMessage] = useState("");
   const [userIds, setUserIds] = useState([]);
+
   const dispatch = useDispatch();
   const { user_stats } = useSelector((state) => state?.userstats);
   const selector = useSelector((state) => state.users?.user?.docs);
@@ -95,7 +97,8 @@ const Commission = () => {
   const SendBroadcast = async (e) => {
     e.preventDefault();
     const data = { title, message, userIds, as: mode };
-    console.log(data);
+    setLoading(true);
+
     try {
       if (data?.title === "") {
         throw "Title should not be empty";
@@ -103,10 +106,12 @@ const Commission = () => {
       if (data?.message === "") {
         throw "Message should not be empty";
       }
-      const response = await dispatch(GetNotifications(data));
-      if (response.status === 200) {
-        SuccessNotification(response.data.message);
-      }
+      const response = await dispatch(GetNotifications(data)).unwrap();
+      console.log(response);
+
+      SuccessNotification(response.message);
+
+      setLoading(false);
       setMessage("");
       setTitle("");
       setMode("");
@@ -114,6 +119,7 @@ const Commission = () => {
       console.log(response);
     } catch (err) {
       HandleError(err);
+      setLoading(false);
       console.log(err?.response?.data?.message);
     }
   };
@@ -154,12 +160,14 @@ const Commission = () => {
             rows="6"
           />
         </div>
-        <button
-          onClick={SendBroadcast}
-          className=" text-white rounded-md w-64 py-3  bg-normal"
-        >
-          Send Message
-        </button>
+        <ButtonComponent
+          title="Send Message"
+          clickFunction={SendBroadcast}
+          // bgcolor="btn"
+          width="w-64"
+          // width :
+          loading={loading}
+        />
       </form>
     </main>
   );

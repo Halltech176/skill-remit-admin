@@ -1,6 +1,6 @@
 import cancel from "../../../assets/delete.png";
-const Tab1 = () => {
-  const skills = [
+const Tab1 = ({ skills, skill, setSkill, AddSkills, setSkills }) => {
+  const skillss = [
     "Leadership",
     "Visioner",
     "Teamwork",
@@ -9,8 +9,17 @@ const Tab1 = () => {
   ];
   const AddSkill = (e) => {
     e.preventDefault();
+    const findDuplicate = skills.find((data) => data === skill);
+
+    if (findDuplicate === undefined) {
+      setSkills((prev) => [...prev, skill]);
+    } else {
+      console.log("skill already exist");
+    }
+    console.log(skills);
   };
-  const renderSkills = skills.map((data, index) => {
+
+  const renderSkills = skillss.map((data, index) => {
     return (
       <div
         key={index}
@@ -32,12 +41,15 @@ const Tab1 = () => {
         action=""
       >
         <input
+          required
+          value={skill}
+          onChange={(e) => setSkill(e.target.value)}
           placeholder="Enter New Skill"
           className="bg-primary-100 p-3 text-normal font-aeonik font-semibold text-md rounded-md  md:w-96"
           type="text"
         />
         <button
-          onClick={AddSkill}
+          onClick={AddSkills}
           className="btn px-10 w-32 my-3 mx-5 md:mx-48"
         >
           Add

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import cancel from "../../../assets/cancel.png";
 import { HandleError } from "../../Common/HandleError";
+import ButtonComponent from "../../Common/ButtonComponent";
 import { GetNotifications } from "../../../Redux/Actions";
 import { useDispatch } from "react-redux";
 import { ErrorNotification, SuccessNotification } from "../../Common/Toastify";
@@ -45,6 +46,7 @@ const NotificationComponent = ({ open, setOpen, user }) => {
   const [title, setTitle] = useState("");
   const [message, setMessage] = useState("");
   const [userIds, setUserIds] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setUserIds([user?._id]);
@@ -53,8 +55,9 @@ const NotificationComponent = ({ open, setOpen, user }) => {
 
   const SendBroadcast = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const data = { title, message, userIds, as: "notification" };
-    console.log(data);
+
     try {
       if (data?.title === "") {
         throw "Title should not be empty";
@@ -66,12 +69,13 @@ const NotificationComponent = ({ open, setOpen, user }) => {
       console.log(response);
       setTitle("");
       setMessage("");
-
+      setLoading(false);
       SuccessNotification(response?.message);
       setOpen(false);
 
       console.log(response);
     } catch (err) {
+      setLoading(false);
       HandleError(err);
       console.log(err?.response?.data?.message);
     }
@@ -88,7 +92,7 @@ const NotificationComponent = ({ open, setOpen, user }) => {
             exit="hidden"
             className="backdrop"
           >
-            <div className="absolute bg-white top-1/2 shadow-md md:max-w-2xl w-full max-w-xl left-1/2 rounded-xl -translate-x-2/4 -translate-y-2/4 md:p-10 p-5">
+            <div className="absolute bg-white top-1/2 shadow-md md:max-w-xl w-full max-w-xs left-1/2 rounded-xl -translate-x-2/4 -translate-y-2/4 md:p-10 p-5">
               <motion.div
                 variants={variants}
                 initial="hidden"
@@ -99,7 +103,7 @@ const NotificationComponent = ({ open, setOpen, user }) => {
                 <form className="my-10 relative">
                   <span onClick={() => setOpen(false)}>
                     <img
-                      className="w-10 absolute -top-14 -right-5"
+                      className="md:w-10 w-6 absolute md:-top-14 -top-10 -right-3 md:-right-5"
                       src={cancel}
                       alt="cancel"
                     />
@@ -122,12 +126,11 @@ const NotificationComponent = ({ open, setOpen, user }) => {
                       rows="8"
                     />
                   </div>
-                  <button
-                    onClick={SendBroadcast}
-                    className=" text-white rounded-md w-64 py-3  bg-normal"
-                  >
-                    Send Message
-                  </button>
+                  <ButtonComponent
+                    title="Send Message"
+                    clickFunction={SendBroadcast}
+                    loading={loading}
+                  />
                 </form>
               </motion.div>
             </div>

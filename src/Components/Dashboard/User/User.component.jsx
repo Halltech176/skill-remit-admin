@@ -1,12 +1,20 @@
 import Accounts from "./Accounts.json";
 import person1 from "../../../assets/no_avatar.png";
 import arrowDown from "../../../assets/arrow-down.png";
+import arrowUp from "../../../assets/arrow-up.png";
 import { Users, ClickedUser, GetReview } from "../../../Redux/Actions";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { NoUser } from "../../Common/NoData";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
+import { NairaFormatter } from "../../utils/NumberFormat";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
 const UserComponent = ({ user_credentials }) => {
   const navigate = useNavigate();
 
@@ -29,16 +37,11 @@ const UserComponent = ({ user_credentials }) => {
   };
 
   const renderAccounts = user_credentials?.map((data, index) => {
-    console.log(data?.project);
+    console.log(data?.wallet?.balance);
     return (
-      <section
-        key={index}
-        onClick={() => GetUserDetails(data?._id)}
-        style={{ color: "#808080" }}
-        className="md:flex grid grid-cols-4 capitalize  cursor-pointer border-b-2 md:py-5 py-2 text-sm font-bold font-manrope my-2 md:my-5 items-center justify-between"
-      >
-        <p className="md:mr-0 md:block hidden shrink-0 ">{index + 1} </p>
-        <p className="flex mr-5 md:mr-0 shrink-0  items-center md:w-60">
+      <TableRow onClick={() => GetUserDetails(data?._id)} key={index}>
+        <TableCell>{index + 1}</TableCell>
+        <TableCell>
           <span>
             {" "}
             <LazyLoadImage
@@ -48,80 +51,105 @@ const UserComponent = ({ user_credentials }) => {
               className="w-8 md:block hidden rounded-full h-8"
             />
           </span>
+        </TableCell>
+        <TableCell>
           <span className="mx-3">
             {data.firstName} {data.lastName}
           </span>
-        </p>
-
-        <div className="flex shrink-0 mr-5 md:mr-0 items-center  md:w-80 justify-between">
-          {data.ratings === null ? (
-            ""
+        </TableCell>
+        <TableCell
+          // sx={{ display: "flex", alignItems: "center" }}
+          component="th"
+          scope="row"
+        >
+          {data?.averageReviewPercentage === undefined ? (
+            <span>no ratings available</span>
           ) : (
             <meter
               className="md:w-36 hidden md:block  shrink-0"
               max={100}
               min={0}
-              value={30}
+              value={data?.averageReviewPercentage}
               high={75}
               low={25}
               optimum={50}
             ></meter>
           )}
-          {/* <span className="mx-2 shrink-0">
+        </TableCell>
+        <TableCell>
+          <span>
             {" "}
-            {data.ratings === undefined
-              ? "no ratings available"
-              : data.ratings + "%"}{" "}
-          </span> */}
-          <p
-            className={`${data.size} mr-7 shrink-0 mx-2 flex p-1 rounded-md items-center`}
-          >
-            <span>
-              {" "}
-              <img src={data.size === "increase" ? arrowUp : arrowDown} />{" "}
-            </span>
-            <span> 30%</span>
-          </p>
-        </div>
-        <p className="md:w-32 md:ml-14 text-center  md:mr-0 shrink-0 ">
-          {data?.project === undefined ? 0 : data?.project}{" "}
-        </p>
-        <p className="md:w-36 mr-5 md:mr-0  text-center shrink-0 ">
-          {" "}
-          ${data?.wallet?.balance}
-        </p>
-      </section>
+            <img
+              src={data.averageReviewPercentage >= 25 ? arrowUp : arrowDown}
+            />{" "}
+          </span>
+        </TableCell>
+        <TableCell>
+          {data?.averageReviewPercentage === undefined ? (
+            "0 %"
+          ) : (
+            <span> {data?.averageReviewPercentage} %</span>
+          )}
+        </TableCell>
+
+        <TableCell align="center">
+          {data?.project === undefined ? 0 : data?.project}
+        </TableCell>
+        <TableCell align="center">
+          {data?.wallet?.balance === undefined
+            ? "₦0"
+            : `₦${NairaFormatter.format(data?.wallet?.balance)}`}
+        </TableCell>
+      </TableRow>
     );
   });
 
   return (
     <>
       {user_credentials?.length ? (
-        <div>
-          <section
-            style={{ color: " #4C4C4C" }}
-            className="md:flex grid grid-cols-4 font-manrope  my-1  md:my-5 justify-between items-center  text-sm md:text-md font-bold"
-          >
-            <h2 className="hidden md:block md:mr-0 mr-5 md:shrink-0  md:p-0 p-4">
-              S/N
-            </h2>
-            <h2 className="md:w-60 md:mr-0 mr-5 md:shrink-0  md:p-0 p-4">
-              User
-            </h2>
-
-            <h2 className="md:w-80 md:mr-0 mr-5 md:shrink-0 md:p-0 p-4  ">
-              Ratings
-            </h2>
-            <h2 className="md:w-32 md:mr-0 md:ml-14  text-center md:shrink-0 md:p-0 p-4">
-              Project
-            </h2>
-            <h2 className="md:w-36 md:mr-0 mr-5   md:shrink-0 md:p-0 p-4  ">
-              Wallet balance
-            </h2>
-          </section>
-          <div>{renderAccounts}</div>
-        </div>
+        <TableContainer component="main">
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>S/N</TableCell>
+                <TableCell colSpan={2} align="left">
+                  User
+                </TableCell>
+                <TableCell colSpan={3} align="left">
+                  Ratings
+                </TableCell>
+                <TableCell align="left">Project</TableCell>
+                <TableCell align="left">Wallet Balance</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>{renderAccounts}</TableBody>
+          </Table>
+        </TableContainer>
       ) : (
+        // <div>
+        //   <section
+        //     style={{ color: " #4C4C4C" }}
+        //     className="md:flex grid grid-cols-4 font-manrope  my-1  md:my-5 justify-between items-center  text-sm md:text-md font-bold"
+        //   >
+        //     <h2 className="hidden md:block md:mr-0 mr-5 md:shrink-0  md:p-0 p-4">
+        //       S/N
+        //     </h2>
+        //     <h2 className="md:w-60 md:mr-0 mr-5 md:shrink-0  md:p-0 p-4">
+        //       User
+        //     </h2>
+
+        //     <h2 className="md:w-80 md:mr-0 mr-5 md:shrink-0 md:p-0 p-4  ">
+        //       Ratings
+        //     </h2>
+        //     <h2 className="md:w-32 md:mr-0 md:ml-14  text-center md:shrink-0 md:p-0 p-4">
+        //       Project
+        //     </h2>
+        //     <h2 className="md:w-36 md:mr-0 mr-5   md:shrink-0 md:p-0 p-4  ">
+        //       Wallet balance
+        //     </h2>
+        //   </section>
+        //   <div>{renderAccounts}</div>
+        // </div>
         <NoUser />
       )}
     </>

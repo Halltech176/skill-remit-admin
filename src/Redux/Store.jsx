@@ -26,6 +26,8 @@ import { AddBankReducer } from "./Slices/AddBankSlice";
 import { WithdrawalReducer } from "./Slices/WithdrawalSlice";
 import { AllNotificationsReducer } from "./Slices/NotificationsSlice";
 import { ReadNotificationReducer } from "./Slices/ReadNotificationSlice";
+import { GetUserReviewReducer } from "./Slices/UserReviewSlice";
+import { UserAccountReducer } from "./Slices/UserAccountSlice";
 
 const reducers = combineReducers({
   user: UserReducer,
@@ -50,6 +52,8 @@ const reducers = combineReducers({
   withdrawal: WithdrawalReducer,
   allnotifications: AllNotificationsReducer,
   readnotifications: ReadNotificationReducer,
+  user_review: GetUserReviewReducer,
+  user_account: UserAccountReducer,
 });
 
 const Store = configureStore({

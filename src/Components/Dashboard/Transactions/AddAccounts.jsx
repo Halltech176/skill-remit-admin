@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { User } from "../../../Redux/Actions";
+import { UserAccount } from "../../../Redux/Actions";
 import { BASE_URL, HEADER } from "../../../../Api";
 import { useDispatch, useSelector } from "react-redux";
 import AddBankComponent from "./AddBank.component";
 import { HandleError } from "../../Common/HandleError";
+import ButtonComponent from "../../Common/ButtonComponent";
 import { BsArrowLeft } from "react-icons/bs";
 import {
   ErrorNotification,
@@ -15,39 +16,52 @@ import axios from "axios";
 
 const AddAccounts = () => {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.user);
+  const { user_account } = useSelector((state) => state.user_account);
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const DeleteBanks = async (id) => {
+    setLoading(true);
     try {
       const response = await axios.delete(
         `${BASE_URL}/wallet/bank-account/${id}`,
         HEADER
       );
-      dispatch(User());
+      dispatch(UserAccount());
+      SuccessNotification(response?.data?.message);
+      setLoading(false);
       console.log(response);
     } catch (err) {
+      setLoading(false);
       HandleError(err);
       console.log(err);
     }
   };
 
-  const renderBanks = user?.bankAccounts?.map((data, index) => {
+  const renderBanks = user_account?.bankAccounts?.map((data, index) => {
     return (
       <div className="flex justify-between items-center my-3">
         <p>{data?.accountName}</p>
         <p>{data?.accountNumber}</p>
         <p>{data?.bankName}</p>
-        <button
+        <ButtonComponent
+          title="Delete"
+          clickFunction={() => DeleteBanks(data?._id)}
+          loading={loading}
+          bgcolor="bg-red-500"
+          width="w-32"
+          bgWidth="w-32"
+        />
+        {/* <button
           onClick={() => DeleteBanks(data?._id)}
           className="text-white font-base bg-red-500 px-2 w-32 py-2 rounded-md"
         >
           Delete
-        </button>
+        </button> */}
       </div>
     );
   });
-  console.log(user?.bankAccounts);
+  console.log(user_account?.bankAccounts);
   return (
     <main>
       <ToastContainer transition={Zoom} autoClose={800} />

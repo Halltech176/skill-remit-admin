@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import cancel from "../../../assets/cancel.png";
 import { HandleError } from "../../Common/HandleError";
+import ButtonComponent from "../../Common/ButtonComponent";
 import { BASE_URL, HEADER } from "../../../../Api";
 import { useDispatch } from "react-redux";
 import axios from "axios";
@@ -9,6 +10,7 @@ import axios from "axios";
 const EditReview = ({ open, setOpen, review }) => {
   console.log(review);
   const [rating, setRating] = useState(review?.rating);
+  const [loading, setLoading] = useState(false);
   const [description, setDescription] = useState(review?.description);
   const variants = {
     hidden: {
@@ -44,6 +46,7 @@ const EditReview = ({ open, setOpen, review }) => {
 
   const confirmEdit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const data = { rating, description };
       if (rating > 5) {
@@ -54,8 +57,10 @@ const EditReview = ({ open, setOpen, review }) => {
         data,
         HEADER
       );
+      setLoading(false);
       console.log(response);
     } catch (err) {
+      setLoading(false);
       HandleError(err);
       console.log(err);
     }
@@ -76,7 +81,7 @@ const EditReview = ({ open, setOpen, review }) => {
               onClick={() => setOpen(false)}
               className="flex flex-row-reverse"
             >
-              <img className="w-10" src={cancel} alt="cancel" />
+              <img className="md:w-10 w-6" src={cancel} alt="cancel" />
             </span>
 
             <motion.div
@@ -95,7 +100,7 @@ const EditReview = ({ open, setOpen, review }) => {
                     min="1"
                     max="5"
                     placeholder="Rating (1-5)"
-                    className=" w-full text-normal text-sm md:text-xl font-medium p-2 md:p-5 bg-primary-200 rounded-xl"
+                    className=" w-full text-normal text-sm md:text-xl font-medium p-2 md:p-5 bg-primary-200 md:rounded-xl rounded-sm"
                     rows="2"
                   />
                 </div>
@@ -104,16 +109,21 @@ const EditReview = ({ open, setOpen, review }) => {
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     placeholder="Description"
-                    className=" w-full text-normal text-sm md:text-xl font-medium p-2 md:p-5 bg-primary-200 rounded-xl"
+                    className=" w-full text-normal text-sm md:text-xl font-medium p-2 md:p-5 bg-primary-200 md:rounded-xl rounded-sm"
                     rows="8"
                   />
                 </div>
-                <button
+                <ButtonComponent
+                  title="Update Review"
+                  clickFunction={confirmEdit}
+                  loading={loading}
+                />
+                {/* <button
                   onClick={confirmEdit}
                   className=" text-white rounded-md w-64 py-3  bg-normal"
                 >
                   Update Review
-                </button>
+                </button> */}
               </form>
             </motion.div>
           </div>

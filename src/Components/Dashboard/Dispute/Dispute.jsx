@@ -1,7 +1,7 @@
 import arrowRight from "../../../assets/arrow-right.png";
 import user_vendor from "../../../assets/user_vendor.png";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { FetchChat, UserChat } from "../../../Redux/Actions";
 import { io } from "socket.io-client";
 import ChatBody from "./ChatBody";
@@ -10,16 +10,20 @@ import { HandleError } from "../../Common/HandleError";
 import { HandleSuccess } from "../../Common/HandleSuccess";
 import { ToastContainer, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import logo from "../../../assets/logo.png";
 
 const Dispute = () => {
   const dispatch = useDispatch();
-  const { chats, loading, error } = useSelector((state) => state.chats);
+  const { chats, error } = useSelector((state) => state.chats);
   const { user } = useSelector((state) => state.user);
-  const { chat } = useSelector((state) => state.chat);
+  const { chat, loading } = useSelector((state) => state.chat);
   const [barName, setBarName] = useState(null);
   const [content, setContent] = useState([]);
   const [receivedMessage, setReceivedMessage] = useState(null);
+  const bodyRef = useRef(null);
+
   console.log(chat);
+  console.log(chats);
 
   useEffect(() => {
     const socket = io(`https://skill-remit.herokuapp.com?userId=${user?._id}`, {
@@ -48,6 +52,12 @@ const Dispute = () => {
   const id = JSON.parse(window.localStorage.getItem("CHAT_ID"));
 
   const GetUserChat = async (id) => {
+    // bodyRef.current.scrollIntoView();
+    if (bodyRef.current) {
+      bodyRef.current.scrollTop = bodyRef.current.scrollHeight;
+      console.log(bodyRef.current.scrollHeight);
+    }
+
     try {
       window.localStorage.setItem("CHAT_ID", JSON.stringify(id));
       GetBarUser(id);
@@ -58,7 +68,6 @@ const Dispute = () => {
       console.log(err);
     }
   };
-  console.log(content);
 
   const renderDisputes = chats?.docs?.map((data, index) => {
     return (
@@ -101,46 +110,60 @@ const Dispute = () => {
     );
   });
   return (
-    <main className="md:flex h-full chat-container justify-between pt-5 ">
-      <ToastContainer transition={Zoom} autoClose={800} />
-      <div className=" hidden  md:block  w-2/4 mr-8">
-        <div className="flex  items-center bg-primary text-white p-4 rounded-md justify-between">
-          <p>Dispute </p>
-          <span>
-            <img className="w-4" src={arrowRight} alt="arrow" />
-          </span>
+    <main>
+      <section className="md:flex    justify-between pt-5 ">
+        <ToastContainer transition={Zoom} autoClose={800} />
+        <div className=" hidden  md:block  w-2/4 mr-8">
+          <div className="flex  items-center bg-primary text-white p-4 rounded-md justify-between">
+            <p>Dispute </p>
+            <span>
+              <img className="w-4" src={arrowRight} alt="arrow" />
+            </span>
+          </div>
+          {chats === null ? (
+            ""
+          ) : (
+            <div className="my-4">
+              <input
+                className="p-3 text-dark rounded-md w-5/6"
+                style={{
+                  border: " 1px  solid #E8EBF2",
+                  // color: "rgba(26, 35, 78, 0.8)",
+                }}
+                type="text"
+                placeholder="search for dispute"
+              />
+            </div>
+          )}
+
+          <div className="  pb-5  overflow-y-scroll h-96 app_container ">
+            {renderDisputes}
+          </div>
         </div>
-        {chat === null ? (
-          ""
-        ) : (
-          <div className="my-4">
-            <input
-              className="p-3 text-dark rounded-md w-5/6"
-              style={{
-                border: " 1px  solid #E8EBF2",
-                // color: "rgba(26, 35, 78, 0.8)",
-              }}
-              type="text"
-              placeholder="search for dispute"
+        <div
+          style={{ background: "rgba(0,134, 64,0.1)" }}
+          className="relative md:w-5/6"
+        >
+          {chat === null && !loading ? (
+            <div>
+              <img src={logo} alt="logo" />
+            </div>
+          ) : (
+            ""
+          )}
+
+          <ChatHeader barName={barName} setBarName={setBarName} />
+          <div ref={bodyRef} className=" ">
+            <ChatBody
+              currentUser={barName}
+              setContent={setContent}
+              content={content}
+              chat={chat}
+              ref={bodyRef}
             />
           </div>
-        )}
-
-        <div className="h-full my-10 pb-5 app_container overflow-y-scroll">
-          {renderDisputes}
         </div>
-      </div>
-      <div style={{ background: "#F7F7FD" }} className=" md:w-5/6">
-        <ChatHeader barName={barName} setBarName={setBarName} />
-        <div className="">
-          <ChatBody
-            currentUser={barName}
-            setContent={setContent}
-            content={content}
-            chat={chat}
-          />
-        </div>
-      </div>
+      </section>
     </main>
   );
 };

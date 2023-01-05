@@ -3,9 +3,18 @@ import alert from "../../../assets/alert.png";
 import { useState } from "react";
 import { variants, backdrop } from "./variants";
 import { motion, AnimatePresence } from "framer-motion";
+import axios from "axios";
+import { HEADER, BASE_URL } from "../../../../Api";
 
 export const UploadData = ({ open, ToggleModal }) => {
-  console.log(open);
+  const AddOccupations = async () => {
+    try {
+      // const response = await axios.post(`${BASE_URL}/`)
+      console.log("updating...");
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <main>
       <AnimatePresence exitBeforeEnter>
@@ -71,6 +80,7 @@ export const UploadData = ({ open, ToggleModal }) => {
                 </form>
                 <div className="flex justify-center my-3">
                   <button
+                    onClick={AddOccupations}
                     style={{ background: "#001B87" }}
                     className=" py-3 px-10 rounded-md bg-normal text-xl text-white font-bold "
                   >

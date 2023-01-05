@@ -1,3 +1,4 @@
+import ButtonComponent from "../../Common/ButtonComponent";
 const InputComponent = ({
   name,
   type,
@@ -6,7 +7,10 @@ const InputComponent = ({
   label,
   Update,
   handleChange,
+  loading,
+  target,
 }) => {
+  console.log(target);
   return (
     <form className="my-5 flex flex-col ">
       <h3 className="text-normal my-3  text-normal font-bold md:text-xl text-sm">
@@ -22,12 +26,15 @@ const InputComponent = ({
           type={type}
         />
       </div>
-      <button
-        onClick={(e) => Update(e, status, value)}
-        className="md:text-xl text-base mx-auto text-white bg-normal rounded-md w-52 my-3 py-3"
-      >
-        Update
-      </button>
+      <div className="flex items-center justify-center my-3">
+        <ButtonComponent
+          width="w-52"
+          target={status}
+          clickFunction={(e) => Update(e, status, value)}
+          title="Update"
+          loading={target === status ? loading : ""}
+        />
+      </div>
     </form>
   );
 };

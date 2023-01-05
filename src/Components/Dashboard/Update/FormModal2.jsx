@@ -4,11 +4,19 @@ import alert from "../../../assets/alert.png";
 import { useState } from "react";
 import { variants, backdrop } from "./variants";
 import { motion, AnimatePresence } from "framer-motion";
+import axios from "axios";
+import { HEADER } from "../../../../Api";
 
 export const UploadData = ({ open, ToggleModal }) => {
   Modal.setAppElement("#root");
+  const AddOccupations = () => {
+    try {
+      console.log("updating...");
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-  console.log(open);
   return (
     <main>
       <AnimatePresence exitBeforeEnter>
@@ -56,6 +64,7 @@ export const UploadData = ({ open, ToggleModal }) => {
                 </form>
                 <div className="flex justify-center my-3">
                   <button
+                    onClick={AddOccupations}
                     style={{ background: "#001B87" }}
                     className=" py-3 px-10 rounded-md bg-normal text-xl text-white font-bold "
                   >

@@ -74,8 +74,6 @@ const Login = () => {
         setTimeout(() => {
           console.log("LOG....");
           window.location.href = "/";
-          // navigate("/");
-          // window.location.reload();
         }, 500);
       } else if (
         response?.data?.user?.type !== "super" &&

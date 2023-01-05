@@ -28,7 +28,7 @@ const Notifications = () => {
 
   return (
     <>
-      <main>
+      <main className="h-full mb-3 overflow-y-scroll">
         <div className="my-3">
           <Tabs
             value={value}

@@ -4,6 +4,7 @@ import job2 from "../../../assets/job2.png";
 import job3 from "../../../assets/job3.png";
 import job4 from "../../../assets/job4.png";
 import { UploadData, UpdateData } from "./FormModal1";
+
 const Tab2 = () => {
   const [isOpen, setIsOpen] = useState(false);
   const ToggleModal = (e) => {
@@ -55,6 +56,7 @@ const Tab2 = () => {
       img: job4,
     },
   ];
+
   const renderSections = sections.map((data, index) => {
     return (
       <div

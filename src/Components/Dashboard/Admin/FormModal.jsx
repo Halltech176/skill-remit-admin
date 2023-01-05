@@ -3,13 +3,15 @@ import cancel from "../../../assets/cancel.png";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSelector, useDispatch } from "react-redux";
-import { CreateAdmin, EditAdmin, Users } from "../../../Redux/Actions";
+import { CreateAdmin, EditAdmin, SuspendedUsers } from "../../../Redux/Actions";
 import { ErrorNotification, SuccessNotification } from "../../Common/Toastify";
 import { HandleError } from "../../Common/HandleError";
 import { HandleSuccess } from "../../Common/HandleSuccess";
 import { ToastContainer, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-{/* <ToastContainer transition={Zoom} autoClose={800} /> */}
+{
+  /* <ToastContainer transition={Zoom} autoClose={800} /> */
+}
 
 import axios from "axios";
 import { BASE_URL } from "../../../../Api";
@@ -41,14 +43,6 @@ const inputs = [
 ];
 
 export const CreateAccount = ({ open, ToggleModal, setIsOpen, setIsOpen2 }) => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(Users());
-  }, []);
-  const { user, loading, error } = useSelector((state) => state.users);
-
-  console.log(user);
-
   const initialState = {
     email: "olayemi.ayomide642@gmail.com",
     firstName: "olajide",
@@ -56,6 +50,8 @@ export const CreateAccount = ({ open, ToggleModal, setIsOpen, setIsOpen2 }) => {
     password: "pass111",
   };
   const [values, setValues] = useState(initialState);
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
@@ -64,8 +60,8 @@ export const CreateAccount = ({ open, ToggleModal, setIsOpen, setIsOpen2 }) => {
   // setIsOpen2(true);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsOpen(false);
-
+    // setIsOpen(false);
+    setLoading(true);
     console.log(values);
     try {
       const response = await dispatch(CreateAdmin(values)).unwrap();
@@ -76,6 +72,7 @@ export const CreateAccount = ({ open, ToggleModal, setIsOpen, setIsOpen2 }) => {
           { email: response?.data?.data?.email }
         );
         console.log(response2);
+        setLoading(false);
         SuccessNotification(response2.data.message);
         setTimeout(() => {
           setIsOpen(false);
@@ -84,7 +81,9 @@ export const CreateAccount = ({ open, ToggleModal, setIsOpen, setIsOpen2 }) => {
       }
       console.log(response2);
     } catch (err) {
+      setLoading(false);
       HandleError(err);
+
       console.log(err);
     }
   };
@@ -103,6 +102,7 @@ export const CreateAccount = ({ open, ToggleModal, setIsOpen, setIsOpen2 }) => {
             type="create"
             handleSubmit={handleSubmit}
             setIsOpen={setIsOpen}
+            loading={loading}
           />
         )}
       </AnimatePresence>
@@ -119,6 +119,7 @@ export const EditAccount = ({
 }) => {
   Modal.setAppElement("#root");
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
   console.log(active);
   const handleChange = (e) => {
     setActiveUser({ ...active, [e.target.name]: e.target.value });
@@ -126,6 +127,7 @@ export const EditAccount = ({
 
   const handleEdit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       const response = await dispatch(EditAdmin(active)).unwrap();
@@ -135,8 +137,10 @@ export const EditAccount = ({
       setIsOpen(false);
 
       HandleSuccess(response);
-      dispatch(Users());
+      setLoading(false);
+      dispatch(SuspendedUsers());
     } catch (err) {
+      setLoading(false);
       HandleError(err);
       console.log(err);
     }
@@ -156,6 +160,7 @@ export const EditAccount = ({
             setIsOpen={setIsOpen}
             inputs={inputs.slice(0, -1)}
             handleSubmit={handleEdit}
+            loading={loading}
           />
         )}
       </AnimatePresence>
@@ -178,7 +183,7 @@ export const VerifyAccount = ({ open, setOpen, ToggleModal }) => {
       if (response.status === 200) {
         SuccessNotification(response.data.message);
         setOpen(false);
-        dispatch(Users());
+        dispatch(SuspendedUsers());
       }
 
       console.log(response);

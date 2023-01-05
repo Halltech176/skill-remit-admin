@@ -50,15 +50,20 @@ const User = () => {
     })
     ?.reduce((acc, cur) => ((acc[cur] = (acc[cur] || 0) + 1), acc), {});
 
-  const reviewSum = review?.docs?.map((data, index) => {
-    return data?.rating 
-  });
-  // ?.reduce((acc, cur) => ((acc[cur] = (acc[cur] || 0) + 1), acc), {});
-  console.log(reviewSum);
-  // ?.map((data, index) => {
-  //   return data?.receiver?._id;
-  // })
-  // ?.reduce((acc, cur) => ((acc[cur] = (acc[cur] || 0) + 1), acc), {});
+  const processedIds = new Set();
+
+  const results = review?.docs?.reduce((acc, item) => {
+    if (!processedIds.has(item?.receiver?._id)) {
+      processedIds.add(item?.receiver?._id);
+      acc.push({ _id: item?.receiver?._id, sum: item.rating });
+    } else {
+      const result = acc.find(
+        (result) => result?.receiver?._id === item?.receiver?._id
+      );
+      result.sum += item.rating;
+    }
+    return acc;
+  }, []);
 
   const unique_reviews =
     createdReviews &&
@@ -72,20 +77,30 @@ const User = () => {
       return { _id: data[0], project: data[1] };
     });
 
+  const mergedReviews = results
+    ?.reduce((acc, item) => {
+      const marchResult = unique_reviews?.find(
+        (data) => data?._id === item?._id
+      );
+      return acc.concat({ ...item, ...marchResult });
+    }, [])
+    ?.map((data, index) => {
+      return {
+        ...data,
+        averageReviewPercentage: Math.floor(
+          (data?.sum / data?.review) * (100 / 5)
+        ),
+      };
+    });
+
   const mergedData = user_stats?.docs?.reduce((acc, item) => {
     const matchingJob = unique_jobs?.find((data) => data?._id === item?._id);
-    const matchingReview = unique_reviews?.find(
+    const matchingReview = mergedReviews?.find(
       (data) => data?._id === item?._id
     );
+
     return acc.concat({ ...item, ...matchingJob, ...matchingReview });
   }, []);
-
-  console.log(createdJobs);
-  console.log(mergedData);
-  console.log(unique_jobs);
-
-  console.log(createdReviews);
-  console.log(unique_reviews);
 
   const GetSumType = (type) => {
     const response = user_stats?.docs?.filter(
@@ -123,7 +138,7 @@ const User = () => {
   };
   useEffect(() => {
     GetData(0, "");
-  }, [user]);
+  }, [user_stats]);
   const paginatedData = datas?.slice(0, currentPage * datas_per_page + 1);
 
   const handlePaginage = () => {
@@ -136,7 +151,7 @@ const User = () => {
   const active_status = GetSumStatus("active");
   const pending_status = GetSumStatus("pending");
   const suspended_status = GetSumStatus("suspended");
-  console.log(suspended_status);
+
   const numofusers = [
     alluserssum,
     pending_status,
@@ -188,7 +203,7 @@ const User = () => {
           </section>
           <div className="md:app_container md:overflow-x-scroll">
             <AllAccounts datas={paginatedData} />
-            <div className="flex items-center justify-center">
+            <div className="flex dummyData-center justify-center">
               <button
                 onClick={handlePaginage}
                 className="bg-normal p-3 md:w-52 w-44 md:rounded-xl rounded-md text-sm text-white md:text-xl my-4 px-4"

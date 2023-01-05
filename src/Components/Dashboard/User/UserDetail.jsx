@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router";
-import user from "../../../assets/no_avatar.png";
+import no_avatar from "../../../assets/no_avatar.png";
 import { NoReview } from "../../Common/NoData";
 import user_review from "../../../assets/user_review.png";
 import toggle_arrow from "../../../assets/toggle_arrow.png";
@@ -11,7 +11,7 @@ import star4 from "../../../assets/Star-3.png";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { Users, ClickedUser, GetReview } from "../../../Redux/Actions";
+import { Users, ClickedUser, GetUserReview } from "../../../Redux/Actions";
 import { BASE_URL, TOKEN, HEADER } from "../../../../Api";
 import { Loader1 } from "../../Common/Loader";
 import { HandleError } from "../../Common/HandleError";
@@ -32,12 +32,15 @@ const UserDetail = () => {
   const { review, loading } = useSelector((state) => state?.review);
   const [open, setOpen] = useState(false);
   const [reviewObj, setReviewObj] = useState({});
+  const { user_review } = useSelector((state) => state?.user_review);
+  console.log(user_review);
 
   const [open1, setOpen1] = useState(false);
   const [open2, setOpen2] = useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(ClickedUser());
+    dispatch(GetUserReview());
   }, []);
   console.log(selector?.user?.wallet?.balance);
 
@@ -63,11 +66,11 @@ const UserDetail = () => {
     },
   ];
 
-  const ratingsSum = review?.docs?.reduce((acc, cur) => {
+  const ratingsSum = user_review?.docs?.reduce((acc, cur) => {
     console.log(cur?.rating);
     return acc + cur?.rating;
   }, 0);
-  const averageRatings = ratingsSum / review?.totalDocs;
+  const averageRatings = user_review / user_review?.totalDocs;
   console.log(averageRatings);
   const activeRatings = new Array(4).fill(star1);
   const inactiveRatings = new Array(5 - 4).fill(star4);
@@ -115,14 +118,15 @@ const UserDetail = () => {
   });
 
   const SpecificReview = (id) => {
-    const response = review?.docs?.find((data) => {
+    const response = user_review?.docs?.find((data) => {
       return data?._id === id;
     });
     setReviewObj(response);
   };
   console.log(reviewObj);
 
-  const renderReviews = review?.docs?.map((data, index) => {
+  const renderReviews = user_review?.docs?.map((data, index) => {
+    console.log(data);
     return (
       <section
         style={{ background: "#F3F1FF" }}
@@ -132,10 +136,11 @@ const UserDetail = () => {
         <div className="flex my-1 items-center justify-between">
           <span>
             <img
+              className="w-10 h-10 rounded-full"
               src={
                 data?.createdBy?.avatar
                   ? data?.createdBy?.avatar?.url
-                  : user_review
+                  : no_avatar
               }
             />
           </span>
@@ -204,7 +209,7 @@ const UserDetail = () => {
                 src={
                   selector?.user?.avatar?.url
                     ? selector?.user?.avatar?.url
-                    : user
+                    : no_avatar
                 }
                 alt="user"
               />

@@ -14,6 +14,8 @@ import "react-toastify/dist/ReactToastify.css";
 
 const OtherSettings = ({ sitedata }) => {
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+  const [target, setTarget] = useState(null);
 
   const initialValues = {
     deliveryFee: sitedata?.deliveryFee,
@@ -52,19 +54,21 @@ const OtherSettings = ({ sitedata }) => {
   const Update = async (e, key, value) => {
     e.preventDefault();
     console.log(value);
-    console.log("updating...");
+
+    setLoading(true);
+    setTarget(e.target.name);
     try {
       const response = await axios.post(`${BASE_URL}//settings`, value, HEADER);
       SuccessNotification(response?.data?.message);
       dispatch(SiteData());
+      setLoading(false);
       console.log(response);
     } catch (err) {
-      console.log(err);
+      setLoading(false);
+
       HandleError(err);
     }
   };
-
-  console.log(banks);
 
   const renderOptions = banks?.map((data, index) => {
     return <option value={data?.name}>{data?.name}</option>;
@@ -98,6 +102,8 @@ const OtherSettings = ({ sitedata }) => {
           type="number"
           handleChange={handleChange}
           Update={Update}
+          loading={loading}
+          target={target}
         />
         <InputComponent
           status="minimumBonusPayout"
@@ -106,6 +112,8 @@ const OtherSettings = ({ sitedata }) => {
           value={values}
           handleChange={handleChange}
           Update={Update}
+          loading={loading}
+          target={target}
         />
         <InputComponent
           status="chargePercent"
@@ -114,6 +122,8 @@ const OtherSettings = ({ sitedata }) => {
           type="number"
           handleChange={handleChange}
           Update={Update}
+          target={target}
+          loading={loading}
         />
 
         <InputComponent
@@ -123,6 +133,8 @@ const OtherSettings = ({ sitedata }) => {
           type="number"
           handleChange={handleChange}
           Update={Update}
+          target={target}
+          loading={loading}
         />
         <InputComponent
           status="minimumAndroidVersion"
@@ -131,6 +143,8 @@ const OtherSettings = ({ sitedata }) => {
           type="number"
           handleChange={handleChange}
           Update={Update}
+          target={target}
+          loading={loading}
         />
       </div>
     </main>

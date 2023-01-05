@@ -20,11 +20,15 @@ import {
 import { ToastContainer, Zoom } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import InputComponent from "./Input1.component";
+import ButtonComponent from "../../Common/ButtonComponent";
 
 import axios from "axios";
 const Settings = () => {
   const { user, loading, error } = useSelector((state) => state.user);
   const { sitedata } = useSelector((state) => state.sitedata);
+  const [profileLoading, setProfileLoading] = useState(false);
+  const [passwordLoading, setPasswordLoading] = useState(false);
+  const [imageLoading, setImageLoading] = useState(false);
   const dispatch = useDispatch();
   // console.log(selector);
 
@@ -34,8 +38,8 @@ const Settings = () => {
     lastName: user?.lastName,
   };
   const initialPassword = {
-    oldPassword: "Admin@1234",
-    newPassword: "12345678",
+    oldPassword: "Admin@12345678",
+    newPassword: "Admin@1234",
   };
   const [values, setValues] = useState(initialState);
   const [passwords, setPasswords] = useState(initialPassword);
@@ -73,6 +77,7 @@ const Settings = () => {
   });
 
   const updateProfile = async (e) => {
+    setProfileLoading(true);
     e.preventDefault();
     try {
       const response = await axios.put(
@@ -87,7 +92,9 @@ const Settings = () => {
           dispatch(User());
         }, 1500);
       }
+      setProfileLoading(false);
     } catch (err) {
+      setProfileLoading(false);
       HandleError(err);
       console.log(err);
     }
@@ -95,6 +102,7 @@ const Settings = () => {
 
   const updatePassword = async (e) => {
     e.preventDefault();
+    setPasswordLoading(true);
     console.log(passwords);
     try {
       const response = await axios.post(
@@ -103,13 +111,12 @@ const Settings = () => {
         HEADER
       );
       console.log(response);
-      if (response.status === 200) {
-        SuccessNotification(response?.data?.message);
-        dispatch(User());
-      }
-      console.log("updated");
+      setPasswordLoading(false);
+      SuccessNotification(response?.data?.message);
+      dispatch(User());
     } catch (err) {
       HandleError(err);
+      setPasswordLoading(false);
       console.log(err);
     }
   };
@@ -120,6 +127,7 @@ const Settings = () => {
   console.log(user?.avatar?.url);
 
   const updateProfileImage = async () => {
+    setImageLoading(true);
     try {
       let formData = new FormData();
       formData.append("image", profileImage);
@@ -130,6 +138,7 @@ const Settings = () => {
         HEADER
       );
       console.log(response);
+      setImageLoading(false);
       if (response.status === 200) {
         SuccessNotification(response?.data?.message);
         setTimeout(() => {
@@ -137,6 +146,7 @@ const Settings = () => {
         }, 2000);
       }
     } catch (err) {
+      setImageLoading(false);
       console.log(err);
       HandleError(err);
     }
@@ -172,27 +182,35 @@ const Settings = () => {
                     name=""
                     id=""
                   />
-                  {/* clickFunction, buttonName  */}
-                  <Button
+                  <ButtonComponent
+                    bgcolor="bg-primary-300"
+                    width="w-40 md:w-52"
                     clickFunction={updateProfileImage}
-                    buttonName="Update Image"
+                    title="Update Image"
+                    loading={imageLoading}
                   />
                 </div>
               </div>
               <div className="md:w-2/4 h-full overflow-scroll app_container md:mx-14">
                 <form className="flex  flex-col  items-center ">
                   {renderInputs}
-                  <Button
+                  <ButtonComponent
+                    bgcolor="bg-primary-300"
+                    width="w-40 md:w-52"
                     clickFunction={updateProfile}
-                    buttonName="Update Profile"
+                    title="Update Profile"
+                    loading={profileLoading}
                   />
                 </form>
 
                 <form className="flex flex-col  items-center ">
                   {renderPasswords}
-                  <Button
+                  <ButtonComponent
+                    bgcolor="bg-primary-300"
+                    width="w-40 md:w-52"
                     clickFunction={updatePassword}
-                    buttonName="Change Password"
+                    title="Change Password"
+                    loading={passwordLoading}
                   />
                 </form>
               </div>

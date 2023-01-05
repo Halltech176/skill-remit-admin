@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import cancel from "../../../assets/cancel.png";
 import { variants, backdrop } from "./Animation";
+import ButtonComponent from "../../Common/ButtonComponent";
 const ModalComponent = ({
   inputs,
   ToggleModal,
@@ -11,6 +12,7 @@ const ModalComponent = ({
   handleSubmit,
   type,
   setIsOpen,
+  loading,
 }) => {
   console.log(values);
   const renderInputs = inputs?.map((data, index) => {
@@ -68,18 +70,24 @@ const ModalComponent = ({
 
               {type === "create" ? (
                 <div className="flex justify-center my-5">
-                  <button onClick={handleSubmit} className="btn w-32 ">
-                    Add
-                  </button>
+                  <ButtonComponent
+                    title="Add"
+                    clickFunction={handleSubmit}
+                    bgcolor="btn"
+                    // width :
+                    loading={loading}
+                  />
                 </div>
               ) : (
                 <div className="flex capitalize justify-center md:my-10 my-2">
-                  <button
-                    onClick={handleSubmit}
-                    className="bg-white text-primary shadow-md rounded-md py-3 mx-3 w-48 "
-                  >
-                    Save
-                  </button>
+                  <ButtonComponent
+                    title="Save"
+                    clickFunction={handleSubmit}
+                    // bgcolor="btn"
+                    // width :
+                    loading={loading}
+                  />
+
                   {/* <button onClick={handleSubmit} className="btn mx-3 w-48 ">
                   Delete
                 </button> */}

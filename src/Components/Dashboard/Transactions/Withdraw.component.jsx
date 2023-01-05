@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import cancel from "../../../assets/cancel.png";
 import { HandleError } from "../../Common/HandleError";
+import ButtonComponent from "../../Common/ButtonComponent";
 import { GetNotifications, Banks, AddBank } from "../../../Redux/Actions";
 import { useDispatch, useSelector } from "react-redux";
 import { BsArrowLeft } from "react-icons/bs";
@@ -18,8 +19,9 @@ const WithdrawComponent = ({ open, setOpen }) => {
   const { banks } = useSelector((state) => state.banks);
   const [bankId, setBankId] = useState("");
   const [amount, setAmount] = useState("");
-  const { user } = useSelector((state) => state?.user);
-  console.log(user);
+  const [loading, setLoading] = useState(false);
+  const { user_account } = useSelector((state) => state?.user_account);
+  console.log(user_account);
 
   const [bankName, setBankName] = useState("");
   const variants = {
@@ -53,13 +55,12 @@ const WithdrawComponent = ({ open, setOpen }) => {
       opacity: 1,
     },
   };
-
   const HandleSelectedOptions = (e) => {
     console.log(e.target.value);
     setBankId(e.target.value);
     // setBankName(e.target.value);
 
-    // const findCode = user?.bankAccounts?.find((data, index) => {
+    // const findCode = user_account?.bankAccounts?.find((data, index) => {
     //   return data.name === e.target.value;
     // });
     // setAccountNumber(findCode?.accountNumber);
@@ -68,7 +69,7 @@ const WithdrawComponent = ({ open, setOpen }) => {
   const handleWithdraw = async (e) => {
     e.preventDefault();
     const data = { amount: Number(amount), bankId };
-    console.log(data);
+    setLoading(true);
     const TOKEN = JSON.parse(localStorage.getItem("token"));
     try {
       const response = await axios.post(
@@ -81,15 +82,17 @@ const WithdrawComponent = ({ open, setOpen }) => {
           },
         }
       );
+      setLoading(false);
       // const response = await dispatch(AddBank(data)).unwrap();
       console.log(response);
       console.log(data);
     } catch (err) {
+      setLoading(false);
       HandleError(err);
     }
   };
 
-  const renderOptions = user?.bankAccounts?.map((data, index) => {
+  const renderOptions = user_account?.bankAccounts?.map((data, index) => {
     return (
       <option onChange={(e) => HandleSelectedOptions(e)} value={data?._id}>
         {data?.accountNumber}
@@ -153,12 +156,17 @@ const WithdrawComponent = ({ open, setOpen }) => {
                   </div>
                 </section>
                 <div className="flex justify-center">
-                  <button
+                  <ButtonComponent
+                    title="Next"
+                    clickFunction={handleWithdraw}
+                    loading={loading}
+                  />
+                  {/* <button
                     onClick={handleWithdraw}
                     className="bg-normal md:w-56 w-48 rounded-md text-xl p-3 text-white"
                   >
                     next
-                  </button>
+                  </button> */}
                 </div>
               </motion.div>
             </div>

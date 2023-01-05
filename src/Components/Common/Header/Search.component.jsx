@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import search_sm from "../../../assets/search_sm.png";
 import { useDispatch, useSelector } from "react-redux";
-import { Users } from "../../../Redux/Actions";
+import { Users, GetUserStats } from "../../../Redux/Actions";
 const Search = () => {
   const [searchValue, setSearchValue] = useState("");
+  const dispatch = useDispatch();
   const location = window.location.pathname;
   const paths = [
     "/admin/allAccount",
@@ -15,10 +16,18 @@ const Search = () => {
     return path === location;
   });
 
-  const dispatch = useDispatch();
   const handleSearch = (e) => {
+    switch (location) {
+      case "/admin/allAccount":
+        dispatch(GetUserStats(e.target.value));
+        break;
+
+      default:
+        console.log("yeah");
+    }
     setSearchValue(e.target.value);
   };
+  console.log(searchValue);
   return (
     <>
       {filter === undefined ? (
